@@ -1,2 +1,2 @@
 # GoS
-Don't REad this
+Don't Read this...
