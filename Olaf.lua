@@ -1,5 +1,13 @@
 if GetObjectName(GetMyHero()) ~= "Olaf" then return end
 
+local v = 1
+
+GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.version", function(num)
+	if v < tonumber(num) then
+		DownloadFileAsync("", SCRIPT_PATH .. "", function() PrintChat("[Olaf] Updated") end)
+	end
+end)
+
 require("OpenPredict")
 
 --Menu--
@@ -11,7 +19,18 @@ OlafMenu.Combo:Boolean("W", "Use W", true)
 OlafMenu.Combo:Slider("uW", "Use W at % HP", 75, 5, 100, 5)
 OlafMenu.Combo:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
-OlafMenu:SubMenu("JC", "JungleClear / LaneClear")
+OlafMenu:SubMenu("Harass", "Harass")
+OlafMenu.Harass:Boolean("Q", "Use Q", true)
+OlafMenu.Harass:Boolean("W", "Use W", true)
+OlafMenu.Harass:Slider("uW", "Use W at % HP", 75, 5, 100, 5)
+OlafMenu.Harass:Boolean("E", "Use E", true)
+-----------------------------------------------------------------
+OlafMenu:SubMenu("LC", "LaneClear")
+OlafMenu.LC:Boolean("Q", "Use Q", true)
+OlafMenu.LC:Boolean("W", "Use W", true)
+OlafMenu.LC:Boolean("E", "Use E", true)
+-----------------------------------------------------------------
+OlafMenu:SubMenu("JC", "JungleClear")
 OlafMenu.JC:Boolean("Q", "Use Q", true)
 OlafMenu.JC:Boolean("W", "Use W", true)
 OlafMenu.JC:Boolean("E", "Use E", true)
@@ -24,8 +43,6 @@ OlafMenu:SubMenu("Draw", "Drawings")
 OlafMenu.Draw:Boolean("DrawQ", "Draw Q Range", true)
 OlafMenu.Draw:Boolean("DrawE", "Draw E Range", true)
 -----------------------------------------------------------------
-
-
 
 local OlafQ = {delay = 0.25, speed = 1550, width = 100, range = 1000}
 
@@ -42,6 +59,22 @@ OnTick(function()
 			CastSpell(_W)
 			end
 		if OlafMenu.Combo.Q:Value() and Ready(_Q) and ValidTarget(target, 1000) then
+			local QPred = GetLinearAOEPrediction(target, OlafQ)
+			if QPred.hitChance >= 0.3 then
+				CastSkillShot(_Q, QPred.castPos)
+			end
+		end
+	end
+
+--Harass--
+	if IOW:Mode() == "Harass" then
+		if OlafMenu.Harass.E:Value() and Ready(_E) and ValidTarget(target, 325) then
+			CastTargetSpell(target, _E)
+			end
+		if OlafMenu.Harass.W:Value() and Ready(_W) and ValidTarget(target, 250) then
+			CastSpell(_W)
+			end
+		if OlafMenu.Harass.Q:Value() and Ready(_Q) and ValidTarget(target, 1000) then
 			local QPred = GetLinearAOEPrediction(target, OlafQ)
 			if QPred.hitChance >= 0.3 then
 				CastSkillShot(_Q, QPred.castPos)
@@ -67,18 +100,31 @@ OnTick(function()
 		end
 	end
 	
---JungleClear--
+--LaneClear / JungleClear--
 
 	if IOW:Mode() == "LaneClear" then
 		for _, mob in pairs(minionManager.objects) do
-			if OlafMenu.JC.E:Value() and Ready(_E) and ValidTarget(mob, 325) then
-				CastTargetSpell(mob, _E)
-			end
-			if OlafMenu.JC.W:Value() and Ready(_W) and ValidTarget(mob, 225) then
-				CastSpell(_W)
-			end
-			if OlafMenu.JC.Q:Value() and Ready(_Q) and ValidTarget(mob, 1000) then
-				CastSkillShot(_Q, mob)
+			if GetTeam(mob) == MINION_ENEMY then
+				if OlafMenu.LC.E:Value() and Ready(_E) and ValidTarget(mob, 325) then
+					CastTargetSpell(mob, _E)
+					end
+				if OlafMenu.LC.W:Value() and Ready(_W) and ValidTarget(mob, 225) then
+					CastSpell(_W)
+					end
+				if OlafMenu.LC.Q:Value() and Ready(_Q) and ValidTarget(mob, 1000) then
+					CastSkillShot(_Q, mob)
+					end
+				end
+			if GetTeam(mob) == MINION_JUNGLE then
+				if OlafMenu.JC.E:Value() and Ready(_E) and ValidTarget(mob, 325) then
+					CastTargetSpell(mob, _E)
+					end
+				if OlafMenu.JC.W:Value() and Ready(_W) and ValidTarget(mob, 225) then
+					CastSpell(_W)
+					end
+				if OlafMenu.JC.Q:Value() and Ready(_Q) and ValidTarget(mob, 1000) then
+					CastSkillShot(_Q, mob)
+				end
 			end
 		end
 	end
