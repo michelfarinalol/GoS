@@ -35,6 +35,10 @@ OlafMenu.JC:Boolean("Q", "Use Q", true)
 OlafMenu.JC:Boolean("W", "Use W", true)
 OlafMenu.JC:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
+OlafMenu:SubMenu("LH", "Last Hit")
+OlafMenu.LH:Boolean("Q", "Use Q", true)
+OlafMenu.LH:Boolean("E", "Use E", true)
+-----------------------------------------------------------------
 OlafMenu:SubMenu("KS", "Killsteal")
 OlafMenu.KS:Boolean("Q", "Use Q", true)
 OlafMenu.KS:Boolean("E", "Use E", true)
@@ -147,6 +151,23 @@ OnTick(function()
 					end
 				if OlafMenu.JC.Q:Value() and Ready(_Q) and ValidTarget(mob, 1000) then
 					CastSkillShot(_Q, mob)
+				end
+			end
+		end
+	end
+	if IOW:Mode() == "LastHit" then
+		for _, mob in pairs(minionManager.objects) do
+			if GetTeam(mob) == MINION_ENEMY then
+				if OlafMenu.LH.E:Value() and Ready(_E) and ValidTarget(mob, 325) then
+					local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
+					if GetCurrentHP(mob) + GetDmgShield(mob) < eDmg then
+						CastTargetSpell(mob, _E)
+					end
+				end
+				if OlafMenu.LH.Q:Value() and Ready(_Q) and ValidTarget(mob, 1000) then
+					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, GetCastLevel(myHero, _Q), 0) * 45 + 25 + GetBonusDmg(myHero) * 1 then
+						CastSkillShot(_Q, mob)
+					end
 				end
 			end
 		end
