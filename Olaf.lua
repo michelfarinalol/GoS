@@ -114,7 +114,7 @@ OnTick(function()
 		end
 		if OlafMenu.KS.E:Value() and Ready(_Q) and ValidTarget(enemy, 325) then
 			local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
-			if GetCurrentHP(enemy) + GetDmgShield(enemy) < Edmg then
+			if GetCurrentHP(enemy) + GetDmgShield(enemy) < eDmg then
 				CastTargetSpell(enemy, _E)
 			end
 		end
