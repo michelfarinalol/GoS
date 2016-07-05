@@ -105,7 +105,7 @@ OnTick(function()
 
 	for _,enemy in pairs(GetEnemyHeroes()) do
 		if OlafMenu.KS.Q:Value() and Ready(_Q) and ValidTarget(enemy, 1000) then
-			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, 0, GetCastLevel(myHero, _Q) * 45 + 25 + GetBonusDmg(myHero) * 1) then
+			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, GetCastLevel(myHero, _Q), 0) * 45 + 25 + GetBonusDmg(myHero) * 1) then
 				local QPred = GetLinearAOEPrediction(enemy, OlafQ)
 				if QPred.hitChance >= 0.3 then
 					CastSkillShot(_Q, QPred.castPos)
@@ -113,7 +113,8 @@ OnTick(function()
 			end
 		end
 		if OlafMenu.KS.E:Value() and Ready(_Q) and ValidTarget(enemy, 325) then
-			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, 0, GetCastLevel(myHero, _E) * 45 + 25 + GetBaseDamage(myHero) * 0.4) then
+			local Edmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
+			if GetCurrentHP(enemy) + GetDmgShield(enemy) < Edmg then
 				CastTargetSpell(enemy, _E)
 			end
 		end
