@@ -42,9 +42,28 @@ OlafMenu.KS:Boolean("E", "Use E", true)
 OlafMenu:SubMenu("Draw", "Drawings")
 OlafMenu.Draw:Boolean("DrawQ", "Draw Q Range", true)
 OlafMenu.Draw:Boolean("DrawE", "Draw E Range", true)
+OlafMenu.Draw:Boolean("DrawAxe", "Draw Axe Circle", true)
 -----------------------------------------------------------------
 
 local OlafQ = {delay = 0.25, speed = 1550, width = 100, range = 1000}
+
+OnObjectLoad(function(Object)
+	if GetObjectBaseName(Object) == "olaf_axe_totem_team_id_green.troy" then
+		AxeOlaf = Object
+	end
+end)
+
+OnCreateObj(function(Object)
+	if GetObjectBaseName(Object) == "olaf_axe_totem_team_id_green.troy" then
+		AxeOlaf = Object
+	end
+end)
+
+OnDeleteObj(function(Object)
+	if GetObjectBaseName(Object) == "olaf_axe_totem_team_id_green.troy" then
+		AxeOlaf = nil
+	end
+end)
 
 OnTick(function()
 	local target = GetCurrentTarget()
@@ -133,6 +152,12 @@ end)
 --Drawings--
 
 OnDraw(function(myHero)
+
+	if OlafMenu.Draw.DrawAxe:Value() then
+		if AxeOlaf then
+			DrawCircle(GetOrigin(AxeOlaf), 70, 5, 100, ARGB(100, 0, 0, 255))
+		end
+	end
 
 	if IsObjectAlive(myHero) then
 	
