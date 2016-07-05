@@ -96,38 +96,42 @@ OnTick(function()
 	end
 end)
 
+
 --Drawings--
 
 OnDraw(function(myHero)
 	
 --Spell Drawings--
+
+	if IsObjectAlive(myHero) then
 	
-	if JaxMenu.Drawings.Q:Value() then
-		if Ready(_Q) then
-			DrawCircle(GetOrigin(myHero), 700, 5, 100, ARGB(100, 0, 225, 0))
-		else
-			DrawCircle(GetOrigin(myHero), 700, 5, 100, ARGB(100, 225, 0, 0))
+		if JaxMenu.Drawings.Q:Value() then
+			if Ready(_Q) then
+				DrawCircle(GetOrigin(myHero), 700, 5, 100, ARGB(100, 0, 225, 0))
+			else
+				DrawCircle(GetOrigin(myHero), 700, 5, 100, ARGB(100, 225, 0, 0))
+			end
 		end
-	end
-	if JaxMenu.Drawings.W:Value() then
-		if Ready(_W) then
-			DrawCircle(GetOrigin(myHero), 125, 5, 100, ARGB(100, 0, 225, 0))
-		else
-			DrawCircle(GetOrigin(myHero), 125, 5, 100, ARGB(100, 225, 0, 0))
+		if JaxMenu.Drawings.W:Value() then
+			if Ready(_W) then
+				DrawCircle(GetOrigin(myHero), 125, 5, 100, ARGB(100, 0, 225, 0))
+			else
+				DrawCircle(GetOrigin(myHero), 125, 5, 100, ARGB(100, 225, 0, 0))
+			end
 		end
-	end
-	if JaxMenu.Drawings.E:Value() then
-		if Ready(_E) then
-			DrawCircle(GetOrigin(myHero), 187.5, 5, 100, ARGB(100, 0, 225, 0))
-		else
-			DrawCircle(GetOrigin(myHero), 187.5, 5, 100, ARGB(100, 225, 0, 0))
+		if JaxMenu.Drawings.E:Value() then
+			if Ready(_E) then
+				DrawCircle(GetOrigin(myHero), 187, 5, 100, ARGB(100, 0, 225, 0))
+			else
+				DrawCircle(GetOrigin(myHero), 187, 5, 100, ARGB(100, 225, 0, 0))
+			end
 		end
-	end
-	if JaxMenu.Drawings.R:Value() then
-		if Ready(_R) then
-			DrawCircle(GetOrigin(myHero), 50, 5, 50, ARGB(100, 225, 0, 225))
-		else
-			DrawCircle(GetOrigin(myHero), 50, 5, 50, ARGB(100, 225, 0, 0,))
+		if JaxMenu.Drawings.R:Value() then
+			if Ready(_R) then
+				DrawCircle(GetOrigin(myHero), 50, 5, 50, ARGB(100, 225, 0, 225))
+			else
+				DrawCircle(GetOrigin(myHero), 50, 5, 50, ARGB(100, 225, 0, 0))
+			end
 		end
 	end
 end)
