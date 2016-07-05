@@ -126,7 +126,10 @@ OnTick(function()
 		for _, mob in pairs(minionManager.objects) do
 			if GetTeam(mob) == MINION_ENEMY then
 				if OlafMenu.LC.E:Value() and Ready(_E) and ValidTarget(mob, 325) then
-					CastTargetSpell(mob, _E)
+					local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
+					if GetCurrentHP(mob) + GetDmgShield(mob) < eDmg then
+						CastTargetSpell(mob, _E)
+						end
 					end
 				if OlafMenu.LC.W:Value() and Ready(_W) and ValidTarget(mob, 225) then
 					CastSpell(_W)
