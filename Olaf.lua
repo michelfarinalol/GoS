@@ -153,6 +153,8 @@ end)
 
 OnDraw(function(myHero)
 
+--Axe Drawings--
+
 	if OlafMenu.Draw.DrawAxe:Value() then
 		if AxeOlaf then
 			DrawCircle(GetOrigin(AxeOlaf), 70, 5, 100, ARGB(100, 0, 0, 255))
