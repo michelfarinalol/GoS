@@ -74,7 +74,7 @@ OnTick(function()
 		if OlafMenu.Combo.E:Value() and Ready(_E) and ValidTarget(target, 325) then
 			CastTargetSpell(target, _E)
 			end
-		if OlafMenu.Combo.W:Value() and Ready(_W) and ValidTarget(target, 250) then
+		if OlafMenu.Combo.W:Value() and Ready(_W) and ValidTarget(target, 250) and (GetCurrentHP(myHero)/GetMaxHP(myHero)) <= (OlafMenu.Combo.uW:Value()/100) then
 			CastSpell(_W)
 			end
 		if OlafMenu.Combo.Q:Value() and Ready(_Q) and ValidTarget(target, 1000) then
@@ -90,7 +90,7 @@ OnTick(function()
 		if OlafMenu.Harass.E:Value() and Ready(_E) and ValidTarget(target, 325) then
 			CastTargetSpell(target, _E)
 			end
-		if OlafMenu.Harass.W:Value() and Ready(_W) and ValidTarget(target, 250) then
+		if OlafMenu.Harass.W:Value() and Ready(_W) and ValidTarget(target, 250) and (GetCurrentHP(myHero)/GetMaxHP(myHero)) <= (OlafMenu.Harass.uW:Value()/100) then
 			CastSpell(_W)
 			end
 		if OlafMenu.Harass.Q:Value() and Ready(_Q) and ValidTarget(target, 1000) then
