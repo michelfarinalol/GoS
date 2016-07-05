@@ -36,7 +36,7 @@ OlafMenu.JC:Boolean("W", "Use W", true)
 OlafMenu.JC:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("LH", "Last Hit")
-OlafMenu.LH:Boolean("Q", "Use Q", true)
+OlafMenu.LH:Boolean("Q", "Use Q", false)
 OlafMenu.LH:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("KS", "Killsteal")
