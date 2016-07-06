@@ -1,6 +1,6 @@
 if GetObjectName(GetMyHero()) ~= "Olaf" then return end
 
-local v = 1
+local v = 2
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.version", function(num)
 	if v < tonumber(num) then
@@ -155,6 +155,9 @@ OnTick(function()
 			end
 		end
 	end
+	
+--LastHit--
+	
 	if IOW:Mode() == "LastHit" then
 		for _, mob in pairs(minionManager.objects) do
 			if GetTeam(mob) == MINION_ENEMY then
