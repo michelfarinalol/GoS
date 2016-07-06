@@ -1,5 +1,7 @@
 if GetObjectName(GetMyHero()) ~= "Jax" then return end
 
+require("MixLib")
+
 local JaxMenu = Menu("Jax", "Jax")
 JaxMenu:SubMenu("Combo", "Combo")
 JaxMenu.Combo:Boolean("Q", "Use Q", true)
@@ -34,7 +36,7 @@ OnTick(function()
 	
 --Combo--
 
-	if IOW:Mode() == "Combo" then
+	if Mix:Mode() == "Combo" then
 		if JaxMenu.Combo.Q:Value() and Ready(_Q) and ValidTarget(target, 700) then
 			CastTargetSpell(target, _Q)
 		end
@@ -46,7 +48,7 @@ OnTick(function()
 	
 --Harass--
 	
-	if IOW:Mode() == "Harass" then
+	if Mix:Mode() == "Harass" then
 		if JaxMenu.Harass.Q:Value() and Ready(_Q) and ValidTarget(target, 700) then
 			CastTargetSpell(target, _Q)
 		end
@@ -60,12 +62,12 @@ OnTick(function()
 
 	for _,enemy in pairs(GetEnemyHeroes()) do
 		if JaxMenu.Killsteal.Q:Value() and Ready(_Q) and ValidTarget(target, 700) then
-			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, 0, GetCastLevel(myHero, _Q) * 40 + 30 + GetBonusDmg(myHero) * 1 + GetBonusAP(myHero) * 0.6) then
+			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, GetCastLevel(myHero, _Q), 0) * 40 + 30 + GetBonusDmg(myHero) * 1 + GetBonusAP(myHero) * 0.6 then
 				CastTargetSpell(enemy, _Q)
 			end
 		end
 		if JaxMenu.Killsteal.W:Value() and Ready(_W) and ValidTarget(target, 125) then
-			if GetCurrentHP(enemy) + GetDmgShield(enemy) + GetMagicShield(enemy) < CalcDamage(myHero, enemy, 0, GetCastLevel(myHero, _W) * 35 + 5 + GetBonusAP(myHero) * 0.6) then
+			if GetCurrentHP(enemy) + GetDmgShield(enemy) + GetMagicShield(enemy) < CalcDamage(myHero, enemy, 0, GetCastLevel(myHero, _W)) * 35 + 5 + GetBonusAP(myHero) * 0.6 then
 				CastSpell(_W)
 				end
 			end
@@ -73,7 +75,7 @@ OnTick(function()
 		
 --Laneclear / Jungleclear--
 	
-	if IOW:Mode() == "Laneclear" then
+	if Mix:Mode() == "Laneclear" then
 		for _, mob in pairs(minionManager.objects) do
 			if GetTeam(mob) == MINION_ENEMY then
 				if JaxMenu.Laneclear.Q:Value() and Ready(_Q) and ValidTarget(target, 700) then
@@ -114,16 +116,16 @@ OnDraw(function(myHero)
 		end
 		if JaxMenu.Drawings.W:Value() then
 			if Ready(_W) then
-				DrawCircle(GetOrigin(myHero), 125, 5, 100, ARGB(100, 0, 225, 0))
+				DrawCircle(GetOrigin(myHero), 200, 5, 100, ARGB(100, 0, 225, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 125, 5, 100, ARGB(100, 225, 0, 0))
+				DrawCircle(GetOrigin(myHero), 200, 5, 100, ARGB(100, 225, 0, 0))
 			end
 		end
 		if JaxMenu.Drawings.E:Value() then
 			if Ready(_E) then
-				DrawCircle(GetOrigin(myHero), 187, 5, 100, ARGB(100, 0, 225, 0))
+				DrawCircle(GetOrigin(myHero), 350, 5, 100, ARGB(100, 0, 225, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 187, 5, 100, ARGB(100, 225, 0, 0))
+				DrawCircle(GetOrigin(myHero), 350, 5, 100, ARGB(100, 225, 0, 0))
 			end
 		end
 		if JaxMenu.Drawings.R:Value() then
