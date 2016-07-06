@@ -1,0 +1,107 @@
+PrintChat(myHero.charName.." is equals to "..GetObjectName(myHero))
+-- indexes:
+unit.name
+unit.charName
+unit.dead
+unit.team
+unit.valid
+unit.visible
+unit.level
+unit.type
+unit.pos
+unit.pos2D
+unit.x
+unit.y
+unit.z
+unit.distance -- returns distance to myHero
+unit.networkID
+unit.isInvulnerable
+unit.isMelee
+unit.isRanged
+unit.isMe
+unit.isStealthed
+unit.isTaunted
+unit.isCharmed
+unit.isFeared
+unit.isAsleep
+unit.isNearSight
+unit.isGhosted
+unit.isFleeing
+unit.isPoisoned
+unit.isSpellShielded
+unit.isTargetable
+unit.range
+unit.boundingRadius
+unit.cdr
+unit.health
+unit.maxHealth
+unit.mana
+unit.maxMana
+unit.hpRegen
+unit.mpRegen
+unit.critChance
+unit.attackSpeed
+unit.baseAttackSpeed
+unit.windUp
+unit.exp
+unit.lifeSteal
+unit.spellVamp
+unit.physReduction
+unit.magicReduction
+unit.armorPen
+unit.magicPen
+unit.armorPenPercent
+unit.bonusArmorPenPercent
+unit.magicPenPercent
+unit.totalDamage
+unit.ap
+unit.damage
+unit.armor
+unit.baseArmor
+unit.magicArmor
+unit.ms
+unit.gold
+unit.shieldAD
+unit.shieldAP
+unit.isUnit
+unit.isHero
+unit.isMinion
+unit.isTurret
+unit.totalGold
+unit.hpBarPos
+unit.isRecalling
+object.isSpell
+spellObject.spellName
+spellObject.spellOwner
+spellObject.startPos
+spellObject.endPos
+spellObject.placePos
+spellObject.target
+spellObject.owner
+-- functions:
+myHero:Stop()
+myHero:Move(x, z)
+myHero:Attack(targetUnit)
+myHero:CastSpell(slot) -- or myHero:Cast(slot)
+myHero:CastSpell(slot, targetUnit) -- or myHero:Cast(slot, targetUnit)
+myHero:CastSpell(slot, x, z) -- or myHero:Cast(slot, x, z)
+unit:HasBuffType(buffType)
+unit:CalcDamage(targetUnit, amount)
+unit:CalcMagicDamage(targetUnit, amount)
+unit:GetSpellData(slot) -- {name, toggleState, ammo, ammoCd, ammoCurrentCd, castT, rechargeT, ready, mana, cd, displayCd, currentCd, range, level}
+unit:CanUseSpell(slot) -- == 0 means ready
+unit:GetBuff(index) -- {valid, type, startT, endT, name}
+unit:getBuff(index) -- as above
+unit:GetItem(slot) -- {id, stack, ammo}
+object:DistanceTo(object)
+object:DistanceTo(x, y, z)
+object:DistanceTo(x, z)
+object:Draw()
+object:Draw(radius)
+object:Draw(radius, color)
+object:DrawDmg(damage)
+object:DrawDmg(damage, color)
+object:DrawDmg(damage, color, currentHpOffset)
+object:Skin(id)
+object:Model(id, modelName)
+
