@@ -1,0 +1,970 @@
+GoSNeverCalledOnProcessWaypoint --> function: 215A3E10
+ 
+WM_MOUSEHWHEEL --> 522
+ 
+ONCOOLDOWN --> 32
+ 
+GetTeam --> function: 215CD848
+ 
+LevelSpell --> function: 215CD048
+ 
+DrawTextSmall --> function: 215CF068
+ 
+DrawScreenCircle --> function: 31E980A8
+ 
+OnUpdateBuff --> function: 215A45B0
+ 
+ObjectMetaTable --> table: 31ED94C0
+ 
+_E --> 2
+ 
+GetBuffStacks --> function: 215CF088
+ 
+GetTotalEarnedGold --> function: 215CF268
+ 
+GetWebResultAsync --> function: 0BA01590
+ 
+Obj_AI_Barracks --> obj_BarracksDampener
+ 
+GetBaseArmor --> function: 215CC988
+ 
+WINDOW_H --> 768
+ 
+GetCastRange --> function: 215CD088
+ 
+GetObjectSpellName --> function: 215CF7A8
+ 
+GetTurrets --> function: 31E97CA8
+ 
+BuyItem --> function: 215CBEA8
+ 
+GetItemAmmo --> function: 215CC228
+ 
+IsGoSHumanizerActive --> function: 31E1EB00
+ 
+Notify --> table: 31EDCFD0
+ 
+GetMPRegen --> function: 215CD1E8
+ 
+ctostring --> function: 31E97748
+ 
+DAMAGE_MAGICAL --> 1
+ 
+pairs --> function: 16274470
+ 
+NOTLEARNED --> 12
+ 
+GoSNeverCalledOnAnimationEvent --> function: 215A3730
+ 
+BlockOrder --> function: 31E1DD60
+ 
+GetExactFPS --> function: 31E97A88
+ 
+GetAllyHeroes --> function: 31E97828
+ 
+WriteFile --> function: 31E97B48
+ 
+GetCastMana --> function: 215CD688
+ 
+GetOrigin --> function: 215CF648
+ 
+DelIssueOrder --> function: 1379D600
+ 
+BuffIsValid --> function: 31E97E28
+ 
+myHeroName --> Vayne
+ 
+GetItemSlot --> function: 215CC408
+ 
+GetDistance --> function: 31E97708
+ 
+GetObjectName --> function: 215CCC28
+ 
+dofile --> function: 16273F84
+ 
+DelProcessWaypoint --> function: 31E86A60
+ 
+LoadOrb --> function: 31E177F0
+ 
+DrawLineBorder3D --> function: 31E98168
+ 
+DAMAGE_MAGIC --> 1
+ 
+AutoUpdate --> function: 31E17550
+ 
+CalcDamage --> function: 31FF50F8
+ 
+Dashes --> table: 3208ED28
+ 
+DANGEROUS_SPELLS --> table: 3208DE50
+ 
+InspiredNeverCalledOnHumanTick --> function: 31E86D00
+ 
+os --> table: 31EDB3B0
+ 
+Interact --> function: 215CDDC8
+ 
+GAPCLOSER2_SPELLS --> table: 3208C2A8
+ 
+OnHumanTick --> function: 31E86D40
+ 
+GAPCLOSER_SPELLS --> table: 3208E0F8
+ 
+KeyBinding --> table: 31EDD818
+ 
+_CalcCombos --> function: 31E98408
+ 
+CHANELLING_SPELLS --> table: 3208E378
+ 
+VectorType --> function: 215A4090
+ 
+GetBaseAttackSpeed --> function: 215CE648
+ 
+HeroSkinChanger --> function: 31E1D2A0
+ 
+Info --> table: 31EDEFD8
+ 
+ad --> table: 3208BFD8
+ 
+GoSNeverCalledOnGainVisionEvent --> function: 215A3530
+ 
+HoldPosition --> function: 215CE768
+ 
+mixed --> table: 3208DA40
+ 
+GetBuffTypeList --> function: 215CD348
+ 
+WINDOW_W --> 1366
+ 
+MINION_ALLY --> 100
+ 
+MINION_ENEMY --> 200
+ 
+OnProcessWaypoint --> function: 215A2BF0
+ 
+DAMAGE_PHYSIC --> 2
+ 
+unpack --> function: 16277EAC
+ 
+ITEM_6 --> 11
+ 
+IsInDistance --> function: 31E97BC8
+ 
+math --> table: 31EDBFE0
+ 
+OnProcessSpell --> function: 215A32F0
+ 
+load --> function: 16274648
+ 
+OnIssueOrder --> function: 215A2D30
+ 
+UnzipArchive --> function: 0BA01650
+ 
+TARGET_PRIORITY --> 3
+ 
+UnloadIOW --> function: 3208E8C8
+ 
+SCRIPT_PATH --> C:\Users\Asia\AppData\Roaming\GamingOnSteroids\LOL\Scripts\
+ 
+DelLoad --> function: 1379D540
+ 
+mc_cfg_base --> table: 3208D8D8
+ 
+GetLevelPoints --> function: 215CCD08
+ 
+minionManager --> table: 31ED92E0
+ 
+DAMAGE_PHYSICAL --> 2
+ 
+GetMagicPenFlat --> function: 215CFD68
+ 
+OnProcessRecall --> function: 215A40D0
+ 
+GetItemID --> function: 215CCEC8
+ 
+GetObjectType --> function: 215CC688
+ 
+CanUseSpell --> function: 215CBDC8
+ 
+DelSpellCast --> function: 31E86860
+ 
+TARGET_NEAR_MOUSE --> 7
+ 
+IsSubscriber --> function: 31E1DC40
+ 
+GoSNeverCalledOnAggroEvent --> function: 215A3350
+ 
+ITEM_3 --> 8
+ 
+CastSpell --> function: 215CC788
+ 
+DelDraw --> function: 1379D4E0
+ 
+GetBuffTypeToString --> function: 215CC388
+ 
+DrawRectangle --> function: 31E98128
+ 
+GetHitBox --> function: 215CE1E8
+ 
+TARGET_MOST_AP --> 4
+ 
+ColorPick --> table: 31EDACD0
+ 
+SUMMONERS_RIFT --> 11
+ 
+allowed --> true
+ 
+drive --> C
+ 
+Circle2 --> table: 31EDD520
+ 
+myHero --> table: 31EDA4D8
+ 
+GetObjectSpellTarget --> function: 31EDFD20
+ 
+DelUnLoad --> function: 31E86960
+ 
+bit32 --> table: 31ED9740
+ 
+GoSNeverCalledOnWndMsg --> function: 215A3410
+ 
+OnProcessSpellAttack --> function: 215A2B50
+ 
+GoSNeverCalledObjectLoadEvent --> function: 31ED8958
+ 
+AlliesAround --> function: 31E97F48
+ 
+type --> function: 31E38780
+ 
+GoSNeverCalledOnCreateObjEvent --> function: 215A3A50
+ 
+HOWLING_ABYSS --> 12
+ 
+_Q --> 0
+ 
+GetFPS --> function: 31E97AC8
+ 
+GetMapID --> function: 31E1E720
+ 
+GetNetworkID --> function: 215CF4E8
+ 
+GetObjByNetID --> function: 31EDC940
+ 
+ITEM_5 --> 10
+ 
+DrawCircle2D --> function: 31E981A8
+ 
+mouse_event --> function: 31E1E560
+ 
+TargetSelector --> table: 31EDCF58
+ 
+Section --> table: 31EDDDB8
+ 
+Empty --> table: 31EDA8C0
+ 
+ap --> table: 3208B650
+ 
+GetMyHero --> function: 215A2F50
+ 
+DrawText --> function: 31E98248
+ 
+DelProcessSpellCast --> function: 31E86AE0
+ 
+ReleaseSprite --> function: 215CEEA8
+ 
+CastSkillShot2 --> function: 215CCE88
+ 
+GetMagicResist --> function: 215CE668
+ 
+READY --> 0
+ 
+TARGET_LESS_CAST_PRIORITY --> 2
+ 
+ARGB --> function: 215CF028
+ 
+Slider --> table: 31ED9C18
+ 
+GetTextRect --> function: 215CF428
+ 
+DelHumanTick --> function: 31E86D60
+ 
+WM_MBUTTONUP --> 520
+ 
+GetBuffStartTime --> function: 215CE448
+ 
+ITEM_4 --> 9
+ 
+GetObjectModelName --> function: 215CD228
+ 
+GetGameVersion --> function: 215CE148
+ 
+IsReady --> function: 31E97FC8
+ 
+Boolean --> table: 31ED89A8
+ 
+MenuConfig --> table: 31EDA578
+ 
+DropDown --> table: 31ED8ED0
+ 
+DelProcessRecall --> function: 31E86B60
+ 
+GetMinions --> function: 31E87540
+ 
+ctype --> function: 31E97728
+ 
+GetObjectSpellOwner --> function: 31ED9768
+ 
+IsCampusUp --> function: 215CDC68
+ 
+DrawTextOutline --> function: 31E98448
+ 
+ReadFile --> function: 31E97B68
+ 
+FindGroupCenterNearTarget --> function: 31E98428
+ 
+FindGroupCenterFromNearestEnemies --> function: 31E983C8
+ 
+_CalcSpellPosForGroup --> function: 31E983E8
+ 
+UnderTurret --> function: 31E97CE8
+ 
+KeyIsDown --> function: 31E1D840
+ 
+GetMEC --> function: 31E983C8
+ 
+RECALL --> 13
+ 
+io --> table: 31EDF2A8
+ 
+collectgarbage --> function: 16274018
+ 
+MEC --> table: 31EDC288
+ 
+GetLifeSteal --> function: 215CD6C8
+ 
+LineSegmentIntersection --> function: 215A3E90
+ 
+DelLoseVision --> function: 1379D440
+ 
+DrawText3D --> function: 31E982A8
+ 
+Obj_AI_Camp --> NeutralMinionCamp
+ 
+DrawTextA --> function: 31E98288
+ 
+GetEnemyHeroes --> function: 31E977E8
+ 
+Obj_AI_Minion --> obj_AI_Minion
+ 
+DrawLines3D --> function: 31E98228
+ 
+OnRemoveBuff --> function: 215A3DD0
+ 
+GetObjects --> function: 31E875A0
+ 
+NOMANA --> 64
+ 
+DrawCircle2 --> function: 31E980E8
+ 
+WM_RBUTTONUP --> 517
+ 
+DrawSprite --> function: 215CE7C8
+ 
+GetMagicShield --> function: 215CDA68
+ 
+DrawCircle3D --> function: 31E981C8
+ 
+MenuSprite --> table: 31EDE7E0
+ 
+WorldToMinimap --> function: 215CCEE8
+ 
+DrawLineBorder --> function: 31E98188
+ 
+mc_cfg_orb --> table: 3208EC38
+ 
+OnAggro --> function: 215A3CB0
+ 
+DrawLines2 --> function: 31E98108
+ 
+OnObjectLoop --> function: 215A2BB0
+ 
+DrawArrow3D --> function: 31E981E8
+ 
+GoSNeverCalledOnBugSplatEvent --> function: 215A3AF0
+ 
+GetMaxHP --> function: 215CDF08
+ 
+Ready --> function: 31E97FC8
+ 
+GetPercentHP --> function: 31E98068
+ 
+Base64Encode --> function: 215CC8A8
+ 
+GetDamagePrediction --> function: 31E1DA40
+ 
+GetDistanceFromMouse --> function: 31E977C8
+ 
+GoSNeverCalledOnTickEvent --> function: 215A41B0
+ 
+OnBugSplat --> function: 215A49F0
+ 
+CountObjectsNearPos --> function: 31E98048
+ 
+GetObjectSpellEndPos --> function: 215CE908
+ 
+KEY_DOWN --> 256
+ 
+ipairs --> function: 16274488
+ 
+EMOTE_LAUGH --> 2
+ 
+CountObjectsOnLineSegment --> function: 31E98028
+ 
+IsImmune --> function: 215CE848
+ 
+GetLatency --> function: 31E1D940
+ 
+GetFarmPosition --> function: 31E98008
+ 
+GoSNeverCalledOnRemoveBuffEvent --> function: 215A3690
+ 
+DelObjectLoad --> function: 31E86A20
+ 
+GetPercentMP --> function: 31E98088
+ 
+ClosestEnemy --> function: 31E97F28
+ 
+pcall --> function: 16274268
+ 
+GetBuffData --> function: 215CC8E8
+ 
+MinionsAround --> function: 31E97F88
+ 
+GetUser --> function: 31E1E040
+ 
+TWISTED_TREELINE --> 10
+ 
+SUMMONER_1 --> 4
+ 
+ModelChanger --> function: 31E1E6C0
+ 
+SUMMONER_2 --> 5
+ 
+GoSNeverCalledOnDeleteObjEvent --> function: 215A3190
+ 
+GetCurrentHP --> function: 215CBE88
+ 
+ClosestMinion --> function: 31E97FA8
+ 
+GetTextArea --> function: 31E98488
+ 
+GetDmgShield --> function: 215CC808
+ 
+CastOffensiveItems --> function: 31E97EE8
+ 
+VectorPointProjectionOnLineSegment --> function: 215A4010
+ 
+GetObjectSpellStartPos --> function: 215CC588
+ 
+GetMaladySlot --> function: 31E97EC8
+ 
+CastSkillShot3 --> function: 215CE3C8
+ 
+getmetatable --> function: 162744A4
+ 
+AutoUpdater --> table: 31EDEAD8
+ 
+rawget --> function: 16273B28
+ 
+CountEnemyHeroInRange --> function: 31E97E68
+ 
+UnitHaveBuff --> function: 31E97E48
+ 
+GetExperience --> function: 215CCDC8
+ 
+DrawLine --> function: 215CE048
+ 
+GoSNeverCalledOnDrawMinimapEvent --> function: 215A4970
+ 
+ValidTargetNear --> function: 31E977A8
+ 
+MoveToXYZ --> function: 215CCBC8
+ 
+IsGameOnTop --> function: 31E1E020
+ 
+MessageBox --> function: 31E1DB00
+ 
+SetInterval --> function: 31E97D48
+ 
+DelayAction --> function: 31ED9588
+ 
+GetUnderTurret --> function: 31E97CC8
+ 
+GetFileSize --> function: 31E97BA8
+ 
+CursorIsUnder --> function: 31E97B88
+ 
+FileExist --> function: 31E97B28
+ 
+tostring --> function: 1627373C
+ 
+Point2 --> table: 31EDDBB0
+ 
+GetSave --> function: 31EDE600
+ 
+ITEM_1 --> 6
+ 
+GetCastName --> function: 215CDFC8
+ 
+GetDrawClock --> function: 31E97868
+ 
+DrawDmgOverHpBar --> function: 215CDD48
+ 
+EnableOverlay --> function: 215A7568
+ 
+ValidTarget --> function: 31E97788
+ 
+DrawTextOutlineA --> function: 31E98468
+ 
+GetGameTimer --> function: 31E1E980
+ 
+VecIsUnder --> function: 31E86CE0
+ 
+IsDead --> function: 215CE308
+ 
+GetBuffType --> function: 215CF708
+ 
+GetDistanceSqr --> function: 31E976E8
+ 
+myHeroPos --> function: 31E976C8
+ 
+DelRemoveBuff --> function: 1379CFC0
+ 
+package --> table: 31EDE8A8
+ 
+AddGapcloseEvent --> function: 31E976A8
+ 
+string --> table: 31EDE2B8
+ 
+DelProcessSpellComplete --> function: 1379D4C0
+ 
+DrawLine3D --> function: 31E98208
+ 
+Sprite --> table: 31ED9628
+ 
+CreateDir --> function: 215CF308
+ 
+GoSNeverCalledOnIssueOrderEvent --> function: 215A3670
+ 
+OnAnimation --> function: 215A4870
+ 
+setmetatable --> function: 162742E4
+ 
+MinionManager --> table: 31EDAD70
+ 
+SPRITE_PATH --> C:\Users\Asia\AppData\Roaming\GamingOnSteroids\LOL\Sprites\
+ 
+Polygon2 --> table: 31EE0388
+ 
+GetObjectOwner --> function: 31EDDC50
+ 
+DelProcessSpell --> function: 31E869A0
+ 
+GetTickCount --> function: 31E1D580
+ 
+Obj_AI_Turret --> obj_AI_Turret
+ 
+LineSegment2 --> table: 31EDB8D8
+ 
+GoSNeverCalledOnUpdateBuffEvent --> function: 215A48B0
+ 
+DelObjectLoop --> function: 31E86B20
+ 
+EnemiesAround --> function: 31E97F08
+ 
+GetSpellData --> function: 215CE288
+ 
+Set --> function: 31E86CC0
+ 
+ITEM_2 --> 7
+ 
+ITEM_7 --> 12
+ 
+GOS_Decrypt --> function: 215CF108
+ 
+Timer --> function: 162777A4
+ 
+DelAfterLoad --> function: 31E86BA0
+ 
+DelDamage --> function: 1379D0A0
+ 
+DelUpdateBuff --> function: 31E86AA0
+ 
+UnLoadIOW --> function: 3208E8C8
+ 
+BlockCast --> function: 31E1EE40
+ 
+GoSNeverCalledOnSpellCastEvent --> function: 215A32B0
+ 
+PermaShow --> table: 31EDEF88
+ 
+DelBugSplat --> function: 31E86920
+ 
+BlockF7Dodge --> function: 31E1EAC0
+ 
+GoSNeverCalledOnProcessSpellComplete --> function: 215A37F0
+ 
+DelWndMsg --> function: 31E868E0
+ 
+DelProcessPacket --> function: 31E868A0
+ 
+TARGET_LOW_HP --> 8
+ 
+DelProcessSpellAttack --> function: 1379D000
+ 
+WM_MBUTTONDOWN --> 519
+ 
+DelCreateObj --> function: 1379D180
+ 
+DelDrawMinimap --> function: 1379D5E0
+ 
+DrawCircleMinimap --> function: 215CDFE8
+ 
+DelAggro --> function: 1379D200
+ 
+EMOTE_JOKE --> 3
+ 
+GetLevel --> function: 215CDCA8
+ 
+DelAnimation --> function: 31E869E0
+ 
+DelGainVision --> function: 1379D020
+ 
+EMOTE_DANCE --> 0
+ 
+TARGET_MOST_AD --> 5
+ 
+DelAttackCancel --> function: 1379D5C0
+ 
+DelTick --> function: 215A4250
+ 
+OnAfterLoad --> function: 215A4270
+ 
+OnProcessSpellCast --> function: 215A37B0
+ 
+GetCurrentMana --> function: 215CC328
+ 
+GetObjectBaseName --> function: 215CD368
+ 
+MINION_JUNGLE --> 300
+ 
+LoadGOSScript --> function: 0BA01130
+ 
+OnObjectLoad --> function: 215A2DD0
+ 
+GetHeroes --> function: 31E87560
+ 
+WM_LBUTTONDOWN --> 513
+ 
+OnUnLoad --> function: 215A39B0
+ 
+IsObjectAlive --> function: 215CC9E8
+ 
+OnProcessPacket --> function: 215A4370
+ 
+OnSpellCast --> function: 215A3010
+ 
+OnCreateObj --> function: 215A4170
+ 
+Obj_AI_SpawnPoint --> obj_SpawnPoint
+ 
+mapID --> 11
+ 
+OnDamage --> function: 215A4210
+ 
+OnAttackCancel --> function: 215A43F0
+ 
+StopSound --> function: 215CD808
+ 
+GetHPBarPos --> function: 215CDAC8
+ 
+OnProcessSpellComplete --> function: 215A2EF0
+ 
+OnDrawMinimap --> function: 215A4A10
+ 
+GetBuffExpireTime --> function: 215CF548
+ 
+OnScreen --> function: 31E98148
+ 
+debug --> table: 31ED8B10
+ 
+OnDeleteObj --> function: 215A3550
+ 
+OnLoad --> function: 215A3770
+ 
+DrawCircle --> function: 215CC5C8
+ 
+OnGainVision --> function: 215A42F0
+ 
+xpcall --> function: 16274188
+ 
+BlockInput --> function: 31E1E180
+ 
+UNKNOWN --> 4
+ 
+OnLoseVision --> function: 215A4710
+ 
+heroes --> table: 31EDE100
+ 
+GetBuffCount --> function: 215CCAC8
+ 
+OnTick --> function: 215A37D0
+ 
+GoSNeverCalledOnUnLoadEvent --> function: 215A3090
+ 
+hookedFunctions --> table: 31EDF730
+ 
+GoSNeverCalledOnLoseVisionEvent --> function: 215A4470
+ 
+GoSNeverCalledOnDamageEvent --> function: 215A2E10
+ 
+IsLineSegmentIntersection --> function: 215A4510
+ 
+GoSNeverCalledObjectLoopEvent --> function: 215A4330
+ 
+DirExists --> function: 215CD148
+ 
+module --> function: 31E1DA20
+ 
+GoSNeverCalledAfterObjectLoopEvent --> function: 215A3370
+ 
+GoSNeverCalledOnProcessRecall --> function: 215A38F0
+ 
+Line2 --> table: 31EDA258
+ 
+GetLineFarmPosition --> function: 31E97FE8
+ 
+GetCurrentTarget --> function: 31ED99C0
+ 
+GetArmorPenPercent --> function: 215CCA28
+ 
+GoSNeverCalledOnAttackCancel --> function: 215A3570
+ 
+GoSNeverCalledOnProcessSpellAttack --> function: 215A3390
+ 
+GoSNeverCalledOnProcessSpellCast --> function: 215A3170
+ 
+GoSNeverCalledOnProcessSpell --> function: 215A3310
+ 
+Callback --> table: 31EE0658
+ 
+RemoveDir --> function: 215CD9E8
+ 
+GetResolution --> function: 31E1E9A0
+ 
+GetObjectSpellPlacementPos --> function: 215CD628
+ 
+heroManager --> table: 31ED8D40
+ 
+ClosestAlly --> function: 31E97F68
+ 
+mousePos --> (9648.0791015625,51.218017578125,1471.0777587891)
+ 
+GetArmorPenFlat --> function: 215CC188
+ 
+GetGameTarget --> function: 31ED8908
+ 
+PlaySound --> function: 215CF008
+ 
+COMMON_PATH --> C:\Users\Asia\AppData\Roaming\GamingOnSteroids\LOL\Scripts\Common\
+ 
+CRYSTAL_SCAR --> 8
+ 
+require --> function: 31E1EC00
+ 
+GetCDR --> function: 215CDD68
+ 
+MapVirtualKey --> function: 31E1E140
+ 
+GetWindUp --> function: 215134F0
+ 
+KEY_UP --> 257
+ 
+Vector --> table: 31EDD8E0
+ 
+VectorPointProjectionOnLine --> function: 215A4830
+ 
+GetAttackSpeed --> function: 215CDE08
+ 
+Base64Decode --> function: 215CDC08
+ 
+DeleteFile --> function: 215CEB68
+ 
+READYNONCAST --> 8
+ 
+EMOTE_TAUNT --> 1
+ 
+GetGroup --> function: 31E1D700
+ 
+VectorIntersection --> function: 215A3610
+ 
+GoSNeverCalledOnProcessPacketEvent --> function: 215A3E30
+ 
+GoS --> table: 3208CF28
+ 
+CreateSpriteFromFile --> function: 215CDF68
+ 
+PrintChat --> function: 215CF288
+ 
+Packet --> table: 31EDCE40
+ 
+DelDeleteObj --> function: 1379D1A0
+ 
+WM_RBUTTONDOWN --> 516
+ 
+class --> function: 31E39B80
+ 
+GetMagicPenPercent --> function: 215CE0E8
+ 
+FillRect --> function: 215CD408
+ 
+DownloadFileAsync --> function: 0BA01300
+ 
+error --> function: 16273EFC
+ 
+rawlen --> function: 16273B84
+ 
+IsVisible --> function: 215CE968
+ 
+next --> function: 16273DB4
+ 
+IsChatOpened --> function: 31E1E540
+ 
+GOS_DIR --> C:\Users\Asia\AppData\Roaming\GamingOnSteroids\
+ 
+GetCastCooldown --> function: 215CD648
+ 
+GetSpellVamp --> function: 215CDCC8
+ 
+GetCritChance --> function: 215CE0A8
+ 
+assert --> function: 16274508
+ 
+AttackUnit --> function: 215CF528
+ 
+_VERSION --> Lua 5.2
+ 
+keybd_event --> function: 31E1DC20
+ 
+MD5Encode --> function: 31E1ED80
+ 
+DrawRectangleOutline --> function: 31E97EA8
+ 
+GetPredictionForPlayer --> function: 31E1EA80
+ 
+BlockF7OrbWalk --> function: 31E1E300
+ 
+tonumber --> function: 16273778
+ 
+GetBonusAP --> function: 215CE468
+ 
+CastTargetSpell --> function: 215CC948
+ 
+CastEmote --> function: 31E1E240
+ 
+OnWndMsg --> function: 215A3D30
+ 
+print --> function: 31E97768
+ 
+VectorDirection --> function: 31FC3B20
+ 
+TARGET_LOW_HP_PRIORITY --> 9
+ 
+Obj_AI_Shop --> obj_Shop
+ 
+GetCastLevel --> function: 215CEB88
+ 
+GetItemStack --> function: 215CE7E8
+ 
+SOUNDS_PATH --> C:\Users\Asia\AppData\Roaming\GamingOnSteroids\LOL\Sounds
+ 
+rawequal --> function: 16273BE4
+ 
+IsRecalling --> function: 215CD4A8
+ 
+TARGET_CLOSEST --> 6
+ 
+_W --> 1
+ 
+WM_LBUTTONUP --> 514
+ 
+GetArmor --> function: 215CE4E8
+ 
+OnDraw --> function: 215A36F0
+ 
+GetMousePos --> function: 31E1CFC0
+ 
+SetCursorPos --> function: 31E1DE80
+ 
+CastSkillShot --> function: 215CC3C8
+ 
+GetBonusArmorPenPercent --> function: 215CD748
+ 
+WorldToScreen --> function: 215CC1C8
+ 
+EMOTE_TOGGLE --> 4
+ 
+GetBuffName --> function: 215CE4A8
+ 
+GetBaseDamage --> function: 215CD468
+ 
+TARGET_LESS_CAST --> 1
+ 
+NOTAVAILABLE --> 4
+ 
+table --> table: 31EDAB18
+ 
+Menu --> table: 31EDA578
+ 
+DisableOverlay --> function: 215A9098
+ 
+GetCurrentGold --> function: 215CC5E8
+ 
+GetRange --> function: 215CF1E8
+ 
+GetMoveSpeed --> function: 215CE588
+ 
+GetHPRegen --> function: 215CC148
+ 
+GetBonusDmg --> function: 215CD588
+ 
+_R --> 3
+ 
+loadstring --> function: 16274648
+ 
+GotBuff --> function: 215CE888
+ 
+GetCursorPos --> function: 31E1E8C0
+ 
+Obj_AI_LineMissle --> SpellLineMissileClient
+ 
+select --> function: 16273998
+ 
+cursorPos --> 249
+ 
+Obj_AI_Hero --> AIHeroClient
+ 
+IsTargetable --> function: 215CCDA8
+ 
+GetMaxMana --> function: 215CBF28
+ 
+DrawFilledScreenCircle --> function: 31E980C8
+ 
+DAMAGE_MIXED --> 3
+ 
+_G --> table: 31EDF208
+ 
+loadfile --> function: 16274570
+ 
+rawset --> function: 16273ABC
+
