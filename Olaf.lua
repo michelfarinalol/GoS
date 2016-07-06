@@ -9,6 +9,8 @@ GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.v
 end)
 
 require("OpenPredict")
+require("Analytics")
+Analytics("Olaf.lua", "wildrelic", true)
 
 --Menu--
 OlafMenu = Menu("Olaf", "Olaf")
