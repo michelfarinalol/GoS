@@ -1,0 +1,37 @@
+OnProcessSpell(function(unit,spellProc)
+	if unit.isMe then
+		print(spellProc.name)
+	end
+end)
+
+OnObjectLoad(function(Object)
+	if GetObjectBaseName(Object) == "olaf_axe_totem_team_id_green.troy" then
+		AxeOlaf = Object
+	end
+end)
+
+OnCreateObj(function(Object)
+    if GetObjectBaseName(Object) == "olaf_axe_totem_team_id_green.troy" then
+        QAxe = Object
+    end
+end)
+
+OnDeleteObj(function(Object)
+    if GetObjectBaseName(Object) == "olaf_axe_totem_team_id_green.troy" then
+        QAxe = nil
+    end
+end)
+
+OnDraw(function(myHero)
+    if OlafMenu.Draw.DrawAxe:Value()
+        if QAxe = Object
+            DrawCircle(GetOrigin(QAxe), 70, 5, 100, ARGB(100, 0, 0, 225))
+        end
+    end
+end)
+
+OnCreateObj(function(Object)
+	if Object.isSpell and Object.spellOwner.isMe then
+		print(Object.spellName)
+	end
+end)
