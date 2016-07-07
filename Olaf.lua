@@ -119,7 +119,7 @@ OnTick(function()
 
 	for _,enemy in pairs(GetEnemyHeroes()) do
 		if OlafMenu.KS.Q:Value() and Ready(_Q) and ValidTarget(enemy, 1000) then
-			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, 25 + 45 * GetCastLevel(myHero, _Q), 0) + GetBonusDmg(myHero) * 1 then
+			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, 25 + 45 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero), 0) then
 				local QPred = GetLinearAOEPrediction(enemy, OlafQ)
 				if QPred.hitChance >= 0.3 then
 					CastSkillShot(_Q, QPred.castPos)
@@ -178,7 +178,7 @@ OnTick(function()
 					end
 				end
 				if OlafMenu.LH.Q:Value() and Ready(_Q) and ValidTarget(mob, 1000) then
-					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, GetCastLevel(myHero, _Q) * 45 + 25, 0) + GetBonusDmg(myHero) * 1 then
+					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, 25 + 45 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero), 0) then
 						CastSkillShot(_Q, mob)
 					end
 				end
