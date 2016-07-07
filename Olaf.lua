@@ -1,6 +1,6 @@
 if GetObjectName(GetMyHero()) ~= "Olaf" then return end
 
-local v = 6
+local v = 7
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.version", function(num)
 	if v < tonumber(num) then
@@ -24,13 +24,13 @@ OlafMenu = Menu("Olaf", "Olaf")
 OlafMenu:SubMenu("Combo", "Combo")
 OlafMenu.Combo:Boolean("Q", "Use Q", true)
 OlafMenu.Combo:Boolean("W", "Use W", true)
-OlafMenu.Combo:Slider("uW", "Use W at % HP", 75, 5, 100, 5)
+OlafMenu.Combo:Slider("uW", "Use W under % HP", 75, 5, 100, 5)
 OlafMenu.Combo:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("Harass", "Harass")
 OlafMenu.Harass:Boolean("Q", "Use Q", true)
 OlafMenu.Harass:Boolean("W", "Use W", true)
-OlafMenu.Harass:Slider("uW", "Use W at % HP", 75, 5, 100, 5)
+OlafMenu.Harass:Slider("uW", "Use W under % HP", 75, 5, 100, 5)
 OlafMenu.Harass:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("LC", "LaneClear")
@@ -61,9 +61,10 @@ OlafMenu.Draw:Boolean("DrawE", "Draw E Range", true)
 OlafMenu.Draw:Boolean("DrawR", "Draw R", true)
 OlafMenu.Draw:Boolean("DrawAxe", "Draw Axe Circle", true)
 OlafMenu.Draw:Boolean("DrawDMG", "Draw DMG", true)
+OlafMenu.Draw:Boolean("MinCirc", "Minion Killable by E", true)
 -----------------------------------------------------------------
 
-local OlafQ = {delay = 0.25, speed = 1550, width = 100, range = 1000}
+OlafQ = {delay = 0.25, speed = 1550, width = 100, range = 1000}
 
 OnObjectLoad(function(Object)
 	if GetObjectBaseName(Object) == "olaf_axe_totem_team_id_green.troy" then
@@ -109,7 +110,7 @@ OnTick(function()
 		if OlafMenu.Harass.E:Value() and Ready(_E) and ValidTarget(target, 325) then
 			CastTargetSpell(target, _E)
 			end
-		if OlafMenu.Harass.W:Value() and Ready(_W) and ValidTarget(target, 250) and GetPercent(myHero) <= OlafMenu.Harass.uW:Value() then
+		if OlafMenu.Harass.W:Value() and Ready(_W) and ValidTarget(target, 250) and GetPercentHP(myHero) <= OlafMenu.Harass.uW:Value() then
 			CastSpell(_W)
 			end
 		if OlafMenu.Harass.Q:Value() and Ready(_Q) and ValidTarget(target, 1000) then
@@ -282,6 +283,23 @@ local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
 						DrawDmgOverHpBar(enemy, GetCurrentHP(enemy), CalcDamage(myHero, enemy, qDmg, 0), 0, GoS.White)
 					elseif Ready(_E) then
 						DrawDmgOverHpBar(enemy, GetCurrentHP(enemy), 0, eDmg, GoS.White)
+					end
+				end
+			end
+		end
+		if OlafMenu.Draw.MinCirc:Value() then
+		local BaseAD = GetBaseDamage(myHero)
+		local BonusAD = GetBonusDmg(myHero)
+		local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
+			for _, mob in pairs(minionManager.objects) do
+				if GetTeam(mob) == 300 - GetTeam(myHero) and ValidTarget(mob, 10000) then
+					if GetCurrentHP(mob) < eDmg and Ready (_E) then
+						DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(100, 200, 0, 255))
+					end
+					if GetCurrentHP(mob) < BaseAD + BonusAD + (BaseAD + BonusAD) * 0.20 and GetCurrentHP(mob) > BaseAD + BonusAD then
+						DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(100, 255, 0, 0))
+					elseif GetCurrentHP(mob) < BaseAD + BonusAD then
+						DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(100, 0, 255, 0))
 					end
 				end
 			end
