@@ -73,10 +73,11 @@ local OlafQ = {delay = 0.25, speed = 1550, width = 100, range = 1000}
 local CCType = {[5] = "Stun", [7] = "Silence", [8] = "Taunt", [9] = "Polymorph", [11] = "Snare", [21] = "Fear", [22] = "Charm", [24] = "Suppression"}
 
 OnUpdateBuff(function(unit, buff)
-if CCType[buff.type] then print(unit.name .. " just got CCd") end
-    if unit.isMe and CCType[buff.type] and OlafMenu.AutoR.R:Value() and Ready(_R) and GetPercentHP(myHero) <= OlafMenu.AutoR.hR:Value() and EnemiesAround(myHeroPos(), 1000) >= OlafMenu.AutoR.cR:Value() then
-        CastSpell(_R)
-    end
+	for _, enemies in pairs(GetEnemyHeroes()) do
+		if unit.isMe and CCType[buff.Type] and OlafMenu.AutoR.R:Value() and Ready(_R) and GetPercentHP(myHero) <= OlafMenu.AutoR.hR:Value() and EnemiesAround(myHeroPos(), 1000) >= OlafMenu.AutoR.cR:Value() then
+			CastSpell(_R)
+		end
+	end
 end)
 
 OnObjectLoad(function(Object)
