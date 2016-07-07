@@ -53,7 +53,9 @@ OlafMenu.KS:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("Draw", "Drawings")
 OlafMenu.Draw:Boolean("DrawQ", "Draw Q Range", true)
+OlafMenu.Draw:Boolean("DrawW", "Draw W", true)
 OlafMenu.Draw:Boolean("DrawE", "Draw E Range", true)
+OlafMenu.Draw:Boolean("DrawR", "Draw R", true)
 OlafMenu.Draw:Boolean("DrawAxe", "Draw Axe Circle", true)
 -----------------------------------------------------------------
 
@@ -209,6 +211,16 @@ OnDraw(function()
 			end
 		end
 		
+--W Drawings--
+
+		if OlafMenu.Draw.DrawW:Value() then
+			if Ready(_W) then
+				DrawCircle(GetOrigin(myHero), 200, 5, 100, ARGB(100, 0, 225, 0))
+			else
+				DrawCircle(GetOrigin(myHero), 200, 5, 100, ARGB(100, 225, 0, 0))
+			end
+		end
+		
 --E Drawings--
 
 		if OlafMenu.Draw.DrawE:Value() then
@@ -216,6 +228,16 @@ OnDraw(function()
 				DrawCircle(GetOrigin(myHero), 325, 5, 100, ARGB(100, 0, 225, 0))
 			else
 				DrawCircle(GetOrigin(myHero), 325, 5, 100, ARGB(100, 225, 0, 0))
+			end
+		end
+		
+--R Drawings--
+
+		if OlafMenu.Draw.DrawR:Value() then
+			if Ready(_R) then
+				DrawCircle(GetOrigin(myHero), 50, 5, 50, ARGB(100, 0, 225, 0))
+			else
+				DrawCircle(GetOrigin(myHero), 50, 5, 50, ARGB(100, 225, 0, 0))
 			end
 		end
 	end
