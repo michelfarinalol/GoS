@@ -1,6 +1,11 @@
 if GetObjectName(GetMyHero()) ~= "Jax" then return end
 
-require("MixLib")
+if FileExist(COMMON_PATH.."MixLib.lua") then
+ require('MixLib')
+else
+ PrintChat("MixLib not found. Please wait for download.")
+ DownloadFileAsync("https://raw.githubusercontent.com/VTNEETS/NEET-Scripts/master/MixLib.lua", COMMON_PATH.."MixLib.lua", function() PrintChat("Downloaded MixLib. Please 2x F6!") return end)
+end
 
 local JaxMenu = Menu("Jax", "Jax")
 JaxMenu:SubMenu("Combo", "Combo")
@@ -11,13 +16,16 @@ JaxMenu:SubMenu("Harass", "Harass")
 JaxMenu.Harass:Boolean("Q", "Use Q", false)
 JaxMenu.Harass:Boolean("W", "Use W", true)
 -----------------------------------------------------------------
-JaxMenu:SubMenu("Laneclear", "Laneclear")
+JaxMenu:SubMenu("LaneClear", "Laneclear")
 JaxMenu.Laneclear:Boolean("Q", "Use Q", false)
 JaxMenu.Laneclear:Boolean("W", "Use W", false)
 -----------------------------------------------------------------
-JaxMenu:SubMenu("Jungleclear", "Jungleclear")
-JaxMenu.Jungleclear:Boolean("Q", "Use Q", false)
-JaxMenu.Jungleclear:Boolean("W", "Use W", true)
+JaxMenu:SubMenu("JungleClear", "JungleClear")
+JaxMenu.JungleClear:Boolean("Q", "Use Q", false)
+JaxMenu.JungleClear:Boolean("W", "Use W", true)
+-----------------------------------------------------------------
+JaxMenu:SubMenu("LastHit", "LastHit")
+JaxMenu.LastHit:Boolean("W", "Use W", false)
 -----------------------------------------------------------------
 JaxMenu:SubMenu("Killsteal", "Killsteal")
 JaxMenu.Killsteal:Boolean("Q", "Use Q", false)
@@ -36,41 +44,35 @@ OnProcessSpellComplete(function(unit,spell)
 	local target = GetCurrentTarget()
 	if JaxMenu.Combo.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isHero then
 		if Mix:Mode() == "Combo" then
-			if Ready(_Q) then
-				CastSpell(_W,)
+			if Ready(_W) then
+				CastSpell(_W)
 				DelayAction(function()
 					AttackUnit(spell.target)
 				end, spell.windUpTime)
 			end
 		end
 	end
-	if JaxMenu.Combo.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isHero then
+	if JaxMenu.Harass.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isHero then
 		if Mix:Mode() == "Harass" then
 			if Ready(_W) then
-				CastTargetSpell(_W,)
+				CastSpell(_W)
 				DelayAction(function()
 					AttackUnit(spell.target)
 				end, spell.windUpTime)
 			end
 		end
 	end
-	if JaxMenu.Combo.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isHero then
+	if JaxMenu.LaneClear.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isMinion then
 		if Mix:Mode() == "LaneClear" then
-			if Ready(_W) then
-				CastTargetSpell(_W,)
-				DelayAction(function()
-					AttackUnit(spell.target)
-				end, spell.windUpTime)
-			end
-		end
-	end
-	if JaxMenu.Combo.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isHero then
-		if Mix:Mode() == "LastHit" then
-			if Ready(_W) then
-				CastTargetSpell(_W,)
-				DelayAction(function()
-					AttackUnit(spell.target)
-				end, spell.windUpTime)
+			for _, mob in pairs(minionManager.objects) do
+				if GetTeam(mob) == MINION_ENEMY or GetTeam(mob) == MINION_JUNGLE then
+					if Ready(_W) then
+						CastSpell(_W)
+						DelayAction(function()
+							AttackUnit(spell.target)
+						end, spell.windUpTime)
+					end
+				end
 			end
 		end
 	end
