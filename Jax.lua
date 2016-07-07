@@ -38,42 +38,6 @@ JaxMenu.Drawings:Boolean("E", "Draw E", true)
 JaxMenu.Drawings:Boolean("R", "Draw R", true)
 -----------------------------------------------------------------
 
---W AA Reset--
-
-OnProcessSpellComplete(function(unit,spell)
-	local target = GetCurrentTarget()
-	if JaxMenu.Combo.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isHero then
-		if Mix:Mode() == "Combo" then
-			if Ready(_W) then
-				CastSpell(_W)
-				DelayAction(function()
-					AttackUnit(spell.target)
-				end, spell.windUpTime)
-			end
-		end
-	end
-	if JaxMenu.Harass.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isHero then
-		if Mix:Mode() == "Harass" then
-			if Ready(_W) then
-				CastSpell(_W)
-				DelayAction(function()
-					AttackUnit(spell.target)
-				end, spell.windUpTime)
-			end
-		end
-	end
-	if JaxMenu.LaneClear.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isMinion and spell.target.team == 300 - GetTeam(myHero) or spell.target.team == 300 then
-		if Mix:Mode() == "LaneClear"
-			if Ready(_W) then
-				CastSpell(_W)
-				DelayAction(function()
-					AttackUnit(spell.target)
-				end, spell.windUpTime)
-			end
-		end
-	end
-end)
-
 OnTick(function()
 
 	local target = GetCurrentTarget()
@@ -107,14 +71,14 @@ OnTick(function()
 	
 	if Mix:Mode() == "Laneclear" then
 		for _, mob in pairs(minionManager.objects) do
-			if GetTeam(mob) == MINION_ENEMY then
-				if JaxMenu.Laneclear.Q:Value() and Ready(_Q) and ValidTarget(target, 700) then
-					CastTargetSpell(target, _Q)
+			if GetTeam(mob) == 300 - GetTeam(myHero) then
+				if JaxMenu.Laneclear.Q:Value() and Ready(_Q) and ValidTarget(mob, 700) then
+					CastTargetSpell(mob, _Q)
 				end
 			end
-			if GetTeam(mob) == MINION_JUNGLE then
-				if JaxMenu.Jungleclear:Value() and Ready(_Q) and ValidTarget(target, 700) then
-					CastTargetSpell(target, _Q)
+			if GetTeam(mob) == 300 then
+				if JaxMenu.Jungleclear:Value() and Ready(_Q) and ValidTarget(mob, 700) then
+					CastTargetSpell(mob, _Q)
 				end
 			end
 		end
@@ -124,7 +88,7 @@ end)
 
 --Drawings--
 
-OnDraw(function(myHero)
+OnDraw(function()
 	
 --Spell Drawings--
 
@@ -156,6 +120,42 @@ OnDraw(function(myHero)
 				DrawCircle(GetOrigin(myHero), 50, 5, 50, ARGB(100, 225, 0, 225))
 			else
 				DrawCircle(GetOrigin(myHero), 50, 5, 50, ARGB(100, 225, 0, 0))
+			end
+		end
+	end
+end)
+
+--W AA Reset--
+
+OnProcessSpellComplete(function(unit,spell)
+	local target = GetCurrentTarget()
+	if JaxMenu.Combo.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isHero then
+		if Mix:Mode() == "Combo" then
+			if Ready(_W) then
+				CastSpell(_W)
+				DelayAction(function()
+					AttackUnit(spell.target)
+				end, spell.windUpTime)
+			end
+		end
+	end
+	if JaxMenu.Harass.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isHero then
+		if Mix:Mode() == "Harass" then
+			if Ready(_W) then
+				CastSpell(_W)
+				DelayAction(function()
+					AttackUnit(spell.target)
+				end, spell.windUpTime)
+			end
+		end
+	end
+	if JaxMenu.LaneClear.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isMinion and spell.target.team == 300 - GetTeam(myHero) or spell.target.team == 300 then
+		if Mix:Mode() == "LaneClear"
+			if Ready(_W) then
+				CastSpell(_W)
+				DelayAction(function()
+					AttackUnit(spell.target)
+				end, spell.windUpTime)
 			end
 		end
 	end
