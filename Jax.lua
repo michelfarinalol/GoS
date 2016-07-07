@@ -38,6 +38,12 @@ JaxMenu.Drawings:Boolean("E", "Draw E", true)
 JaxMenu.Drawings:Boolean("R", "Draw R", true)
 -----------------------------------------------------------------
 
+OnUpdateBuff(function(unit, buff)
+          if unit.isMe then 
+          print(buff.name)
+          end
+end)
+
 OnTick(function()
 
 	local target = GetCurrentTarget()
@@ -62,7 +68,7 @@ OnTick(function()
 
 	for _,enemy in pairs(GetEnemyHeroes()) do
 		if JaxMenu.Killsteal.Q:Value() and Ready(_Q) and ValidTarget(target, 700) then
-			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, CalcDamage(myHero, enemy, 30 + 40 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero), GetBonusAP(myHero) * 0.6) then
+			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, CalcDamage(myHero, enemy, 30 + 40 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero)) then
 				CastTargetSpell(enemy, _Q)
 			end
 		end
