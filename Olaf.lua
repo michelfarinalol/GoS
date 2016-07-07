@@ -43,6 +43,9 @@ OlafMenu.JC:Boolean("Q", "Use Q", true)
 OlafMenu.JC:Boolean("W", "Use W", true)
 OlafMenu.JC:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
+OlafMenu:SubMenu("Ign", "Auto Ignite")
+OlafMenu.Ign:Boolean("AIgn", "Use Auto Ignite", true)
+-----------------------------------------------------------------
 OlafMenu:SubMenu("LH", "Last Hit")
 OlafMenu.LH:Boolean("Q", "Use Q", false)
 OlafMenu.LH:Boolean("E", "Use E", true)
@@ -88,7 +91,7 @@ OnTick(function()
 		if OlafMenu.Combo.E:Value() and Ready(_E) and ValidTarget(target, 325) then
 			CastTargetSpell(target, _E)
 			end
-		if OlafMenu.Combo.W:Value() and Ready(_W) and ValidTarget(target, 250) and GetPercent(myHero) <= OlafMenu.Harass.uW:Value() then
+		if OlafMenu.Combo.W:Value() and Ready(_W) and ValidTarget(target, 250) and GetPercentHP(myHero) <= OlafMenu.Harass.uW:Value() then
 			CastSpell(_W)
 			end
 		if OlafMenu.Combo.Q:Value() and Ready(_Q) and ValidTarget(target, 1000) then
@@ -100,6 +103,7 @@ OnTick(function()
 	end
 
 --Harass--
+
 	if Mix:Mode() == "Harass" then
 		if OlafMenu.Harass.E:Value() and Ready(_E) and ValidTarget(target, 325) then
 			CastTargetSpell(target, _E)
@@ -180,6 +184,28 @@ OnTick(function()
 				if OlafMenu.LH.Q:Value() and Ready(_Q) and ValidTarget(mob, 1000) then
 					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, 25 + 45 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero), 0) then
 						CastSkillShot(_Q, mob)
+					end
+				end
+			end
+		end
+	end
+	
+--Auto Ignite--
+	
+	for _, enemy in pairs(GetEnemyHeroes()) do
+		if OlafMenu.Ign.AIgn:Value() then
+			if GetCastName(myHero, SUMMONER_1) == 'SummonerDot' then
+				Ignite = SUMMONER_1
+				if ValidTarget(enemy, 600) then
+					if 20 * GetLevel(myHero) + 50 > GetCurrentHP(enemy) + GetHPRegen(enemy) * 3 then
+						CastTargetSpell(enemy, Ignite)
+					end
+				end
+			elseif GetCastName(myHero, SUMMONER_2) == 'SummonerDot' then
+				Ignite = SUMMONER_2
+				if ValidTarget(enemy, 600) then
+					if 20 * GetLevel(myHero) + 50 > GetCurrentHP(enemy) + GetHPRegen(enemy) * 3 then
+						CastTargetSpell(enemy, Ignite)
 					end
 				end
 			end
