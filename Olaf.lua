@@ -1,6 +1,6 @@
 if GetObjectName(GetMyHero()) ~= "Olaf" then return end
 
-local v = 5
+local v = 6
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.version", function(num)
 	if v < tonumber(num) then
@@ -60,6 +60,7 @@ OlafMenu.Draw:Boolean("DrawW", "Draw W", true)
 OlafMenu.Draw:Boolean("DrawE", "Draw E Range", true)
 OlafMenu.Draw:Boolean("DrawR", "Draw R", true)
 OlafMenu.Draw:Boolean("DrawAxe", "Draw Axe Circle", true)
+OlafMenu.Draw:Boolean("DrawDMG", "Draw DMG", true)
 -----------------------------------------------------------------
 
 local OlafQ = {delay = 0.25, speed = 1550, width = 100, range = 1000}
@@ -174,7 +175,7 @@ OnTick(function()
 	
 	if Mix:Mode() == "LastHit" then
 		for _, mob in pairs(minionManager.objects) do
-			if GetTeam(mob) == MINION_ENEMY then
+			if GetTeam(mob) == 300 - GetTeam(myHero) then
 				if OlafMenu.LH.E:Value() and Ready(_E) and ValidTarget(mob, 325) then
 					local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
 					if GetCurrentHP(mob) + GetDmgShield(mob) < eDmg then
@@ -216,6 +217,9 @@ end)
 --Drawings--
 
 OnDraw(function()
+
+local qDmg = 25 + 45 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero)
+local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
 
 --Axe Drawings--
 
@@ -264,6 +268,22 @@ OnDraw(function()
 				DrawCircle(GetOrigin(myHero), 50, 5, 50, ARGB(100, 0, 225, 0))
 			else
 				DrawCircle(GetOrigin(myHero), 50, 5, 50, ARGB(100, 225, 0, 0))
+			end
+		end
+		
+--Dmg Drawings--
+		
+		if OlafMenu.Draw.DrawDMG:Value() then
+			for _, enemy in pairs(GetEnemyHeroes()) do
+				if ValidTarget(enemy) then
+					if Ready(_Q) and Ready(_E) then
+						DrawDmgOverHpBar(enemy, GetCurrentHP(enemy), CalcDamage(myHero, enemy, qDmg, 0), eDmg, GoS.White)
+					elseif Ready(_Q) then
+						DrawDmgOverHpBar(enemy, GetCurrentHP(enemy), CalcDamage(myHero, enemy, qDmg, 0), 0, GoS.White)
+					elseif Ready(_E) then
+						DrawDmgOverHpBar(enemy, GetCurrentHP(enemy), 0, eDmg, GoS.White)
+					end
+				end
 			end
 		end
 	end
