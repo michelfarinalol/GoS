@@ -68,7 +68,7 @@ OnTick(function()
 
 	for _,enemy in pairs(GetEnemyHeroes()) do
 		if JaxMenu.Killsteal.Q:Value() and Ready(_Q) and ValidTarget(target, 700) then
-			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, CalcDamage(myHero, enemy, 30 + 40 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero)) then
+			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, 30 + 40 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero),  GetBonusAP(myHero) * 0.6) then
 				CastTargetSpell(enemy, _Q)
 			end
 		end
@@ -156,7 +156,7 @@ OnProcessSpellComplete(function(unit,spell)
 		end
 	end
 	if JaxMenu.LaneClear.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isMinion and spell.target.team == 300 - GetTeam(myHero) or spell.target.team == 300 then
-		if Mix:Mode() == "LaneClear"
+		if Mix:Mode() == "LaneClear" then
 			if Ready(_W) then
 				CastSpell(_W)
 				DelayAction(function()
