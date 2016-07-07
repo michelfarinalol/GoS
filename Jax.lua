@@ -30,6 +30,52 @@ JaxMenu.Drawings:Boolean("E", "Draw E", true)
 JaxMenu.Drawings:Boolean("R", "Draw R", true)
 -----------------------------------------------------------------
 
+--W AA Reset--
+
+OnProcessSpellComplete(function(unit,spell)
+	local target = GetCurrentTarget()
+	if JaxMenu.Combo.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isHero then
+		if Mix:Mode() == "Combo" then
+			if Ready(_Q) then
+				CastSpell(_W,)
+				DelayAction(function()
+					AttackUnit(spell.target)
+				end, spell.windUpTime)
+			end
+		end
+	end
+	if JaxMenu.Combo.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isHero then
+		if Mix:Mode() == "Harass" then
+			if Ready(_W) then
+				CastTargetSpell(_W,)
+				DelayAction(function()
+					AttackUnit(spell.target)
+				end, spell.windUpTime)
+			end
+		end
+	end
+	if JaxMenu.Combo.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isHero then
+		if Mix:Mode() == "LaneClear" then
+			if Ready(_W) then
+				CastTargetSpell(_W,)
+				DelayAction(function()
+					AttackUnit(spell.target)
+				end, spell.windUpTime)
+			end
+		end
+	end
+	if JaxMenu.Combo.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isHero then
+		if Mix:Mode() == "LastHit" then
+			if Ready(_W) then
+				CastTargetSpell(_W,)
+				DelayAction(function()
+					AttackUnit(spell.target)
+				end, spell.windUpTime)
+			end
+		end
+	end
+end)
+
 OnTick(function()
 
 	local target = GetCurrentTarget()
@@ -40,10 +86,6 @@ OnTick(function()
 		if JaxMenu.Combo.Q:Value() and Ready(_Q) and ValidTarget(target, 700) then
 			CastTargetSpell(target, _Q)
 		end
-		if JaxMenu.Combo.W:Value() and Ready(_W) and ValidTarget(target, 125) then
-			CastSpell(_W)
-			IOW:ResetAA()
-		end
 	end
 	
 --Harass--
@@ -52,27 +94,17 @@ OnTick(function()
 		if JaxMenu.Harass.Q:Value() and Ready(_Q) and ValidTarget(target, 700) then
 			CastTargetSpell(target, _Q)
 		end
-		if JaxMenu.Combo.W:Value() and Ready(_W) and ValidTarget(target, 125) then
-			CastSpell(_W)
-			IOW:ResetAA()
-		end
 	end
 	
 --Killsteal--
 
 	for _,enemy in pairs(GetEnemyHeroes()) do
 		if JaxMenu.Killsteal.Q:Value() and Ready(_Q) and ValidTarget(target, 700) then
-			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, GetCastLevel(myHero, _Q), 0) * 40 + 30 + GetBonusDmg(myHero) * 1 + GetBonusAP(myHero) * 0.6 then
+			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, GetCastLevel(myHero, _Q) * 40 + 30, 0) + GetBonusDmg(myHero) * 1 + GetBonusAP(myHero) * 0.6 then
 				CastTargetSpell(enemy, _Q)
 			end
 		end
-		if JaxMenu.Killsteal.W:Value() and Ready(_W) and ValidTarget(target, 125) then
-			if GetCurrentHP(enemy) + GetDmgShield(enemy) + GetMagicShield(enemy) < CalcDamage(myHero, enemy, 0, GetCastLevel(myHero, _W)) * 35 + 5 + GetBonusAP(myHero) * 0.6 then
-				CastSpell(_W)
-				end
-			end
-		end
-		
+	end
 --Laneclear / Jungleclear--
 	
 	if Mix:Mode() == "Laneclear" then
@@ -81,17 +113,10 @@ OnTick(function()
 				if JaxMenu.Laneclear.Q:Value() and Ready(_Q) and ValidTarget(target, 700) then
 					CastTargetSpell(target, _Q)
 				end
-				if JaxMenu.Laneclear.W:Value() and Ready(_W) and ValidTarget(target, 125) then
-					CastSpell(_W)
-					IOW:ResetAA()
-				end
 			end
 			if GetTeam(mob) == MINION_JUNGLE then
 				if JaxMenu.Jungleclear:Value() and Ready(_Q) and ValidTarget(target, 700) then
 					CastTargetSpell(target, _Q)
-				end
-				if JaxMenu.Jungleclear:Value() and Ready(_W) and ValidTarget(target, 125) then
-					CastSpell(_W)
 				end
 			end
 		end
