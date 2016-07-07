@@ -62,7 +62,7 @@ OnTick(function()
 
 	for _,enemy in pairs(GetEnemyHeroes()) do
 		if JaxMenu.Killsteal.Q:Value() and Ready(_Q) and ValidTarget(target, 700) then
-			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, GetCastLevel(myHero, _Q) * 40 + 30 + GetBonusDmg(myHero) * 1, GetBonusAP(myHero) * 0.6) then
+			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, GetCastLevel(myHero, _Q) * GetBonusDmg(myHero) * 40 + 30 , GetBonusAP(myHero) * 0.6) then
 				CastTargetSpell(enemy, _Q)
 			end
 		end
