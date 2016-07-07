@@ -1,12 +1,20 @@
 if GetObjectName(GetMyHero()) ~= "Olaf" then return end
 
-local v = 7
+local v = 8
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.version", function(num)
 	if v < tonumber(num) then
 		DownloadFileAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.lua", SCRIPT_PATH .. "Olaf.lua", function() PrintChat("[Olaf] Updated") end)
 	end
 end)
+
+if not FileExist(COMMON_PATH.. "Analytics.lua") then
+  DownloadFileAsync("https://raw.githubusercontent.com/LoggeL/GoS/master/Analytics.lua", COMMON_PATH .. "Analytics.lua", function() end)
+end
+
+require("Analyitics")
+
+Analytics("Olaf", "wildrelic", true)
 
 require("OpenPredict")
 
