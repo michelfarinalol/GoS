@@ -8,14 +8,6 @@ GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.v
 	end
 end)
 
-if not FileExist(COMMON_PATH.. "Analytics.lua") then
-  DownloadFileAsync("https://raw.githubusercontent.com/LoggeL/GoS/master/Analytics.lua", COMMON_PATH .. "Analytics.lua", function() end)
-end
-
-require("Analyitics")
-
-Analytics("Olaf", "wildrelic", true)
-
 require("OpenPredict")
 
 if FileExist(COMMON_PATH.."MixLib.lua") then
@@ -32,13 +24,13 @@ OlafMenu = Menu("Olaf", "Olaf")
 OlafMenu:SubMenu("Combo", "Combo")
 OlafMenu.Combo:Boolean("Q", "Use Q", true)
 OlafMenu.Combo:Boolean("W", "Use W", true)
-OlafMenu.Combo:Slider("uW", "Use W under % HP", 75, 5, 100, 5)
+OlafMenu.Combo:Slider("uW", "Use W under % HP", 75, 0, 100, 5)
 OlafMenu.Combo:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("Harass", "Harass")
 OlafMenu.Harass:Boolean("Q", "Use Q", true)
 OlafMenu.Harass:Boolean("W", "Use W", true)
-OlafMenu.Harass:Slider("uW", "Use W under % HP", 75, 5, 100, 5)
+OlafMenu.Harass:Slider("uW", "Use W under % HP", 75, 0, 100, 5)
 OlafMenu.Harass:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("LC", "LaneClear")
@@ -51,9 +43,6 @@ OlafMenu.JC:Boolean("Q", "Use Q", true)
 OlafMenu.JC:Boolean("W", "Use W", true)
 OlafMenu.JC:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
-OlafMenu:SubMenu("Ign", "Auto Ignite")
-OlafMenu.Ign:Boolean("AIgn", "Use Auto Ignite", true)
------------------------------------------------------------------
 OlafMenu:SubMenu("LH", "Last Hit")
 OlafMenu.LH:Boolean("Q", "Use Q", false)
 OlafMenu.LH:Boolean("E", "Use E", true)
@@ -61,6 +50,14 @@ OlafMenu.LH:Boolean("E", "Use E", true)
 OlafMenu:SubMenu("KS", "Killsteal")
 OlafMenu.KS:Boolean("Q", "Use Q", true)
 OlafMenu.KS:Boolean("E", "Use E", true)
+-----------------------------------------------------------------
+OlafMenu:SubMenu("Ign", "Auto Ignite")
+OlafMenu.Ign:Boolean("AIgn", "Use Auto Ignite", true)
+-----------------------------------------------------------------
+--OlafMenu:SubMenu("AutoR", "Auto R")
+--OlafMenu.AutoR:Boolean("R", "Use R", true)
+--OlafMenu.AutoR:Slider("hR", "Use R under % HP", 50, 0, 100, 5)
+--OlafMenu.AutoR:Slider("cR", "Use R around # Enemies", 1, 0, 5, 1)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("Draw", "Drawings")
 OlafMenu.Draw:Boolean("DrawQ", "Draw Q Range", true)
@@ -72,7 +69,14 @@ OlafMenu.Draw:Boolean("DrawDMG", "Draw DMG", true)
 OlafMenu.Draw:Boolean("MinCirc", "Minion Killable by E", true)
 -----------------------------------------------------------------
 
-OlafQ = {delay = 0.25, speed = 1550, width = 100, range = 1000}
+local OlafQ = {delay = 0.25, speed = 1550, width = 100, range = 1000}
+local CCType = {[5] = "Stun", [7] = "Silence", [8] = "Taunt", [9] = "Polymorph", [11] = "Snare", [21] = "Fear", [22] = "Charm", [24] = "Suppression"}
+
+--OnUpdateBuff(function(unit, buff)
+	--if unit.isMe and CCType[buff.type] and OlafMenu.AutoR.R:Value() and Ready(_R) and GetPercentHP(myHero) <= OlafMenu.AutoR.hR:Value() and EnemiesAround(myHeroPos(), 1000) >= 1 and EnemiesAround(myHeroPos(), 1000) >= OlafMenu.AutoR.cR:Value() then
+		--CastSpell(_R)
+	--end
+--end)
 
 OnObjectLoad(function(Object)
 	if GetObjectBaseName(Object) == "olaf_axe_totem_team_id_green.troy" then
@@ -128,10 +132,11 @@ OnTick(function()
 			end
 		end
 	end
-	
---Killsteal--
 
 	for _,enemy in pairs(GetEnemyHeroes()) do
+	
+--Killsteal--
+	
 		if OlafMenu.KS.Q:Value() and Ready(_Q) and ValidTarget(enemy, 1000) then
 			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, 25 + 45 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero), 0) then
 				local QPred = GetLinearAOEPrediction(enemy, OlafQ)
@@ -146,12 +151,36 @@ OnTick(function()
 				CastTargetSpell(enemy, _E)
 			end
 		end
+		
+--Auto Ignite When Killable--
+		
+		if OlafMenu.Ign.AIgn:Value() then
+			if GetCastName(myHero, SUMMONER_1) == 'SummonerDot' then
+				Ignite = SUMMONER_1
+				if ValidTarget(enemy, 600) then
+					if 20 * GetLevel(myHero) + 50 > GetCurrentHP(enemy) + GetHPRegen(enemy) * 3 then
+						CastTargetSpell(enemy, Ignite)
+					end
+				end
+			elseif GetCastName(myHero, SUMMONER_2) == 'SummonerDot' then
+				Ignite = SUMMONER_2
+				if ValidTarget(enemy, 600) then
+					if 20 * GetLevel(myHero) + 50 > GetCurrentHP(enemy) + GetHPRegen(enemy) * 3 then
+						CastTargetSpell(enemy, Ignite)
+					end
+				end
+			end
+		end
+		--if OlafMenu.AutoR.R:Value() and Ready(_R) and GetPercentHP(myHero) <= OlafMenu.AutoR.hR:Value() and EnemiesAround(myHeroPos(), 1000) >= 1 and EnemiesAround(myHeroPos(), 1000) >= OlafMenu.AutoR.cR:Value() and GotBuff(myHero, "rocketgrab2") > 0 or GotBuff(myHero, "charm") > 0 or GotBuff(myHero, "fear") > 0 or GotBuff(myHero, "flee") > 0 or GotBuff(myHero, "snare") > 0 or GotBuff(myHero, "taunt") > 0 or GotBuff(myHero, "suppression") > 0 or GotBuff(myHero, "stun") > 0 or GotBuff(myHero, "summonerexhaust") > 0 then
+			--CastSpell(_R)
+		--end
 	end
 	
+	for _,mob in pairs(minionManager.objects) do
+	
 --LaneClear / JungleClear--
-
-	if Mix:Mode() == "LaneClear" then
-		for _, mob in pairs(minionManager.objects) do
+	
+		if Mix:Mode() == "LaneClear" then
 			if GetTeam(mob) == MINION_ENEMY then
 				if OlafMenu.LC.E:Value() and Ready(_E) and ValidTarget(mob, 325) then
 					local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
@@ -178,12 +207,10 @@ OnTick(function()
 				end
 			end
 		end
-	end
-	
+		
 --LastHit--
-	
-	if Mix:Mode() == "LastHit" then
-		for _, mob in pairs(minionManager.objects) do
+		
+		if Mix:Mode() == "LastHit" then
 			if GetTeam(mob) == 300 - GetTeam(myHero) then
 				if OlafMenu.LH.E:Value() and Ready(_E) and ValidTarget(mob, 325) then
 					local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
@@ -199,28 +226,6 @@ OnTick(function()
 			end
 		end
 	end
-	
---Auto Ignite--
-	
-	for _, enemy in pairs(GetEnemyHeroes()) do
-		if OlafMenu.Ign.AIgn:Value() then
-			if GetCastName(myHero, SUMMONER_1) == 'SummonerDot' then
-				Ignite = SUMMONER_1
-				if ValidTarget(enemy, 600) then
-					if 20 * GetLevel(myHero) + 50 > GetCurrentHP(enemy) + GetHPRegen(enemy) * 3 then
-						CastTargetSpell(enemy, Ignite)
-					end
-				end
-			elseif GetCastName(myHero, SUMMONER_2) == 'SummonerDot' then
-				Ignite = SUMMONER_2
-				if ValidTarget(enemy, 600) then
-					if 20 * GetLevel(myHero) + 50 > GetCurrentHP(enemy) + GetHPRegen(enemy) * 3 then
-						CastTargetSpell(enemy, Ignite)
-					end
-				end
-			end
-		end
-	end
 end)
 
 --Drawings--
@@ -230,16 +235,16 @@ OnDraw(function()
 local qDmg = 25 + 45 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero)
 local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
 
---Axe Drawings--
-
-	if OlafMenu.Draw.DrawAxe:Value() then
-		if AxeOlaf then
-			DrawCircle(GetOrigin(AxeOlaf), 70, 5, 100, ARGB(100, 0, 0, 255))
-		end
-	end
-
 	if IsObjectAlive(myHero) then
 	
+--Axe Drawings--
+
+		if OlafMenu.Draw.DrawAxe:Value() then
+			if AxeOlaf then
+				DrawCircle(GetOrigin(AxeOlaf), 70, 5, 100, ARGB(100, 0, 0, 255))
+			end
+		end
+
 --Q Drawings--
 
 		if OlafMenu.Draw.DrawQ:Value() then
@@ -295,6 +300,9 @@ local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
 				end
 			end
 		end
+		
+--Minion Circles--		
+		
 		if OlafMenu.Draw.MinCirc:Value() then
 		local BaseAD = GetBaseDamage(myHero)
 		local BonusAD = GetBonusDmg(myHero)
