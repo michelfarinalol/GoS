@@ -1,6 +1,6 @@
 if GetObjectName(GetMyHero()) ~= "Olaf" then return end
 
-local v = 3
+local v = 4
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.version", function(num)
 	if v < tonumber(num) then
@@ -9,16 +9,14 @@ GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.v
 end)
 
 require("OpenPredict")
-require("Analytics")
 
 if FileExist(COMMON_PATH.."MixLib.lua") then
- require('MixLib')
+	require('MixLib')
 else
- PrintChat("MixLib not found. Please wait for download.")
- DownloadFileAsync("https://raw.githubusercontent.com/VTNEETS/NEET-Scripts/master/MixLib.lua", COMMON_PATH.."MixLib.lua", function() PrintChat("Downloaded MixLib. Please 2x F6!") return end)
+	PrintChat("MixLib not found. Please wait for download.")
+	DownloadFileAsync("https://raw.githubusercontent.com/VTNEETS/NEET-Scripts/master/MixLib.lua", COMMON_PATH.."MixLib.lua", function() PrintChat("Downloaded MixLib. Please 2x F6!") return end)
 end
 
-Analytics("Olaf.lua", "wildrelic", true)
 
 --Menu--
 OlafMenu = Menu("Olaf", "Olaf")
