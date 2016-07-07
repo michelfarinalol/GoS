@@ -1,6 +1,6 @@
 if GetObjectName(GetMyHero()) ~= "Olaf" then return end
 
-local v = 11
+local v = 12
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.version", function(num)
 	if v < tonumber(num) then
@@ -29,17 +29,17 @@ OlafMenu.Combo:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("Harass", "Harass")
 OlafMenu.Harass:Boolean("Q", "Use Q", true)
-OlafMenu.Harass:Boolean("mQ", "Use Q Above % Mana", 75, 0, 100, 5)
+OlafMenu.Harass:Slider("mQ", "Use Q Above % Mana", 75, 0, 100, 5)
 OlafMenu.Harass:Boolean("W", "Use W", true)
 OlafMenu.Harass:Slider("uW", "Use W Under % HP", 75, 0, 100, 5)
-OlafMenu.Harass:Boolean("mW", "Use W Above % Mana", 75, 0, 100, 5)
+OlafMenu.Harass:Slider("mW", "Use W Above % Mana", 75, 0, 100, 5)
 OlafMenu.Harass:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("LC", "LaneClear")
 OlafMenu.LC:Boolean("Q", "Use Q", true)
-OlafMenu.LC:Boolean("mQ", "Use Q Above % Mana", 75, 0, 100, 5)
+OlafMenu.LC:Slider("mQ", "Use Q Above % Mana", 75, 0, 100, 5)
 OlafMenu.LC:Boolean("W", "Use W", true)
-OlafMenu.LC:Boolean("mW", "Use W Above % Mana", 75, 0, 100, 5)
+OlafMenu.LC:Slider("mW", "Use W Above % Mana", 75, 0, 100, 5)
 OlafMenu.LC:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("JC", "JungleClear")
@@ -49,7 +49,7 @@ OlafMenu.JC:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("LH", "Last Hit")
 OlafMenu.LH:Boolean("Q", "Use Q", false)
-OlafMenu.LH:Boolean("mQ", "Use Q under % Mana", 75, 0, 100, 5)
+OlafMenu.LH:Slider("mQ", "Use Q under % Mana", 75, 0, 100, 5)
 OlafMenu.LH:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("KS", "Killsteal")
