@@ -40,7 +40,7 @@ JaxMenu.Drawings:Boolean("R", "Draw R", true)
 
 OnUpdateBuff(function(unit, buff)
           if unit.isMe then 
-          print(buff.name)
+          print(buff.Name)
           end
 end)
 
@@ -67,9 +67,15 @@ OnTick(function()
 --Killsteal--
 
 	for _,enemy in pairs(GetEnemyHeroes()) do
-		if JaxMenu.Killsteal.Q:Value() and Ready(_Q) and ValidTarget(target, 700) then
+		if JaxMenu.Killsteal.Q:Value() and Ready(_Q) and ValidTarget(enemy, 700) then
 			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, 30 + 40 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero),  GetBonusAP(myHero) * 0.6) then
 				CastTargetSpell(enemy, _Q)
+			end
+		else
+			if GotBuff(myHero, "JaxEmpowerTwo") > 0 then
+				if CalcDamage(myHero, enemy, 30 + 40 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero),  GetBonusAP(myHero) * 0.6  + (5 + 35 *GetCastLevel(myHero, _W) + GetBonusAP(myHero) * 0.6)) then
+					CastTargetSpell(enemy, _Q)
+				end
 			end
 		end
 	end
