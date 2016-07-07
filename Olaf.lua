@@ -54,10 +54,10 @@ OlafMenu.KS:Boolean("E", "Use E", true)
 OlafMenu:SubMenu("Ign", "Auto Ignite")
 OlafMenu.Ign:Boolean("AIgn", "Use Auto Ignite", true)
 -----------------------------------------------------------------
---OlafMenu:SubMenu("AutoR", "Auto R")
---OlafMenu.AutoR:Boolean("R", "Use R", true)
---OlafMenu.AutoR:Slider("hR", "Use R under % HP", 50, 0, 100, 5)
---OlafMenu.AutoR:Slider("cR", "Use R around # Enemies", 1, 0, 5, 1)
+OlafMenu:SubMenu("AutoR", "Auto R")
+OlafMenu.AutoR:Boolean("R", "Use R", true)
+OlafMenu.AutoR:Slider("hR", "Use R under % HP", 50, 0, 100, 5)
+OlafMenu.AutoR:Slider("cR", "Use R around # Enemies", 1, 0, 5, 1)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("Draw", "Drawings")
 OlafMenu.Draw:Boolean("DrawQ", "Draw Q Range", true)
@@ -72,11 +72,12 @@ OlafMenu.Draw:Boolean("MinCirc", "Minion Killable by E", true)
 local OlafQ = {delay = 0.25, speed = 1550, width = 100, range = 1000}
 local CCType = {[5] = "Stun", [7] = "Silence", [8] = "Taunt", [9] = "Polymorph", [11] = "Snare", [21] = "Fear", [22] = "Charm", [24] = "Suppression"}
 
---OnUpdateBuff(function(unit, buff)
-	--if unit.isMe and CCType[buff.type] and OlafMenu.AutoR.R:Value() and Ready(_R) and GetPercentHP(myHero) <= OlafMenu.AutoR.hR:Value() and EnemiesAround(myHeroPos(), 1000) >= 1 and EnemiesAround(myHeroPos(), 1000) >= OlafMenu.AutoR.cR:Value() then
-		--CastSpell(_R)
-	--end
---end)
+OnUpdateBuff(function(unit, buff)
+if CCType[buff.type] then print(unit.name .. " just got CCd") end
+    if unit.isMe and CCType[buff.type] and OlafMenu.AutoR.R:Value() and Ready(_R) and GetPercentHP(myHero) <= OlafMenu.AutoR.hR:Value() and EnemiesAround(myHeroPos(), 1000) >= OlafMenu.AutoR.cR:Value() then
+        CastSpell(_R)
+    end
+end)
 
 OnObjectLoad(function(Object)
 	if GetObjectBaseName(Object) == "olaf_axe_totem_team_id_green.troy" then
