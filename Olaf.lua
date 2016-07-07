@@ -1,6 +1,6 @@
 if GetObjectName(GetMyHero()) ~= "Olaf" then return end
 
-local v = 2
+local v = 3
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.version", function(num)
 	if v < tonumber(num) then
@@ -10,6 +10,7 @@ end)
 
 require("OpenPredict")
 require("Analytics")
+require("MixLib")
 Analytics("Olaf.lua", "wildrelic", true)
 
 --Menu--
@@ -76,7 +77,7 @@ OnTick(function()
 	
 --Combo--
 
-	if IOW:Mode() == "Combo" then
+	if Mix:Mode() == "Combo" then
 		if OlafMenu.Combo.E:Value() and Ready(_E) and ValidTarget(target, 325) then
 			CastTargetSpell(target, _E)
 			end
@@ -92,7 +93,7 @@ OnTick(function()
 	end
 
 --Harass--
-	if IOW:Mode() == "Harass" then
+	if Mix:Mode() == "Harass" then
 		if OlafMenu.Harass.E:Value() and Ready(_E) and ValidTarget(target, 325) then
 			CastTargetSpell(target, _E)
 			end
@@ -128,7 +129,7 @@ OnTick(function()
 	
 --LaneClear / JungleClear--
 
-	if IOW:Mode() == "LaneClear" then
+	if Mix:Mode() == "LaneClear" then
 		for _, mob in pairs(minionManager.objects) do
 			if GetTeam(mob) == MINION_ENEMY then
 				if OlafMenu.LC.E:Value() and Ready(_E) and ValidTarget(mob, 325) then
@@ -160,7 +161,7 @@ OnTick(function()
 	
 --LastHit--
 	
-	if IOW:Mode() == "LastHit" then
+	if Mix:Mode() == "LastHit" then
 		for _, mob in pairs(minionManager.objects) do
 			if GetTeam(mob) == MINION_ENEMY then
 				if OlafMenu.LH.E:Value() and Ready(_E) and ValidTarget(mob, 325) then
