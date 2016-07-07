@@ -29,13 +29,17 @@ OlafMenu.Combo:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("Harass", "Harass")
 OlafMenu.Harass:Boolean("Q", "Use Q", true)
+OlafMenu.Harass:Boolean("mQ", "Use Q Above % Mana", 75, 0, 100, 5)
 OlafMenu.Harass:Boolean("W", "Use W", true)
-OlafMenu.Harass:Slider("uW", "Use W under % HP", 75, 0, 100, 5)
+OlafMenu.Harass:Slider("uW", "Use W Under % HP", 75, 0, 100, 5)
+OlafMenu.Harass:Boolean("mW", "Use W Above % Mana", 75, 0, 100, 5)
 OlafMenu.Harass:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("LC", "LaneClear")
 OlafMenu.LC:Boolean("Q", "Use Q", true)
+OlafMenu.LC:Boolean("mQ", "Use Q Above % Mana", 75, 0, 100, 5)
 OlafMenu.LC:Boolean("W", "Use W", true)
+OlafMenu.LC:Boolean("mW", "Use W Above % Mana", 75, 0, 100, 5)
 OlafMenu.LC:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("JC", "JungleClear")
@@ -45,6 +49,7 @@ OlafMenu.JC:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("LH", "Last Hit")
 OlafMenu.LH:Boolean("Q", "Use Q", false)
+OlafMenu.LH:Boolean("mQ", "Use Q under % Mana", 75, 0, 100, 5)
 OlafMenu.LH:Boolean("E", "Use E", true)
 -----------------------------------------------------------------
 OlafMenu:SubMenu("KS", "Killsteal")
@@ -122,10 +127,10 @@ OnTick(function()
 		if OlafMenu.Harass.E:Value() and Ready(_E) and ValidTarget(target, 325) then
 			CastTargetSpell(target, _E)
 			end
-		if OlafMenu.Harass.W:Value() and Ready(_W) and ValidTarget(target, 250) and GetPercentHP(myHero) <= OlafMenu.Harass.uW:Value() then
+		if OlafMenu.Harass.W:Value() and Ready(_W) and ValidTarget(target, 250) and GetPercentHP(myHero) <= OlafMenu.Harass.uW:Value() and GetPercentMP(myHero) >= OlafMenu.Harass.mW:Value() then
 			CastSpell(_W)
 			end
-		if OlafMenu.Harass.Q:Value() and Ready(_Q) and ValidTarget(target, 1000) then
+		if OlafMenu.Harass.Q:Value() and Ready(_Q) and ValidTarget(target, 1000) and GetPercentMP(myHero) >= OlafMenu.Harass.mQ:Value() then
 			local QPred = GetLinearAOEPrediction(target, OlafQ)
 			if QPred.hitChance >= 0.3 then
 				CastSkillShot(_Q, QPred.castPos)
@@ -145,7 +150,7 @@ OnTick(function()
 				end
 			end
 		end
-		if OlafMenu.KS.E:Value() and Ready(_Q) and ValidTarget(enemy, 325) then
+		if OlafMenu.KS.E:Value() and Ready(_E) and ValidTarget(enemy, 325) then
 			local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + myHero.totalDamage * 0.4
 			if GetCurrentHP(enemy) + GetDmgShield(enemy) < eDmg then
 				CastTargetSpell(enemy, _E)
@@ -171,9 +176,6 @@ OnTick(function()
 				end
 			end
 		end
-		--if OlafMenu.AutoR.R:Value() and Ready(_R) and GetPercentHP(myHero) <= OlafMenu.AutoR.hR:Value() and EnemiesAround(myHeroPos(), 1000) >= 1 and EnemiesAround(myHeroPos(), 1000) >= OlafMenu.AutoR.cR:Value() and GotBuff(myHero, "rocketgrab2") > 0 or GotBuff(myHero, "charm") > 0 or GotBuff(myHero, "fear") > 0 or GotBuff(myHero, "flee") > 0 or GotBuff(myHero, "snare") > 0 or GotBuff(myHero, "taunt") > 0 or GotBuff(myHero, "suppression") > 0 or GotBuff(myHero, "stun") > 0 or GotBuff(myHero, "summonerexhaust") > 0 then
-			--CastSpell(_R)
-		--end
 	end
 	
 	for _,mob in pairs(minionManager.objects) do
@@ -188,10 +190,10 @@ OnTick(function()
 						CastTargetSpell(mob, _E)
 						end
 					end
-				if OlafMenu.LC.W:Value() and Ready(_W) and ValidTarget(mob, 225) then
+				if OlafMenu.LC.W:Value() and Ready(_W) and ValidTarget(mob, 225) and GetPercentMP(myHero) >= OlafMenu.LC.mW:Value() then
 					CastSpell(_W)
 					end
-				if OlafMenu.LC.Q:Value() and Ready(_Q) and ValidTarget(mob, 1000) then
+				if OlafMenu.LC.Q:Value() and Ready(_Q) and ValidTarget(mob, 1000) and GetPercentMP(myHero) >= OlafMenu.LC.mQ:Value() then
 					CastSkillShot(_Q, mob)
 					end
 				end
@@ -218,7 +220,7 @@ OnTick(function()
 						CastTargetSpell(mob, _E)
 						end
 					end
-				if OlafMenu.LH.Q:Value() and Ready(_Q) and ValidTarget(mob, 1000) then
+				if OlafMenu.LH.Q:Value() and Ready(_Q) and ValidTarget(mob, 1000) and GetPercentMP(myHero) >= OlafMenu.LH.mQ:Value() then
 					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, 25 + 45 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero), 0) then
 						CastSkillShot(_Q, mob)
 					end
