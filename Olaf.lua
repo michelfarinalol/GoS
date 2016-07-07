@@ -187,7 +187,7 @@ end)
 
 --Drawings--
 
-OnDraw(function(myHero)
+OnDraw(function()
 
 --Axe Drawings--
 
