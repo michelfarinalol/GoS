@@ -62,17 +62,13 @@ OnProcessSpellComplete(function(unit,spell)
 			end
 		end
 	end
-	if JaxMenu.LaneClear.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isMinion then
-		if Mix:Mode() == "LaneClear" then
-			for _, mob in pairs(minionManager.objects) do
-				if GetTeam(mob) == MINION_ENEMY or GetTeam(mob) == MINION_JUNGLE then
-					if Ready(_W) then
-						CastSpell(_W)
-						DelayAction(function()
-							AttackUnit(spell.target)
-						end, spell.windUpTime)
-					end
-				end
+	if JaxMenu.LaneClear.W:Value() and unit.isMe and spell.name:lower():find("attack") and spell.target.isMinion and spell.target.team == 300 - GetTeam(myHero) or spell.target.team == 300 then
+		if Mix:Mode() == "LaneClear"
+			if Ready(_W) then
+				CastSpell(_W)
+				DelayAction(function()
+					AttackUnit(spell.target)
+				end, spell.windUpTime)
 			end
 		end
 	end
