@@ -1,6 +1,6 @@
 if GetObjectName(GetMyHero()) ~= "Olaf" then return end
 
-local v = 12
+local v = 13
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.version", function(num)
 	if v < tonumber(num) then
@@ -59,6 +59,9 @@ OlafMenu.KS:Boolean("E", "Use E", true)
 OlafMenu:SubMenu("Ign", "Auto Ignite")
 OlafMenu.Ign:Boolean("AIgn", "Use Auto Ignite", true)
 -----------------------------------------------------------------
+OlafMenu:SubMenu("QPredict", "Q Prediction")
+OlafMenu.QPredict:Slider("pQ", "Q Prediction", 20, 0, 100, 5)
+-----------------------------------------------------------------
 OlafMenu:SubMenu("AutoR", "Auto R")
 OlafMenu.AutoR:Boolean("R", "Use R", true)
 OlafMenu.AutoR:Slider("hR", "Use R under % HP", 50, 0, 100, 5)
@@ -103,7 +106,7 @@ end)
 
 OnTick(function()
 	local target = GetCurrentTarget()
-	
+	local QPred = GetLinearAOEPrediction(target, OlafQ)	
 --Combo--
 
 	if Mix:Mode() == "Combo" then
@@ -114,8 +117,7 @@ OnTick(function()
 			CastSpell(_W)
 			end
 		if OlafMenu.Combo.Q:Value() and Ready(_Q) and ValidTarget(target, 1000) then
-			local QPred = GetLinearAOEPrediction(target, OlafQ)
-			if QPred.hitChance >= 0.3 then
+			if QPred and QPred.hitChance >= (OlafMenu.QPredict.pQ:Value()/100) then
 				CastSkillShot(_Q, QPred.castPos)
 			end
 		end
@@ -131,8 +133,7 @@ OnTick(function()
 			CastSpell(_W)
 			end
 		if OlafMenu.Harass.Q:Value() and Ready(_Q) and ValidTarget(target, 1000) and GetPercentMP(myHero) >= OlafMenu.Harass.mQ:Value() then
-			local QPred = GetLinearAOEPrediction(target, OlafQ)
-			if QPred.hitChance >= 0.3 then
+			if QPred and QPred.hitChance >= (OlafMenu.QPredict.pQ:Value()/100) then
 				CastSkillShot(_Q, QPred.castPos)
 			end
 		end
@@ -144,7 +145,6 @@ OnTick(function()
 	
 		if OlafMenu.KS.Q:Value() and Ready(_Q) and ValidTarget(enemy, 1000) then
 			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, 25 + 45 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero), 0) then
-				local QPred = GetLinearAOEPrediction(enemy, OlafQ)
 				if QPred.hitChance >= 0.3 then
 					CastSkillShot(_Q, QPred.castPos)
 				end
