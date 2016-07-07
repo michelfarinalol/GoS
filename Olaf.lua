@@ -10,7 +10,14 @@ end)
 
 require("OpenPredict")
 require("Analytics")
-require("MixLib")
+
+if FileExist(COMMON_PATH.."MixLib.lua") then
+ require('MixLib')
+else
+ PrintChat("MixLib not found. Please wait for download.")
+ DownloadFileAsync("https://raw.githubusercontent.com/VTNEETS/NEET-Scripts/master/MixLib.lua", COMMON_PATH.."MixLib.lua", function() PrintChat("Downloaded MixLib. Please 2x F6!") return end)
+end
+
 Analytics("Olaf.lua", "wildrelic", true)
 
 --Menu--
@@ -81,7 +88,7 @@ OnTick(function()
 		if OlafMenu.Combo.E:Value() and Ready(_E) and ValidTarget(target, 325) then
 			CastTargetSpell(target, _E)
 			end
-		if OlafMenu.Combo.W:Value() and Ready(_W) and ValidTarget(target, 250) and (GetCurrentHP(myHero)/GetMaxHP(myHero)) <= (OlafMenu.Combo.uW:Value()/100) then
+		if OlafMenu.Combo.W:Value() and Ready(_W) and ValidTarget(target, 250) and GetPercent(myHero) <= OlafMenu.Harass.uW:Value() then
 			CastSpell(_W)
 			end
 		if OlafMenu.Combo.Q:Value() and Ready(_Q) and ValidTarget(target, 1000) then
@@ -97,7 +104,7 @@ OnTick(function()
 		if OlafMenu.Harass.E:Value() and Ready(_E) and ValidTarget(target, 325) then
 			CastTargetSpell(target, _E)
 			end
-		if OlafMenu.Harass.W:Value() and Ready(_W) and ValidTarget(target, 250) and (GetCurrentHP(myHero)/GetMaxHP(myHero)) <= (OlafMenu.Harass.uW:Value()/100) then
+		if OlafMenu.Harass.W:Value() and Ready(_W) and ValidTarget(target, 250) and GetPercent(myHero) <= OlafMenu.Harass.uW:Value() then
 			CastSpell(_W)
 			end
 		if OlafMenu.Harass.Q:Value() and Ready(_Q) and ValidTarget(target, 1000) then
@@ -171,7 +178,7 @@ OnTick(function()
 					end
 				end
 				if OlafMenu.LH.Q:Value() and Ready(_Q) and ValidTarget(mob, 1000) then
-					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, GetCastLevel(myHero, _Q), 0) * 45 + 25 + GetBonusDmg(myHero) * 1 then
+					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, GetCastLevel(myHero, _Q) * 45 + 25, 0) + GetBonusDmg(myHero) * 1 then
 						CastSkillShot(_Q, mob)
 					end
 				end
