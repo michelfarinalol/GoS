@@ -211,13 +211,13 @@ OnTick(function()
 --LastHit--
 		
 		if Mix:Mode() == "LastHit" then
-			if GetTeam(mob) == 300 - GetTeam(myHero) then
+			if GetTeam(mob) == MINION_ENEMY then
 				if OlafMenu.LH.E:Value() and Ready(_E) and ValidTarget(mob, 325) then
 					local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
 					if GetCurrentHP(mob) + GetDmgShield(mob) < eDmg then
 						CastTargetSpell(mob, _E)
+						end
 					end
-				end
 				if OlafMenu.LH.Q:Value() and Ready(_Q) and ValidTarget(mob, 1000) then
 					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, 25 + 45 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero), 0) then
 						CastSkillShot(_Q, mob)
