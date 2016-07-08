@@ -1,6 +1,6 @@
 if GetObjectName(GetMyHero()) ~= "Olaf" then return end
 
-local v = 14
+local v = 15
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.version", function(num)
 	if v < tonumber(num) then
@@ -314,11 +314,11 @@ local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
 					if GetCurrentHP(mob) < eDmg and Ready (_E) then
 						DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(100, 200, 0, 255))
 					end
-					if GetCurrentHP(mob) < BaseAD + BonusAD + (BaseAD + BonusAD) * 0.20 and GetCurrentHP(mob) > BaseAD + BonusAD then
-						DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(100, 255, 0, 0))
-					elseif GetCurrentHP(mob) < BaseAD + BonusAD then
-						DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(100, 0, 255, 0))
-					end
+					--if GetCurrentHP(mob) < BaseAD + BonusAD + (BaseAD + BonusAD) * 0.20 and GetCurrentHP(mob) > BaseAD + BonusAD then
+					--	DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(100, 255, 0, 0))
+					--elseif GetCurrentHP(mob) < BaseAD + BonusAD then
+					--	DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(100, 0, 255, 0))
+					--end
 				end
 			end
 		end
