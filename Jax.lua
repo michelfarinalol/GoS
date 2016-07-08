@@ -38,12 +38,6 @@ JaxMenu.Drawings:Boolean("E", "Draw E", true)
 JaxMenu.Drawings:Boolean("R", "Draw R", true)
 -----------------------------------------------------------------
 
-OnUpdateBuff(function(unit, buff)
-          if unit.isMe then 
-          print(buff.Name)
-          end
-end)
-
 OnTick(function()
 
 	local target = GetCurrentTarget()
@@ -81,8 +75,8 @@ OnTick(function()
 	end
 --Laneclear / Jungleclear--
 	
-	if Mix:Mode() == "Laneclear" then
-		for _, mob in pairs(minionManager.objects) do
+	for _, mob in pairs(minionManager.objects) do
+		if Mix:Mode() == "Laneclear" then
 			if GetTeam(mob) == 300 - GetTeam(myHero) then
 				if JaxMenu.Laneclear.Q:Value() and Ready(_Q) and ValidTarget(mob, 700) then
 					CastTargetSpell(mob, _Q)
