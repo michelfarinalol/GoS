@@ -107,7 +107,6 @@ end)
 OnTick(function()
 	local target = GetCurrentTarget()
 	local QPred = GetLinearAOEPrediction(target, OlafQ)	
-	local QPred2 = GetLinearAOEPrediction(enemy, OlafQ)
 --Combo--
 
 	if Mix:Mode() == "Combo" then
@@ -146,7 +145,7 @@ OnTick(function()
 	
 		if OlafMenu.KS.Q:Value() and Ready(_Q) and ValidTarget(enemy, 1000) then
 			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, 25 + 45 * GetCastLevel(myHero, _Q) + GetBonusDmg(myHero), 0) then
-				if Qpred2 and Qpred2.hitChance >= (OlafMenu.QPredict.pQ:Value()/100) then
+				if QPred and QPred.hitChance >= (OlafMenu.QPredict.pQ:Value()/100) then
 					CastSkillShot(_Q, QPred.castPos)
 				end
 			end
