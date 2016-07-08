@@ -180,7 +180,7 @@ OnTick(function()
 	
 	for _,mob in pairs(minionManager.objects) do
 	
---LaneClear / JungleClear--
+--LaneClear / JungleClear-- need to fix for shields on minions and stuff
 	
 		if Mix:Mode() == "LaneClear" then
 			if GetTeam(mob) == MINION_ENEMY then
