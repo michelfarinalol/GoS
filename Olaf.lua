@@ -1,9 +1,10 @@
 if GetObjectName(GetMyHero()) ~= "Olaf" then return end
 
-local v = 15
+local v = 16
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.version", function(num)
 	if v < tonumber(num) then
+		PrintChat("[Olaf] Update Available. x2 f6 to Update.")
 		DownloadFileAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.lua", SCRIPT_PATH .. "Olaf.lua", function() PrintChat("[Olaf] Updated") end)
 	end
 end)
