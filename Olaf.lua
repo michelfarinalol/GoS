@@ -5,7 +5,7 @@ local v = 17
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.version", function(num)
 	if v < tonumber(num) then
 		PrintChat("[Olaf] Update Available. x2 f6 to Update.")
-		DownloadFileAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.lua", SCRIPT_PATH .. "Olaf.lua", function() PrintChat("[Olaf] Updated") return end)
+		DownloadFileAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.lua", SCRIPT_PATH .. "Olaf.lua", function() PrintChat("Enjoy your game!") return end)
 	end
 end)
 
