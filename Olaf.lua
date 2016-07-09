@@ -1,11 +1,11 @@
 if GetObjectName(GetMyHero()) ~= "Olaf" then return end
 
-local v = 16
+local v = 17
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.version", function(num)
 	if v < tonumber(num) then
 		PrintChat("[Olaf] Update Available. x2 f6 to Update.")
-		DownloadFileAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.lua", SCRIPT_PATH .. "Olaf.lua", function() PrintChat("[Olaf] Updated") end)
+		DownloadFileAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.lua", SCRIPT_PATH .. "Olaf.lua", function()
 	end
 end)
 
@@ -107,7 +107,7 @@ end)
 
 OnTick(function()
 	local target = GetCurrentTarget()
-	local QPred = GetLinearAOEPrediction(target, OlafQ)	
+	local QPred = GetLinearAOEPrediction(target, OlafQ)
 --Combo--
 
 	if Mix:Mode() == "Combo" then
@@ -244,7 +244,7 @@ local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
 
 		if OlafMenu.Draw.DrawAxe:Value() then
 			if AxeOlaf then
-				DrawCircle(GetOrigin(AxeOlaf), 70, 5, 100, ARGB(100, 0, 0, 255))
+				DrawCircle(GetOrigin(AxeOlaf), 70, 5, 100, ARGB(255, 0, 0, 255))
 			end
 		end
 
@@ -311,9 +311,9 @@ local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
 		local BonusAD = GetBonusDmg(myHero)
 		local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
 			for _, mob in pairs(minionManager.objects) do
-				if GetTeam(mob) == 300 - GetTeam(myHero) and ValidTarget(mob, 10000) then
+				if GetTeam(mob) == 300 - GetTeam(myHero) and ValidTarget(mob, 5000) then
 					if GetCurrentHP(mob) < eDmg and Ready (_E) then
-						DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(100, 200, 0, 255))
+						DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(200, 200, 0, 255))
 					end
 					--if GetCurrentHP(mob) < BaseAD + BonusAD + (BaseAD + BonusAD) * 0.20 and GetCurrentHP(mob) > BaseAD + BonusAD then
 					--	DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(100, 255, 0, 0))
