@@ -1,6 +1,6 @@
 if GetObjectName(GetMyHero()) ~= "Olaf" then return end
 
-local v = 17
+local v = 18
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Olaf.version", function(num)
 	if v < tonumber(num) then
@@ -75,7 +75,8 @@ OlafMenu.Draw:Boolean("DrawE", "Draw E Range", true)
 OlafMenu.Draw:Boolean("DrawR", "Draw R", true)
 OlafMenu.Draw:Boolean("DrawAxe", "Draw Axe Circle", true)
 OlafMenu.Draw:Boolean("DrawDMG", "Draw DMG", true)
-OlafMenu.Draw:Boolean("MinCirc", "Minion Killable by E", true)
+OlafMenu.Draw:Boolean("MinECirc", "Minion Killable by E", true)
+OlafMenu.Draw:Boolean("MinAACirc", "Minion Killable by AA", true)
 -----------------------------------------------------------------
 
 local OlafQ = {delay = 0.25, speed = 1550, width = 100, range = 1000}
@@ -306,20 +307,24 @@ local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
 		
 --Minion Circles--		
 		
-		if OlafMenu.Draw.MinCirc:Value() then
+		for _, mob in pairs(minionManager.objects) do
 		local BaseAD = GetBaseDamage(myHero)
 		local BonusAD = GetBonusDmg(myHero)
 		local eDmg = 25 + 45 * GetCastLevel(myHero, _E) + GetBaseDamage(myHero) * 0.4
-			for _, mob in pairs(minionManager.objects) do
-				if GetTeam(mob) == 300 - GetTeam(myHero) and ValidTarget(mob, 5000) then
+			if OlafMenu.Draw.MinECirc:Value() then
+				if GetTeam(mob) == MINION_ENEMY and ValidTarget(mob, 5000) then
 					if GetCurrentHP(mob) < eDmg and Ready (_E) then
 						DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(200, 200, 0, 255))
 					end
+				end
+			end
+			if OlafMenu.Draw.MinAACirc:Value() then
+				if GetTeam(mob) == MINION_ENEMY and ValidTarget(mob, 5000) then
 					--if GetCurrentHP(mob) < BaseAD + BonusAD + (BaseAD + BonusAD) * 0.20 and GetCurrentHP(mob) > BaseAD + BonusAD then
 					--	DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(100, 255, 0, 0))
-					--elseif GetCurrentHP(mob) < BaseAD + BonusAD then
-					--	DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(100, 0, 255, 0))
-					--end
+					if GetCurrentHP(mob) < BaseAD + BonusAD then
+						DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(200, 255, 255, 255))
+					end
 				end
 			end
 		end
