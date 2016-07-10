@@ -1,6 +1,6 @@
 if GetObjectName(GetMyHero()) ~= "Gnar" then return end
 
-local v = 0.12
+local v = 0.13
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Gnar.version", function(num)
 	if v < tonumber(num) then
@@ -169,7 +169,7 @@ OnTick(function()
 			end
 		elseif GnarMenu.Combo.Q:Value() and GnarMenu.Combo.mQ:Value() and Ready(_Q) and ValidTarget(target, 1200) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1) then
 			if mQPred and mQPred.hitChance >= (GnarMenu.p.mpQ:Value()/100) and (mQPred:mCollision(2) or mQPred:hCollision(1)) then
-				CastSkillShot(_Q, mQPred.castPos
+				CastSkillShot(_Q, mQPred.castPos)
 			end
 		end
 		if GnarMenu.Combo.MQ:Value() and Ready(_Q) and ValidTarget(target, 1150) and GetCastName(myHero, _Q) == "GnarBigQ" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
@@ -375,20 +375,17 @@ OnDraw(function()
 		if GetTeam(mob) == MINION_ENEMY and ValidTarget(mob, 5000)then
 			if GnarMenu.Draw.MinQCirc:Value() and Ready(_Q) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1) then
 				if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -30 + 30 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.15, 0) then
-					DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 255, 115, 0)
-					end
+					DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 255, 115, 0))
 				end
 			end
 			if GnarMenu.Draw.MinQCirc:Value() and Ready(_Q) and GetCastName(myHero, _Q) == "GnarBigQ" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
 				if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -35 + 40 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.2, 0) then
-					DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 255, 115, 0)
-					end
+					DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 255, 115, 0))
 				end
 			end
 			if GnarMenu.Draw.MinAACirc:Value() then
 				if GetCurrentHP(mob) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
 					DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(200, 255, 255, 255))
-					end
 				end
 			end
 		end
