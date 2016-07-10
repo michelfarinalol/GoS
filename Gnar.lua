@@ -216,7 +216,9 @@ OnTick(function()
 		if Mix:Mode() == "LaneClear" then
 			if GetTeam(mob) == MINION_ENEMY then
 				if GnarMenu.LC.Q:Value() and Ready(_Q) and ValidTarget(mob, 1200) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1) then
-					CastSkillShot(_Q, mob)
+					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -30 + 30 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.15, 0) then
+						CastSkillShot(_Q, mob)
+					end
 				end
 				if GnarMenu.LC.MQ:Value() and Ready(_Q) and ValidTarget(mob, 1150) and GetCastName(myHero, _Q) == "GnarBigQ" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
 					CastSkillShot(_Q, mob)
@@ -233,8 +235,10 @@ OnTick(function()
 					CastSkillShot(_Q, mob)
 					end
 				if GnarMenu.JC.MQ:Value() and Ready(_Q) and ValidTarget(mob, 1150) and GetCastName(myHero, _Q) == "GnarBigQ" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
-					CastSkillShot(_Q, mob)
+					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -30 + 30 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.15, 0) then
+						CastSkillShot(_Q, mob)
 					end
+				end
 				if GnarMenu.JC.W:Value() and Ready(_W) and ValidTarget(mob, 600) and GetCastName(myHero, _W) == "GnarBigW" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
 					CastSkillshot(_W, mob)
 					end
@@ -245,17 +249,25 @@ OnTick(function()
 			end
 		if Mix:Mode() == "LastHit" then
 			if GetTeam(mob) == MINION_ENEMY then
-				if GnarMenu.LC.Q:Value() and Ready(_Q) and ValidTarget(mob, 1200) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1) then
-					CastSkillShot(_Q, mob)
+				if GnarMenu.LH.Q:Value() and Ready(_Q) and ValidTarget(mob, 1200) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1) then
+					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -30 + 30 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.15, 0) then
+						CastSkillShot(_Q, mob)
+					end
 				end
-				if GnarMenu.LC.MQ:Value() and Ready(_Q) and ValidTarget(mob, 1150) and GetCastName(myHero, _Q) == "GnarBigQ" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
-					CastSkillShot(_Q, mob)
+				if GnarMenu.LH.MQ:Value() and Ready(_Q) and ValidTarget(mob, 1150) and GetCastName(myHero, _Q) == "GnarBigQ" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
+					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -40 + 40 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.2, 0) then
+						CastSkillShot(_Q, mob)
+					end
 				end
-				if GnarMenu.LC.W:Value() and Ready(_W) and ValidTarget(mob, 600) and GetCastName(myHero, _W) == "GnarBigW" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
-					CastSkillShot(_W, mob)
+				if GnarMenu.LH.W:Value() and Ready(_W) and ValidTarget(mob, 600) and GetCastName(myHero, _W) == "GnarBigW" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
+					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, 5 + 20 * GetCastLevel(myHero, _W) + myHero.totalDamage, 0) then
+						CastSkillShot(_W, mob)
+					end
 				end
-				if GnarMenu.LC.E:Value() and Ready(_E) and ValidTarget(mob, 475) and GetCastName(myHero, _E) == "GnarBigE" and GotBuff(myHero, "gnartransform") == 1 then
-					CastSkillShot(_E, mob)
+				if GnarMenu.LH.E:Value() and Ready(_E) and ValidTarget(mob, 475) and GetCastName(myHero, _E) == "GnarBigE" and GotBuff(myHero, "gnartransform") == 1 then
+					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -20 + 40 * GetCastLevel(myHero, _E) + GetMaxHP(myHero) * 0.06, 0) then
+						CastSkillShot(_E, mob)
+					end
 				end
 			end
 		end
