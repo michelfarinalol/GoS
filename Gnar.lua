@@ -251,7 +251,7 @@ OnTick(function()
 				if GnarMenu.JC.MQ:Value() and Ready(_Q) and ValidTarget(mob, 1150) and not IsDead(mob) and GetCastName(myHero, _Q) == "GnarBigQ" and MegaGnar then
 					CastSkillShot(_Q, mob)
 				end
-				if GnarMenu.JC.W:Value() and Ready(_W) and ValidTarget(mob, 600) and not IsDead(mob) andGetCastName(myHero, _W) == "GnarBigW" and MegaGnar then
+				if GnarMenu.JC.W:Value() and Ready(_W) and ValidTarget(mob, 600) and not IsDead(mob) and GetCastName(myHero, _W) == "GnarBigW" and MegaGnar then
 					CastSkillShot(_W, mob)
 				end
 				if GnarMenu.JC.E:Value() and Ready(_E) and ValidTarget(mob, 475) and not IsDead(mob) and GetCastName(myHero, _W) == "GnarBigW" and GotBuff(myHero, "gnartransform") == 1 then
