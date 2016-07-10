@@ -167,10 +167,10 @@ OnTick(function()
 			if mQPred and mQPred.hitChance >= (GnarMenu.p.mpQ:Value()/100) and not mQPred:mCollision(1) and not mQPred:hCollision(1) then
 				CastSkillShot(_Q, mQPred.castPos)
 			end
-		elseif GnarMenu.Combo.Q:Value() and GnarMenu.Combo.mQ:Value() and Ready(_Q) and ValidTarget(target, 1200) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1) then
-			if mQPred and mQPred.hitChance >= (GnarMenu.p.mpQ:Value()/100) and (mQPred:mCollision(2) or mQPred:hCollision(1)) then
-				CastSkillShot(_Q, mQPred.castPos)
-			end
+		--elseif GnarMenu.Combo.Q:Value() and GnarMenu.Combo.mQ:Value() and Ready(_Q) and ValidTarget(target, 1200) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1) then
+			--if mQPred and mQPred.hitChance >= (GnarMenu.p.mpQ:Value()/100) and (mQPred:mCollision(2) or mQPred:hCollision(1)) then
+				--CastSkillShot(_Q, mQPred.castPos)
+			--end
 		end
 		if GnarMenu.Combo.MQ:Value() and Ready(_Q) and ValidTarget(target, 1150) and GetCastName(myHero, _Q) == "GnarBigQ" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
 			if MQPred and MQPred.hitChance >= (GnarMenu.p.MpQ:Value()/100) and not mQPred:mCollision(1) and not mQPred:hCollision(1) then
@@ -199,10 +199,10 @@ OnTick(function()
 			if mQPred and mQPred.hitChance >= (GnarMenu.p.mpQ:Value()/100) and not mQPred:mCollision(1) and not mQPred:hCollision(1) then
 				CastSkillShot(_Q, mQPred.castPos)
 			end
-		elseif GnarMenu.Harass.Q:Value() and GnarMenu.Harass.mQ:Value() and Ready(_Q) and ValidTarget(target, 1200) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1) then
-			if mQPred and mQPred.hitChance >= (GnarMenu.p.mpQ:Value()/100) and (mQPred:mCollision(2) or mQPred:hCollision(1)) then
-				CastSkillShot(_Q, mQPred.castPos)
-			end
+		--elseif GnarMenu.Harass.Q:Value() and GnarMenu.Harass.mQ:Value() and Ready(_Q) and ValidTarget(target, 1200) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1) then
+			--if mQPred and mQPred.hitChance >= (GnarMenu.p.mpQ:Value()/100) and (mQPred:mCollision(2) or mQPred:hCollision(1)) then
+				--CastSkillShot(_Q, mQPred.castPos)
+			--end
 		end
 		if GnarMenu.Harass.MQ:Value() and Ready(_Q) and ValidTarget(target, 1150) and GetCastName(myHero, _Q) == "GnarBigQ" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
 			if MQPred and MQPred.hitChance >= (GnarMenu.p.MpQ:Value()/100) and not MQPred:mCollision(1) and not MQPred:hCollision(1) then
@@ -227,10 +227,10 @@ OnTick(function()
 					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -30 + 30 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.15, 0) then
 						CastSkillShot(_Q, mob)
 					end
-				elseif GnarMenu.LC.Q:Value() and Ready(_Q) and ValidTarget(mob, 1200) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") ==1) and (mQPred:mCollision(2) or mQPred:hCollision(1)) then
-					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -30 + 30 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.15 * 0.5, 0) then
-						CastSkillShot(_Q, mob)
-					end
+				--elseif GnarMenu.LC.Q:Value() and Ready(_Q) and ValidTarget(mob, 1200) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") ==1) and (mQPred:mCollision(2) or mQPred:hCollision(1)) then
+					--if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -30 + 30 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.15 * 0.5, 0) then
+						--CastSkillShot(_Q, mob)
+					--end
 				end
 				if GnarMenu.LC.MQ:Value() and Ready(_Q) and ValidTarget(mob, 1150) and GetCastName(myHero, _Q) == "GnarBigQ" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
 					CastSkillShot(_Q, mob)
@@ -245,7 +245,7 @@ OnTick(function()
 			if GetTeam(mob) == MINION_JUNGLE then
 				if GnarMenu.JC.Q:Value() and Ready(_Q) and ValidTarget(mob, 1200) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1) then
 					CastSkillShot(_Q, mob)
-					end
+				end
 				if GnarMenu.JC.MQ:Value() and Ready(_Q) and ValidTarget(mob, 1150) and GetCastName(myHero, _Q) == "GnarBigQ" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
 					CastSkillShot(_Q, mob)
 				end
@@ -380,22 +380,22 @@ OnDraw(function()
 				DrawCircle(GetOrigin(myHero), 500, 5, 100, ARGB(100, 255, 0, 0))
 			end
 		end
-	end
-	for _, mob in pairs(minionManager.objects) do
-		if GetTeam(mob) == MINION_ENEMY and ValidTarget(mob, 5000)then
-			if GnarMenu.Draw.MinQCirc:Value() and Ready(_Q) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1) then
-				if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -30 + 30 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.15, 0) then
-					DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 255, 115, 0))
+		for _, mob in pairs(minionManager.objects) do
+			if GetTeam(mob) == MINION_ENEMY and ValidTarget(mob, 5000)then
+				if GnarMenu.Draw.MinQCirc:Value() and Ready(_Q) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1) then
+					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -30 + 30 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.15, 0) then
+						DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 255, 115, 0))
+					end
 				end
-			end
-			if GnarMenu.Draw.MinQCirc:Value() and Ready(_Q) and GetCastName(myHero, _Q) == "GnarBigQ" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
-				if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -35 + 40 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.2, 0) then
-					DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 255, 115, 0))
+				if GnarMenu.Draw.MinQCirc:Value() and Ready(_Q) and GetCastName(myHero, _Q) == "GnarBigQ" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
+					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -35 + 40 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.2, 0) then
+						DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 255, 115, 0))
+					end
 				end
-			end
-			if GnarMenu.Draw.MinAACirc:Value() then
-				if GetCurrentHP(mob) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
-					DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(200, 255, 255, 255))
+				if GnarMenu.Draw.MinAACirc:Value() then
+					if GetCurrentHP(mob) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
+						DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(200, 255, 255, 255))
+					end
 				end
 			end
 		end
