@@ -1,6 +1,6 @@
 if GetObjectName(GetMyHero()) ~= "Gnar" then return end
 
-local v = 0.15
+local v = 0.16
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Gnar.version", function(num)
 	if v < tonumber(num) then
@@ -289,14 +289,14 @@ OnTick(function()
 	for _,enemy in pairs(GetEnemyHeroes()) do	
 		if GnarMenu.KS.Q:Value() and Ready(_Q) and ValidTarget(enemy) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1) then
 			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, -30 + 30 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.15, 0) then
-				if mQPred and mQPred.hitChance >= (GnarMenu.p.mpQ:Value()/100) and not mQPred:mCollision(1) and not mQPred:hCollision then
+				if mQPred and mQPred.hitChance >= (GnarMenu.p.mpQ:Value()/100) and not mQPred:mCollision(1) and not mQPred:hCollision(1) then
 					CastSkillShot(_Q, mQPred.castPos)
 				end
 			end
 		end
 		if GnarMenu.KS.MQ:Value() and Ready(_Q) and ValidTarget(enemy) and GetCastName(myHero, _Q) == "GnarBigQ" and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
 			if GetCurrentHP(enemy) + GetDmgShield(enemy) < CalcDamage(myHero, enemy, -35 + 40 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.2, 0) then
-				if MQPred and MQPred.hitChance >= (GnarMenu.p.MpQ:Value()/100) and not MQPred:mCollision(1) and not MQPred:hCollision then
+				if MQPred and MQPred.hitChance >= (GnarMenu.p.MpQ:Value()/100) and not MQPred:mCollision(1) and not MQPred:hCollision(1) then
 					CastSkillShot(_Q, MQPred.castPos)
 				end
 			end
