@@ -25,7 +25,7 @@ GnarMenu = Menu("Gnar", "Gnar")
 -----------------------------------------------------------------
 GnarMenu:SubMenu("Combo", "Combo")
 GnarMenu.Combo:Boolean("Q", "Use Mini Gnar Q", true)
---GnarMenu.Combo:Boolean("mQ", "Mini Gnar Q Through Minions", true)
+GnarMenu.Combo:Boolean("mQ", "Mini Gnar Q Through Minions", true)
 GnarMenu.Combo:Boolean("MQ", "Use Mega Gnar Q", true)
 GnarMenu.Combo:Boolean("W", "Use Mega Gnar W", true)
 --GnarMenu.Combo:Boolean("mE", "Use Mini Gnar E", false)
@@ -41,7 +41,7 @@ GnarMenu.Combo:Slider("aeR", "Auto Use R on # of Enemies", 3, 1, 5, 1)
 -----------------------------------------------------------------
 GnarMenu:SubMenu("Harass", "Harass")
 GnarMenu.Harass:Boolean("Q", "Use Mini Gnar Q", true)
---GnarMenu.Harass:Boolean("mQ", "Use Mini Gnar Q through Minions", true)
+GnarMenu.Harass:Boolean("mQ", "Use Mini Gnar Q through Minions", true)
 GnarMenu.Harass:Boolean("MQ", "Use Mega Gnar Q", true)
 GnarMenu.Harass:Boolean("W", "Use Mega Gnar W", true)
 GnarMenu.Harass:Boolean("E", "Use Mega Gnar E", true)
@@ -88,7 +88,7 @@ GnarMenu.Draw:Boolean("R", "Draw R Range", true)
 --GnarMenu.Draw:Boolean("DrawQ1", "Draw Mini Gnar Q", true)
 GnarMenu.Draw:Boolean("DrawQ2", "Draw Mega Gnar Q Rock", true)
 --GnarMenu.Draw:Boolean("DrawDMG", "Draw DMG", true)
---GnarMenu.Draw:Boolean("MinQCirc", "Minion Killable by Q", true)
+GnarMenu.Draw:Boolean("MinQCirc", "Minion Killable by Q", true)
 GnarMenu.Draw:Boolean("MinAACirc", "Minion Killable by AA", true)
 -----------------------------------------------------------------
 
@@ -197,6 +197,10 @@ OnTick(function()
 	if Mix:Mode() == "Harass" then
 		if GnarMenu.Harass.Q:Value() and Ready(_Q) and ValidTarget(target, 1200) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1) then
 			if mQPred and mQPred.hitChance >= (GnarMenu.p.mpQ:Value()/100) and not mQPred:mCollision(1) and not mQPred:hCollision(1) then
+				CastSkillShot(_Q, mQPred.castPos)
+			end
+		elseif GnarMenu.Harass.Q:Value() and GnarMenu.Harass.mQ:Value() and Ready(_Q) and ValidTarget(target, 1200) and GetCastName(myHero, _Q) == "GnarQ" and (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1) then
+			if mQPred and mQPred.hitChance >= (GnarMenu.p.mpQ:Value()/100) and (mQPred:mCollision(2) or mQPred:hCollision(1)) then
 				CastSkillShot(_Q, mQPred.castPos)
 			end
 		end
