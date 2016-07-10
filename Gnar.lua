@@ -326,6 +326,9 @@ OnTick(function()
 end)
 
 OnDraw(function()
+	local MiniGnar = (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1)
+	local MegaGnar = (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1)
+
 	if IsObjectAlive(myHero) then
 		--if GnarMenu.Draw.DrawQ1:Value() then
 			--if mGnarQ then
@@ -384,12 +387,12 @@ OnDraw(function()
 		end
 		for _, mob in pairs(minionManager.objects) do
 			if GetTeam(mob) == MINION_ENEMY and ValidTarget(mob, 5000)then
-				if GnarMenu.Draw.MinQCirc:Value() and Ready(_Q) and GetCastName(myHero, _Q) == "GnarQ" and MiniGnar then
+				if GnarMenu.Draw.MinQCirc:Value() and Ready(_Q) and MiniGnar then
 					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -30 + 30 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.15, 0) then
 						DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 255, 115, 0))
 					end
 				end
-				if GnarMenu.Draw.MinQCirc:Value() and Ready(_Q) and GetCastName(myHero, _Q) == "GnarBigQ" and MegaGnar then
+				if GnarMenu.Draw.MinQCirc:Value() and Ready(_Q) and MegaGnar then
 					if GetCurrentHP(mob) + GetDmgShield(mob) < CalcDamage(myHero, mob, -35 + 40 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.2, 0) then
 						DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 255, 115, 0))
 					end
