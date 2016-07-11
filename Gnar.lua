@@ -1,6 +1,6 @@
 if GetObjectName(GetMyHero()) ~= "Gnar" then return end
 
-local v = 0.21
+local v = 0.22
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Gnar.version", function(num)
 	if v < tonumber(num) then
@@ -117,12 +117,6 @@ local MiniGnarE = {delay = 0, speed = 903, width = 150, range = 473}
 local MegaGnarE = {delay = 0.25, speed = 1000, width = 200, range = 475}
 local MegaGnarR = {delay = 0.25, speed = math.huge, width = 500, range = 0}
 
-local mQDMG = -30 + 30 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.15
-local MQDMG = -35 + 40 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.2
-local MWDMG = 5 + 20 * GetCastLevel(myHero, _W) + myHero.totalDamage
-local EDMG = -20 + 40 * GetCastLevel(myHero, _E) + GetMaxHP(myHero) * 0.06
-local RDMG = 100 + 100 * GetCastLevel(myHero, _R) + GetBonusDmg(myHero) * 0.2 + GetBonusAP(myHero) * 0.5
-
 OnObjectLoad(function(Object)
 	--if GetObjectBaseName(Object) == "Gnar_Base_Q_mis.troy" then
 		--mGnarQ = Object
@@ -169,6 +163,11 @@ OnTick(function()
 	local RPred = GetCircularAOEPrediction(target, MegaGnarR)
 	local MiniGnar = (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1)
 	local MegaGnar = (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1)
+	local mQDMG = -30 + 30 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.15
+	local MQDMG = -35 + 40 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.2
+	local MWDMG = 5 + 20 * GetCastLevel(myHero, _W) + myHero.totalDamage
+	local EDMG = -20 + 40 * GetCastLevel(myHero, _E) + GetMaxHP(myHero) * 0.06
+	local RDMG = 100 + 100 * GetCastLevel(myHero, _R) + GetBonusDmg(myHero) * 0.2 + GetBonusAP(myHero) * 0.5
 		
 	if Mix:Mode() == "Combo" then
 		if GnarMenu.Combo.Q:Value() and Ready(_Q) and ValidTarget(target, 1200) and GetCastName(myHero, _Q) == "GnarQ" and MiniGnar then
@@ -338,6 +337,11 @@ end)
 OnDraw(function()
 	local MiniGnar = (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1)
 	local MegaGnar = (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1)
+	local mQDMG = -30 + 30 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.15
+	local MQDMG = -35 + 40 * GetCastLevel(myHero, _Q) + myHero.totalDamage * 1.2
+	local MWDMG = 5 + 20 * GetCastLevel(myHero, _W) + myHero.totalDamage
+	local EDMG = -20 + 40 * GetCastLevel(myHero, _E) + GetMaxHP(myHero) * 0.06
+	local RDMG = 100 + 100 * GetCastLevel(myHero, _R) + GetBonusDmg(myHero) * 0.2 + GetBonusAP(myHero) * 0.5
 
 	if IsObjectAlive(myHero) then
 		--if GnarMenu.Draw.DrawQ1:Value() then
