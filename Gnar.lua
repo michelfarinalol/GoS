@@ -192,7 +192,7 @@ OnTick(function()
 		end
 		if GnarMenu.Combo.mE:Value() and Ready(_E) and ValidTarget(target, 473) and GetCastName(myHero, _E) == "GnarE" and MiniGnar and EnemiesAround(GetOrigin(myHero), GetCastRange(myHero,_E)) >= GnarMenu.Combo.cmE:Valu() and GetPercentHP(myHero) >= GnarMenu.Combo.hmE:Value() then
 			if mEPred and mEPred.hitChance >= (GnarMenu.p.mpE:Value()/100) then
-				CastSkillShot(_E) mEPred.castPos
+				CastSkillShot(_E, mEPred.castPos)
 			end
 		end
 		if GnarMenu.Combo.tE:Value() and Ready(_E) and ValidTarget(target, 475) and GetCastName(myHero, _E) == "GnarBigE" and GotBuff(myHero, "gnartransformsoon") == 1 and GetCurrentMana(myHero) >= 100 then
