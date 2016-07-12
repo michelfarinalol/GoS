@@ -1,6 +1,6 @@
 if GetObjectName(GetMyHero()) ~= "Gnar" then return end
 
-local v = 0.22
+local v = 0.23
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Gnar.version", function(num)
 	if v < tonumber(num) then
