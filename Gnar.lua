@@ -10,6 +10,7 @@ GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/Gnar.v
 end)
 
 require("OpenPredict")
+require("MapPosition")
 require("MapPositionGos")
 require("DamageLib")
 
@@ -38,6 +39,7 @@ GnarMenu.Combo:Boolean("R", "Use R", true)
 GnarMenu.Combo:Slider("eR", "Use R Only on # of Enemies", 2, 1, 5, 1)
 GnarMenu.Combo:Boolean("aR", "Auto Use R", true)
 GnarMenu.Combo:Slider("aeR", "Auto Use R on # of Enemies", 3, 1, 5, 1)
+GnarMenu.Combo:Slider("Angle","AngleQuality",.15,.01,.5,.01)
 -----------------------------------------------------------------
 GnarMenu:SubMenu("Harass", "Harass")
 GnarMenu.Harass:Boolean("Q", "Use Mini Gnar Q", true)
@@ -85,7 +87,7 @@ GnarMenu.Draw:Boolean("Q", "Draw Q Range", true)
 GnarMenu.Draw:Boolean("W", "Draw W Range", true)
 GnarMenu.Draw:Boolean("E", "Draw E Range", true)
 GnarMenu.Draw:Boolean("R", "Draw R Range", true)
---GnarMenu.Draw:Boolean("DrawQ1", "Draw Mini Gnar Q", true)
+GnarMenu.Draw:Boolean("DrawQ1", "Draw Mini Gnar Q", true)
 GnarMenu.Draw:Boolean("DrawQ2", "Draw Mega Gnar Q Rock", true)
 --GnarMenu.Draw:Boolean("DrawDMG", "Draw DMG", true)
 GnarMenu.Draw:Boolean("MinQCirc", "Minion Killable by Q", true)
@@ -100,7 +102,7 @@ GnarMenu.Draw:Boolean("MinAACirc", "Minion Killable by AA", true)
 
 --OnCreateObj(function(Object)
 --if Object.isSpell and Object.spellOwner.isMe then
---print(Object.spellName)
+--print(GetObjectSpellName(Object))
 --end
 --end)
 
@@ -118,36 +120,36 @@ local MegaGnarE = {delay = 0.25, speed = 1000, width = 200, range = 475}
 local MegaGnarR = {delay = 0.25, speed = math.huge, width = 500, range = 0}
 
 OnObjectLoad(function(Object)
-	--if GetObjectBaseName(Object) == "Gnar_Base_Q_mis.troy" then
-		--mGnarQ = Object
-	--end
-	--if GetObjectBaseName(Object) == "Gnar_Base_Q_mis.troy" then
-		--mGnarQ2 = Object
-	--end
+	if Object.isSpell and Object.spellOwner.isMe and GetObjectSpellName(Object) == "GnarQMissile" then
+		mGnarQ = Object
+	end
+	if Object.isSpell and Object.spellOwner.isMe and GetObjectSpellName(Object) == "GnarQMissileReturn" then
+		mGnarQ2 = Object
+	end
 	if GetObjectBaseName(Object) == "GnarBig_Base_Q_Rock_Ground.troy" then
 		MGnarQ = Object
 	end
 end)
 
 OnCreateObj(function(Object)
-	--if GetObjectBaseName(Object) == "Gnar_Base_Q_mis.troy" then
-		--mGnarQ = Object
-	--end
-	--if GetObjectBaseName(Object) == "Gnar_Base_Q_mis.troy" then
-		--mGnarQ2 = Object
-	--end
+	if Object.isSpell and Object.spellOwner.isMe and GetObjectSpellName(Object) == "GnarQMissile" then
+		mGnarQ = Object
+	end
+	if Object.isSpell and Object.spellOwner.isMe and GetObjectSpellName(Object) == "GnarQMissileReturn" then
+		mGnarQ2 = Object
+	end
 	if GetObjectBaseName(Object) == "GnarBig_Base_Q_Rock_Ground.troy" then
 		MGnarQ = Object
 	end
 end)
 
 OnDeleteObj(function(Object)
-	--if GetObjectBaseName(Object) == "Gnar_Base_Q_mis.troy" then
-		--mGnarQ = nil
-	--end
-	--if GetObjectBaseName(Object) == "Gnar_Base_Q_mis.troy" then
-		--mGnarQ2 = nil
-	--end
+	if Object.isSpell and Object.spellOwner.isMe and GetObjectSpellName(Object) == "GnarQMissile" then
+		mGnarQ = nil
+	end
+	if Object.isSpell and Object.spellOwner.isMe and GetObjectSpellName(Object) == "GnarQMissileReturn" then
+		mGnarQ2 = nil
+	end
 	if GetObjectBaseName(Object) == "GnarBig_Base_Q_Rock_Ground.troy" then
 		MGnarQ = nil
 	end
@@ -204,6 +206,17 @@ OnTick(function()
 				CastSkillShot(_E, MEPred.castPos)
 			end
 		end
+		--if GnarMenu.Combo.R:Value() then
+			--for _,enemy in pairs(GetEnemyHeroes()) do
+				--local d = 590 - (GetDistance(myHero, unit))
+				--local RPred = GetCircularAOEPrediction(target, MegaGnarR)
+				--local PosPred = Vector(RPred.PosPred)
+				--local Wall = 590
+				--for Stun = 0, 590, GetHitBox(enemy) do
+					--local StunPos = 
+--if MapPosition:inWall(Stun) == true and Ready(_R) and ValidTarget(enemy, 590) and MegaGnar and EnemiesAround(myHero, 590) >= GnarMenu.Combo.eR:Value() then
+--if RPred and RPred.hitChance >= (GnarMenu.p.pR:Value()/100) then
+				--CastSkillShot(_R, RPred.castPos)
 	end
 	if Mix:Mode() == "Harass" then
 		if GnarMenu.Harass.Q:Value() and Ready(_Q) and ValidTarget(target, 1200) and GetCastName(myHero, _Q) == "GnarQ" and MiniGnar then
@@ -344,16 +357,16 @@ OnDraw(function()
 	local RDMG = 100 + 100 * GetCastLevel(myHero, _R) + GetBonusDmg(myHero) * 0.2 + GetBonusAP(myHero) * 0.5
 
 	if IsObjectAlive(myHero) then
-		--if GnarMenu.Draw.DrawQ1:Value() then
-			--if mGnarQ then
-				--DrawCircle(GetOrigin(mGnarQ), 70, 5, 100, ARGB(255, 0, 0, 255))
-			--end
-		--end
-		--if GnarMenu.Draw.DrawQ1:Value() then
-			--if mGnarQ2 then
-				--DrawCircle(GetOrigin(mGnarQ2), 70, 5, 100, ARGB(255, 0, 0, 255))
-			--end
-		--end
+		if GnarMenu.Draw.DrawQ1:Value() then
+			if mGnarQ then
+				DrawCircle(GetOrigin(mGnarQ), 70, 5, 100, ARGB(255, 0, 0, 255))
+			end
+		end
+		if GnarMenu.Draw.DrawQ2:Value() then
+			if mGnarQ2 then
+				DrawCircle(GetOrigin(mGnarQ2), 70, 5, 100, ARGB(255, 0, 0, 255))
+			end
+		end
 		if GnarMenu.Draw.DrawQ2:Value() then
 			if MGnarQ then
 				DrawCircle(GetOrigin(MGnarQ), 90, 5, 100, ARGB(225, 0, 0, 255))
