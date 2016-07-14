@@ -2,6 +2,13 @@
 
 local v = 0.01
 
+GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/BPAIO.version", function(num)
+	if v < tonumber(num) then
+		PrintChat("[BPAIO] Update Available. x2 f6 to Update.")
+		DownloadFileAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/BPAIO.lua", SCRIPT_PATH .. "BPAIO.lua", function() PrintChat("Enjoy your game!") return end)
+	end
+end)
+
 require("OpenPredict")
 
 local BPChamps = 
@@ -36,3 +43,15 @@ Callback.Add("Load", function()
 		PrintChat(GetObjectName(myHero).." Is not supported!")
 	end
 end)
+
+class "Start"
+
+function Start:__init()
+	local myName = myHero.charName
+	ConfigMenu = MenuConfig("BPAIO", "BPAIO")
+		ConfigMenu:Menu("Champ", "BPAIO "..myName)
+end
+
+class "Annie"
+
+function Annie:__init()
