@@ -98,30 +98,30 @@ function Annie:Draw()
 	if IsObjectAlive(myHero) then
 		if BPAIO.D.Q:Value() then
 			if Ready(_Q) then
-				DrawCircle(GetOrigin(myHero), 625, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 625, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 625, 5, 100, ARGB(100, 225, 0, 0))
+				DrawCircle(GetOrigin(myHero), 625, 1, 100, ARGB(100, 225, 0, 0))
 			end
 		end
 		if BPAIO.D.W:Value() then
 			if Ready(_W) then
-				DrawCircle(GetOrigin(myHero), 615, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 625, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 615, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 625, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.E:Value() then
 			if Ready(_E) then
-				DrawCircle(GetOrigin(myHero), 50, 5, 50, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 50, 1, 50, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 50, 5, 50, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 50, 1, 50, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.R:Value() then
 			if Ready(_R) then
-				DrawCircle(GetOrigin(myHero), 600, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 600, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 600, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 600, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		for _, mob in pairs(minionManager.objects) do
@@ -186,30 +186,30 @@ function Ashe:Draw()
 	if IsObjectAlive(myHero) then
 		if BPAIO.D.Q:Value() then
 			if Ready(_Q) then
-				DrawCircle(GetOrigin(myHero), 600, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 600, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 600, 5, 100, ARGB(100, 225, 0, 0))
+				DrawCircle(GetOrigin(myHero), 600, 1, 100, ARGB(100, 225, 0, 0))
 			end
 		end
 		if BPAIO.D.W:Value() then
 			if Ready(_W) then
-				DrawCircle(GetOrigin(myHero), 1200, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 1200, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 1200, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 1200, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.E:Value() then
 			if Ready(_E) then
-				DrawCircle(GetOrigin(myHero), 100, 5, 50, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 100, 1, 50, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 100, 5, 50, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 100, 1, 50, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.R:Value() then
 			if Ready(_R) then
-				DrawCircle(GetOrigin(myHero), 200, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 200, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 200, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 200, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		for _, mob in pairs(minionManager.objects) do
@@ -298,30 +298,30 @@ function Darius:Draw()
 	if IsObjectAlive(myHero) then
 		if BPAIO.D.Q:Value() then
 			if Ready(_Q) then
-				DrawCircle(GetOrigin(myHero), 425, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 425, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myhero), 425, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myhero), 425, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.W:Value() then
 			if Ready(_W) then
-				DrawCircle(GetOrigin(myHero), 200, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 200, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 200, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 200, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.E:Value() then
 			if Ready(_E) then
-				DrawCircle(GetOrigin(myHero), 550, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 550, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 550, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 550, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.R:Value() then
 			if Ready(_R) then
-				DrawCircle(GetOrigin(myHero), 460, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 460, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 460, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 460, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		for _, mob in pairs(minionManager.objects) do
@@ -518,9 +518,9 @@ function Ryze:Draw()
 	if IsObjectAlive(myHero) then
 		if BPAIO.D.Q:Value() then
 			if Ready(_Q) then
-				DrawCircle(GetOrigin(myHero), 900, 1, 100, ARGB(100, 0, 225, 0))
+				DrawCircle(GetOrigin(myHero), 950, 1, 100, ARGB(100, 0, 225, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 900, 1, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 950, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.W:Value() then
@@ -532,9 +532,9 @@ function Ryze:Draw()
 		end
 		if BPAIO.D.E:Value() then
 			if Ready(_E) then
-				DrawCircle(GetOrigin(myHero), 580, 1, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 595, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 580, 1, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 595, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.R:Value() then
@@ -634,16 +634,16 @@ function Poppy:Draw()
 		end
 		if BPAIO.D.E:Value() then
 			if Ready(_E) then
-				DrawCircle(GetOrigin(myHero), 415, 1, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 420, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 415, 1, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 420, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.R:Value() then
 			if Ready(_R) then
-				DrawCircle(GetOrigin(myHero), 390, 1, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 395, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 390, 1, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 395, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		for _, mob in pairs(minionManager.objects) do
