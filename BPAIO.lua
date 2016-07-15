@@ -390,7 +390,7 @@ function Gnar:Tick()
 			CastSkillShot(_W, WPred.castPos)
 		end
 	end
-	if BPAIO.QWER.E:Value() and Ready(_E) and BPAIO(target, 473) and GetCastName(myHero, _E) == "GnarE" and MiniGnar then
+	if BPAIO.QWER.E:Value() and Ready(_E) and BPAIO(target, 475) and GetCastName(myHero, _E) == "GnarE" and MiniGnar then
 		if mEPred and mEPred.hitChance >= (BPAIO.p.mpE:Value()/100) then
 			CastSkillShot(_E, mEPred.castPos)
 		end
@@ -409,42 +409,42 @@ function Gnar:Draw()
 	if IsObjectAlive(myHero) then
 		if BPAIO.D.Q:Value() then
 			if Ready(_Q) and GotBuff(myHero, "gnartransform") == 0 then
-				DrawCircle(GetOrigin(myHero), 1200, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 1200, 1, 100, ARGB(100, 0, 255, 0))
 			elseif not Ready(_Q) and GotBuff(myHero, "gnartransform") == 0 then
-				DrawCircle(GetOrigin(myHero), 1200, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 1200, 1, 100, ARGB(100, 255, 0, 0))
 			elseif Ready (_Q) and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
-				DrawCircle(GetOrigin(myHero), 1150, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 1150, 1, 100, ARGB(100, 0, 255, 0))
 			elseif not Ready(_Q) and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
-				DrawCircle(GetOrigin(myHero), 1150, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 1150, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.W:Value() then
 			if Ready(_W) and GotBuff(myHero, "gnartransform") == 1 then
-				DrawCircle(GetOrigin(myHero), 600, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 600, 1, 100, ARGB(100, 255, 0, 0))
 			elseif not Ready(_W) and GotBuff(myHero, "gnartransform") == 1 then
-				DrawCircle(GetOrigin(myHero), 600, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 600, 1, 100, ARGB(100, 0, 255, 0))
 			end
 		end
 		if BPAIO.D.E:Value() then
 			if Ready(_E) and GotBuff(myHero, "gnartransform") == 0 then
-				DrawCircle(GetOrigin(myHero), 475, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 475, 1, 100, ARGB(100, 0, 255, 0))
 			elseif not Ready(_E) and GotBuff(myHero, "gnartransform") == 0 then
-				DrawCircle(GetOrigin(myHero), 475, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 475, 1, 100, ARGB(100, 255, 0, 0))
 			elseif Ready (_E) and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
-				DrawCircle(GetOrigin(myHero), 475, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 475, 1, 100, ARGB(100, 0, 255, 0))
 			elseif not Ready(_E) and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
-				DrawCircle(GetOrigin(myHero), 475, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 475, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.R:Value() then
 			if Ready(_R) and GotBuff(myHero, "gnartransform") == 0 then
-				DrawCircle(GetOrigin(myHero), 500, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 500, 1, 100, ARGB(100, 0, 255, 0))
 			elseif not Ready(_R) and GotBuff(myHero, "gnartransform") == 0 then
-				DrawCircle(GetOrigin(myHero), 500, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 500, 1, 100, ARGB(100, 255, 0, 0))
 			elseif Ready (_R) and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
-				DrawCircle(GetOrigin(myHero), 500, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 500, 1, 100, ARGB(100, 0, 255, 0))
 			elseif not Ready(_R) and (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1) then
-				DrawCircle(GetOrigin(myHero), 500, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 500, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		for _, mob in pairs(minionManager.objects) do
@@ -490,7 +490,7 @@ BPAIO.D:Boolean("MinE", "Draw E Minion", true)
 BPAIO.D:Boolean("AA", "Draw Minion AA", true)
 
 OnTick(function(myHero) self.Tick() end)
-OnDraw(function(myHero) self.Tick() end)
+OnDraw(function(myHero) self.Draw() end)
 end
 
 function Ryze:Tick()
@@ -499,7 +499,7 @@ function Ryze:Tick()
 	local QPred = GetPrediction(target, RyzeQ)
 	
 	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 900) then
-		if QPred and QPred.hitChance >= (RyzeMenu.QWER.pQ:Value()/100) then
+		if QPred and QPred.hitChance >= (BPAIO.QWER.pQ:Value()/100) then
 			CastSkillShot(_Q, QPred.castPos)
 		end
 	end
@@ -518,30 +518,30 @@ function Ryze:Draw()
 	if IsObjectAlive(myHero) then
 		if BPAIO.D.Q:Value() then
 			if Ready(_Q) then
-				DrawCircle(GetOrigin(myHero), 900, 5, 100, ARGB(100, 0, 225, 0))
+				DrawCircle(GetOrigin(myHero), 900, 1, 100, ARGB(100, 0, 225, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 900, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 900, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.W:Value() then
 			if Ready(_W) then
-				DrawCircle(GetOrigin(myHero), 600, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 600, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 600, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 600, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.E:Value() then
 			if Ready(_E) then
-				DrawCircle(GetOrigin(myHero), 600, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 580, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 600, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 580, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.R:Value() then
 			if Ready(_R) then
-				DrawCircle(GetOrigin(myHero), GetCastRange(myHero, _R), 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), GetCastRange(myHero, _R), 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), GetCastRange(myHero, _R), 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), GetCastRange(myHero, _R), 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		for _, mob in pairs(minionManager.objects) do
@@ -558,7 +558,7 @@ function Ryze:Draw()
 				end
 				if BPAIO.D.MinE:Value() then
 					if GetCurrentHP(mob) + GetDmgShield(mob) <  getdmg("E", mob, myHero, GetCastLevel(myHero, _Q)) then
-						DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 0, 0, 255))
+						DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 200, 0, 255))
 					end
 				end
 			end
@@ -620,30 +620,30 @@ function Poppy:Draw()
 	if IsObjectAlive(myHero) then
 		if BPAIO.D.Q:Value() then
 			if Ready(_Q) then
-				DrawCircle(GetOrigin(myHero), 425, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 425, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 425, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 425, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.W:Value() then
 			if Ready(_W) then
-				DrawCircle(GetOrigin(myHero), 400, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 400, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 400, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 400, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.E:Value() then
 			if Ready(_E) then
-				DrawCircle(GetOrigin(myHero), 415, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 415, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 415, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 415, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.R:Value() then
 			if Ready(_R) then
-				DrawCircle(GetOrigin(myHero), 390, 5, 100, ARGB(100, 0, 255, 0))
+				DrawCircle(GetOrigin(myHero), 390, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myHero), 390, 5, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 390, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		for _, mob in pairs(minionManager.objects) do
