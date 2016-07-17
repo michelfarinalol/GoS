@@ -125,13 +125,13 @@ function Annie:Draw()
 			end
 		end
 		for _, mob in pairs(minionManager.objects) do
-			if BPAIO.D.QMin:Value() and GetTeam(mob) == MINION_ENEMY and ValidTarget(mob, 3000) then
-				if GetCurrentHP(mob) + GetDmgShield(mob) + GetMagicShield >= getdmg("Q", mob, myHero, GetCastLevel(myHero, _Q)) then
+			if BPAIO.D.QMin:Value() and GetTeam(mob) == MINION_ENEMY and ValidTarget(mob, 3000) and Ready(_Q) then
+				if GetCurrentHP(mob) + GetDmgShield(mob) <= getdmg("Q", mob, myHero, GetCastLevel(myHero, _Q)) then
 					DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 255, 115, 0))
 				end
 			end
-			if BPAIO.D.AA:Value() then
-				if GetCurrentHP(mob) + GetDmgShield(mob) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
+			if BPAIO.D.AA:Value() and GetTeam(mob) == MINION_ENEMY and ValidTarget(mob, 3000)then
+				if GetCurrentHP(mob) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
 					DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(200, 255, 255, 255))
 				end
 			end
@@ -229,7 +229,7 @@ BPAIO:Menu("QWER", "Cast QWER")
 BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
 BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
 BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
-BPAIO.QWER:Key("R", "Cast R", String.byte("G"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
 BPAIO.QWER:Boolean("ksR", "Auto R When Low", true)
 
 BPAIO:Menu("D", "Draw")
@@ -477,7 +477,7 @@ BPAIO.QWER:Key("Q", "Q Key", string.byte("S"))
 BPAIO.QWER:Slider("pQ", "Q Pred", 0, 0, 100, 5)
 BPAIO.QWER:Key("W", "W Key", string.byte("D"))
 BPAIO.QWER:Key("E", "E Key", string.byte("F"))
-BPAIO.QWER:Key("R", "R Key", string.byte("G"))
+--BPAIO.QWER:Key("R", "R Key", string.byte("G"))
 
 BPAIO:Menu("D", "Draw")
 BPAIO.D:Boolean("Q", "Draw Q", true)
@@ -509,9 +509,9 @@ function Ryze:Tick()
 	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 600) then
 		CastTargetSpell(target, _E)
 	end
-	if BPAIO.QWER.R:Value() and Ready(_R) then
-		CastSkillShot(target, _R)
-	end
+	--if BPAIO.QWER.R:Value() and Ready(_R) then
+		--CastSkillShot(GetMousePos(), _R)
+	--end
 end
 
 function Ryze:Draw()
