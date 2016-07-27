@@ -1122,6 +1122,7 @@ class "Cassiopeia"
 function Cassiopeia:__init()
 BPAIO:Menu("QWER", "Cast QWER")
 BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("mQ", "Cast Q on Min", string.byte("Z"))
 BPAIO.QWER:Slider("pQ", "Q Pred", 0, 0, 100, 5)
 BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
 BPAIO.QWER:Slider("pW", "W Pred", 0, 0, 100, 0)
@@ -1159,6 +1160,11 @@ local RPred = GetCircularAOEPrediction(target, CassR)
 	for _, minion in pairs(minionManager.objects) do
 		if BPAIO.QWER.mE:Value() and Ready(_E) and ValidTarget(minion, 700) and GetTeam(minion) == MINION_ENEMY and GetCurrentHP(minion) < getdmg("E", minion, myHero, GetCastLevel(myHero, _E)) then
 			CastTargetSpell(minion, _E)
+		end
+		if BPAIO.QWER.mQ:Value() and Ready(_Q) and ValidTarget(minion, 850) and GetTeam(minion) == MINION_ENEMY then
+			if QPred and QPred.hitChance >= (BPAIO.QWER.pQ:Value()/100) then
+				CastSkillShot(_Q, QPred.castPos)
+			end
 		end
 	end
 	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, 900) then
