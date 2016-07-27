@@ -1162,8 +1162,9 @@ local RPred = GetCircularAOEPrediction(target, CassR)
 			CastTargetSpell(minion, _E)
 		end
 		if BPAIO.QWER.mQ:Value() and Ready(_Q) and ValidTarget(minion, 850) and GetTeam(minion) == MINION_ENEMY then
-			if QPred and QPred.hitChance >= (BPAIO.QWER.pQ:Value()/100) then
-				CastSkillShot(_Q, QPred.castPos)
+			local QPred2 = GetCircluarAOEPrediction(minion, CassQ)
+			if QPred2 and QPred2.hitChance >= (BPAIO.QWER.pQ:Value()/100) then
+				CastSkillShot(_Q, QPred2.castPos)
 			end
 		end
 	end
