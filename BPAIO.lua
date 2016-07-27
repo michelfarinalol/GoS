@@ -1,6 +1,6 @@
 --Credits to SxcS and Zwei
 
-local v = 0.01
+local v = 0.02
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/BPAIO.version", function(num)
 	if v < tonumber(num) then
@@ -1069,10 +1069,10 @@ local RPred = GetPrediction(target, IreliaR)
 		CastSpell(_W)
 	end
 	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 425) then
-		CastTargetSpell(_E, target)
+		CastTargetSpell(target, _E)
 	end
 	if BPAIO.QWER.sE:Value() and Ready(_E) and ValidTarget(target, 425) and GetCurrentHP(target) >= GetCurrentHP(myHero) then
-		CastTargetSpell(_E, target)
+		CastTargetSpell(target, _E)
 	end
 	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, 1000) then
 		if RPred and RPred.hitChance >= (BPAIO.QWER.pR:Value()/100) then
