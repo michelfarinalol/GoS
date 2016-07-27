@@ -23,6 +23,7 @@ local BPChamps =
 	["Irelia"] =		true,
 	["Khazix"] = 		true,
 	["Jinx"] =			true,
+	["Jhin"] =			true,
 	["Katarina"] =		true,
 	["Leona"] = 		true,
 	["Lux"] = 			true,
@@ -1048,8 +1049,8 @@ BPAIO.D:Boolean("E", "Draw E", true)
 BPAIO.D:Boolean("R", "Draw R", true)
 BPAIO.D:Boolean("AA", "Draw AA on Min", true)
 
-OnTick(function() self.Tick() end)
-OnDraw(function() self.Draw() end)
+OnTick(function(myHero) self.Tick() end)
+OnDraw(function(myHero) self.Draw() end)
 end
 
 function Irelia:Tick()
@@ -1139,8 +1140,8 @@ BPAIO.D:Boolean("R", "Draw R", true)
 BPAIO.D:Boolean("AA", "Draw AA", true)
 BPAIO.D:Boolean("mE", "Draw E on Min", true)
 
-OnTick(function() self.Tick() end)
-OnDraw(function() self.Draw() end)
+OnTick(function(myHero) self.Tick() end)
+OnDraw(function(myHero) self.Draw() end)
 end
 
 function Cassiopeia:Tick()
@@ -1221,6 +1222,108 @@ function Cassiopeia:Draw()
 		if BPAIO.D.mE:Value() and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion) then
 			if GetCurrentHP(minion) < getdmg("E", minion, myHero, GetCastLevel(myHero, _E)) then
 				DrawCircle(GetOrigin(minion), 70, 2, 100, ARGB(255, 150, 80, 160))
+			end
+		end
+	end
+end
+
+class "Jhin"
+
+function Jhin:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("mQ", "Cast Q on Min", string.byte("Q"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Slider("pW", "W Pred", 0, 0, 100, 5)
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Slider("pE", "Cast E", 0, 0, 100, 5)
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+BPAIO.QWER:Slider("pR", "R Pred", 0, 0, 100, 0)
+
+BPAIO:Menu("D", "Draw Stuff")
+BPAIO.D:Boolean("Q", "Draw Q", true)
+BPAIO.D:Boolean("mQ", "Draw Q Min", true)
+BPAIO.D:Boolean("W", "Draw W", true)
+BPAIO.D:Boolean("E", "Draw E", true)
+BPAIO.D:Boolean("R", "Draw R", true)
+BPAIO.D:Boolean("AA", "Draw AA on Min", true)
+
+OnTick(function(myHero) self.Tick() end)
+OnDraw(function(myHero) self.Draw() end)
+end
+
+function Jhin:Tick()
+local target = GetCurrentTarget()
+local JhinW = { delay = 0.75, speed = 5000, width = 40, range = 2500 }
+local JhinE = { delay = 0.75, speed = 1000, width = 260, range = 750 }
+local JhinR = { delay = 0.25, speed = 5000, width = 80, range = 3000 }
+local WPred = GetPrediction(target, JhinW)
+local EPred = GetPrediction(target, JhinE)
+local RPred = GetPrediction(target, JhinR)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 550) then
+		CastTargetSpell(target, _Q)
+	end
+	for _, minion in pairs(minionManager.objects) do
+		if BPAIO.QWER.mQ:Value() and Ready(_Q) and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion, 550) and GetCurrentHP(minion) < getdmg("Q", minion, myHero, GetCastLevel(myHero, _Q)) then
+			CastTargetSpell(minion, _Q)
+		end
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, 2500) then
+		if WPred and WPred.hitChance >= (BPAIO.QWER.pW:Value()/100) then
+			CastSkillShot(_W, WPred.castPos)
+		end
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 750) then
+		if EPred and EPred.hitChance >= (BPAIO.QWER.pE:Value()/100) then
+			CastSkillShot(_E, EPred.castPos)
+		end
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, 3500) then
+		if RPred and RPred.hitChance >= (BPAIO.QWER.pR:Value()/100) then
+			CastSkillShot(_R, RPred.castPos)
+		end
+	end
+end
+
+function Jhin:Draw()
+	if BPAIO.D.Q:Value() then
+		if Ready(_Q) then
+			DrawCircle(GetOrigin(myHero), 550, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 550, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.W:Value() then
+		if Ready(_W) then
+			DrawCircle(GetOrigin(myHero), 2500, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 2500, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.E:Value() then
+		if Ready(_E) then
+			DrawCircle(GetOrigin(myHero), 750, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 750, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.R:Value() then
+		if Ready(_R) then
+			DrawCircle(GetOrigin(myHero), 3500, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 3500, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	for _, minion in pairs(minionManager.objects) do
+		if BPAIO.D.AA:Value() and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion) then
+			if GetCurrentHP(minion) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
+				DrawCircle(GetOrigin(minion), 60, 2, 100, ARGB(255, 255, 255, 255))
+			end
+		end
+		if BPAIO.D.mQ:Value() and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion) and Ready(_Q) then
+			if GetCurrentHP(minion) < getdmg("Q", minion, myHero, GetCastLevel(myHero, _Q)) then
+				DrawCircle(GetOrigin(minion), 70, 2, 100, ARGB(255, 230, 40, 170))
 			end
 		end
 	end
