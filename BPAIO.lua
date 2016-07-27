@@ -16,22 +16,26 @@ local BPChamps =
 	{
 	["Annie"] = 		true, 
 	["Ashe"] = 			true,
+	["Cassiopeia"] =	true,
 	["Darius"] = 		true,
 	["Gnar"] = 			true,
 	["Illaoi"] = 		true,
+	["Irelia"] =		true,
 	["Khazix"] = 		true,
 	["Jinx"] =			true,
+	["Katarina"] =		true,
 	["Leona"] = 		true,
 	["Lux"] = 			true,
 	["Nami"] =			true,
+	["Nasus"]=			true,
 	["Olaf"] = 			true,
 	["Poppy"] =			true,
 	["Ryze"] = 			true,
 	["Sejuani"] =		true,
 	["Shen"] = 			true,
 	["Tristana"] =		true,
-	["TwistedFate"] = 	true,
 	["Vayne"] =			true,
+	["XinZhao"]=		true,
 	}
 	
 Callback.Add("Load", function()
@@ -78,6 +82,7 @@ local AnnieR = {delay = 0.25, speed = math.huge, width = 200, range = 600}
 local target = GetCurrentTarget()
 local RPred = GetCircularAOEPrediction(target, AnnieR)
 
+if target ~= nil then
 if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 625) then
 		CastTargetSpell(target, _Q)
 	end
@@ -92,6 +97,7 @@ if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 625) then
 			CastSkillShot(_R, RPred.castPos)
 		end
 	end
+end
 end
 
 function Annie:Draw()
@@ -167,6 +173,7 @@ function Ashe:Tick()
 	local WPred = GetPrediction(target, AsheW)
 	local RPred = GetPrediction(target, AsheR)
 	
+	if target ~= nil then
 	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 1200) then
 		CastSpell(_Q)
 	end
@@ -180,6 +187,7 @@ function Ashe:Tick()
 			CastSkillShot(_R, RPred.castPos)
 		end
 	end
+end
 end
 
 function Ashe:Draw()
@@ -272,6 +280,7 @@ CastSkillShot(_E , GetOrigin(target))
 		AttackUnit(target)
       end
 	
+	if target ~= nil then
 	if BPAIO.QWER.Q:Value() and Ready(_Q) then
 		CastSpell(_Q)
 	end
@@ -293,6 +302,7 @@ CastSkillShot(_E , GetOrigin(target))
 		CastTargetSpell(target, _R)
 	end
 end
+end
 
 function Darius:Draw()
 	if IsObjectAlive(myHero) then
@@ -300,7 +310,7 @@ function Darius:Draw()
 			if Ready(_Q) then
 				DrawCircle(GetOrigin(myHero), 425, 1, 100, ARGB(100, 0, 255, 0))
 			else
-				DrawCircle(GetOrigin(myhero), 425, 1, 100, ARGB(100, 255, 0, 0))
+				DrawCircle(GetOrigin(myHero), 425, 1, 100, ARGB(100, 255, 0, 0))
 			end
 		end
 		if BPAIO.D.W:Value() then
@@ -326,8 +336,10 @@ function Darius:Draw()
 		end
 		for _, mob in pairs(minionManager.objects) do
 			if BPAIO.D.AA:Value() then
-				if GetCurrentHP(mob) + GetDmgShield(mob) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
-					DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(200, 255, 255, 255))
+				if ValidTarget(mob) and GetTeam(mob) == MINION_ENEMY then
+					if GetCurrentHP(mob) + GetDmgShield(mob) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
+						DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(200, 255, 255, 255))
+					end
 				end
 			end
 		end
@@ -375,6 +387,7 @@ function Gnar:Tick()
 	local MiniGnar = (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1)
 	local MegaGnar = (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1)
 	
+	if targe ~= nil then 
 	if BPAIO.QWER.Q:Value() and Ready(_Q) and Ready(_Q) and ValidTarget(target, 1200) and GetCastName(myHero, _Q) == "GnarQ" and MiniGnar then
 		if mQPred and mQPred.hitChance >= (BPAIO.p.pQ:Value()/100) then
 			CastSkillShot(_Q, mQPred.castPos)
@@ -400,6 +413,7 @@ function Gnar:Tick()
 			CastSkillShot(_E, MEPred.castPos)
 		end
 	end
+end
 end
 
 function Gnar:Draw()
@@ -477,7 +491,8 @@ BPAIO.QWER:Key("Q", "Q Key", string.byte("S"))
 BPAIO.QWER:Slider("pQ", "Q Pred", 0, 0, 100, 5)
 BPAIO.QWER:Key("W", "W Key", string.byte("D"))
 BPAIO.QWER:Key("E", "E Key", string.byte("F"))
---BPAIO.QWER:Key("R", "R Key", string.byte("G"))
+BPAIO.QWER:Key("aE", "Auto E Minion", string.byte("Z"))
+BPAIO.QWER:Key("aQ", "Q Minion", string.byte("Q"))
 
 BPAIO:Menu("D", "Draw")
 BPAIO.D:Boolean("Q", "Draw Q", true)
@@ -498,6 +513,7 @@ function Ryze:Tick()
 	local target = GetCurrentTarget()
 	local QPred = GetPrediction(target, RyzeQ)
 	
+	if target ~= nil then
 	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 900) then
 		if QPred and QPred.hitChance >= (BPAIO.QWER.pQ:Value()/100) then
 			CastSkillShot(_Q, QPred.castPos)
@@ -509,9 +525,18 @@ function Ryze:Tick()
 	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 600) then
 		CastTargetSpell(target, _E)
 	end
-	--if BPAIO.QWER.R:Value() and Ready(_R) then
-		--CastSkillShot(GetMousePos(), _R)
-	--end
+	for _, minion in pairs(minionManager.objects) do
+		if GetCurrentHP(minion) + GetDmgShield(minion) < getdmg("E", minion, myHero, GetCastLevel(myHero, _E)) * 0.925 and ValidTarget(minion, 600) and Ready(_E) and BPAIO.QWER.aE:Value() then
+			CastTargetSpell(minion, _E)
+		end
+		if BPAIO.QWER.aQ:Value() and ValidTarget(minion, 900) and Ready(_Q) then
+			local QPred2 = GetPrediction(minion, RyzeQ)
+			if QPred2 and QPred2.hitChance >= (BPAIO.QWER.pQ:Value()/100) then
+				CastSkillShot(_Q, QPred2.castPos)
+			end
+		end
+	end
+end
 end
 
 function Ryze:Draw()
@@ -552,12 +577,12 @@ function Ryze:Draw()
 					end
 				end
 				if BPAIO.D.MinQ:Value() then
-					if GetCurrentHP(mob) + GetDmgShield(mob) <  getdmg("Q", mob, myHero, GetCastLevel(myHero, _Q)) then
+					if GetCurrentHP(mob) + GetDmgShield(mob) < getdmg("Q", mob, myHero, GetCastLevel(myHero, _Q)) then
 						DrawCircle(GetOrigin(mob), 70, 2, 8, ARGB(200, 0, 0, 255))
 					end
 				end
 				if BPAIO.D.MinE:Value() then
-					if GetCurrentHP(mob) + GetDmgShield(mob) <  getdmg("E", mob, myHero, GetCastLevel(myHero, _Q)) then
+					if GetCurrentHP(mob) + GetDmgShield(mob) < getdmg("E", mob, myHero, GetCastLevel(myHero, _Q)) * 0.925 then
 						DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 200, 0, 255))
 					end
 				end
@@ -571,10 +596,10 @@ class "Poppy"
 function Poppy:__init()
 BPAIO:Menu("QWER", "Cast QWER")
 BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
-BPAIO.QWER:Slider("pQ", "Q Pred", 20, 0, 100, 5)
+BPAIO.QWER:Slider("pQ", "Q Pred", 0, 0, 100, 5)
 BPAIO.QWER:Key("E", "Cast Q", string.byte("F"))
 BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
-BPAIO.QWER:Slider("pR", "Cast R", 20, 0, 100, 5)
+BPAIO.QWER:Slider("pR", "Cast R", 0, 0, 100, 5)
 
 BPAIO:Menu("D", "Draw")
 BPAIO.D:Boolean("Q", "Draw Q", true)
@@ -594,6 +619,7 @@ function Poppy:Tick()
 	local QPred = GetPrediction(target, PoppyQ)
 	local RPred = GetLinearAOEPrediction(target, PoppyR)
 	
+	if target ~= nil then
 	if BPAIO.QER.Q:Value() and Ready(_Q) and ValidTarget(target, 400) then
 		if QPred and QPred.hitChance >= (BPAIO.QER.pQ:Value()/100) then
 			CastSkillShot(_Q, QPred.castPos)
@@ -614,6 +640,7 @@ function Poppy:Tick()
 			end, 0.1)
 		end
 	end
+end
 end
 
 function Poppy:Draw()
@@ -653,6 +680,540 @@ function Poppy:Draw()
 						DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(200, 255, 255, 255))
 					end
 				end
+			end
+		end
+	end
+end
+
+class "Katarina"
+
+function Katarina:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("aQ", "Q Minions", string.byte("Q"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+BPAIO:Menu("D", "Draw")
+BPAIO.D:Boolean("dQ", "Draw Q", true)
+BPAIO.D:Boolean("dW", "Draw W", true)
+BPAIO.D:Boolean("dE", "Draw E", true)
+BPAIO.D:Boolean("dR", "Draw R", true)
+BPAIO.D:Boolean("Dmg", "Draw Damage", true)
+
+OnTick(function(myHero) self.Tick() end)
+OnDraw(function(myHero) self.Draw() end)
+end
+
+function Katarina:Tick()
+	local target = GetCurrentTarget()
+	
+	if target ~= nil then
+		if BPAIO.QWER.Q:Value() and ValidTarget(target, 675) and Ready(_Q) then
+			CastTargetSpell(target, _Q)
+		end
+		if BPAIO.QWER.W:Value() and ValidTarget(target, 375) and Ready(_W) then
+			CastSpell(_W)
+		end
+		if BPAIO.QWER.E:Value() and ValidTarget(target, 700) and Ready(_E) then
+			CastTargetSpell(target, _E)
+		end
+		if BPAIO.QWER.R:Value() and Ready(_R) then
+			CastSpell(_R)
+		end
+		for _, minion in pairs(minionManager.objects) do
+			if BPAIO.QWER.aQ:Value() and Ready(_Q) and ValidTarget(minion, 675) and GetTeam(minion) == MINION_ENEMY then
+				CastTargetSpell(minion, _Q)
+			end
+		end
+	end
+end
+
+function Katarina:Draw()
+	if BPAIO.D.dQ:Value() then
+		if Ready(_Q) then
+			DrawCircle(GetOrigin(myHero), 675, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 675, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.dW:Value() then
+		if Ready(_W) then
+			DrawCircle(GetOrigin(myHero), 375, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 375, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.dE:Value() then
+		if Ready(_E) then
+			DrawCircle(GetOrigin(myHero), 700, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 700, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.Dmg:Value() then
+		for _, enemy in pairs(GetEnemyHeroes()) do
+			if ValidTarget(enemy) then
+				DrawDmgOverHpBar(enemy, GetCurrentHP(enemy), 0, getdmg("Q", enemy, myHero, GetCastLevel(myHero, _Q)) + getdmg("W", enemy, myHero, GetCastLevel(myHero, _W)) + getdmg("E", enemy, myHero, GetCastLevel(myHero, _E)) + getdmg("R", enemy, myHero, GetCastLevel(myHero, _R)), GoS.White)
+			end
+		end
+	end	
+end
+
+class "Nasus"
+
+function Nasus:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q on Champs", string.byte("S"))
+BPAIO.QWER:Key("qQ", "Quick Cast Q", string.byte("Q"))
+BPAIO.QWER:Key("sQ", "Stack Q Mininon", string.byte("Z"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Slider("pE", "E Pred", 0, 0, 100, 5)
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+BPAIO:Menu("D", "Draw")
+BPAIO.D:Boolean("dW", "Draw W", true)
+BPAIO.D:Boolean("dE", "Draw E", true)
+BPAIO.D:Boolean("AA", "Draw AA Dmg Minion", true)
+BPAIO.D:Boolean("cDmg", "Draw Damage Q Champions", true)
+BPAIO.D:Boolean("mDmg", "Draw Damage Q Minions", true)
+
+OnTick(function(myHero) self.Tick() end)
+OnDraw(function(myHero) self.Draw() end)
+end
+
+function Nasus:Tick()
+local target = GetCurrentTarget()
+local NasusE = { delay = 0.1, speed = math.huge, width = 400, range = 650 }
+local EPred = GetCircularAOEPrediction(target, NasusE)
+local qdmg = 10 + 20*GetCastLevel(myHero,_Q) + GetBonusDmg(myHero) + GetBaseDamage(myHero) + GetBuffData(myHero,"nasusqstacks").Stacks - 5 -- thanks zwei
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 325) then
+		CastSpell(_Q)
+		AttackUnit(target)
+	end
+	if BPAIO.QWER.qQ:Value() and Ready(_Q) then
+		CastSpell(_Q)
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, 600) then
+		CastTargetSpell(target, _W)
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 650) then
+		if EPred and EPred.hitChance >= (BPAIO.QWER.pE:Value()/100) then
+			CastSkillShot(_E, EPred.castPos)
+		end
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) then
+		CastSpell(_R)
+	end
+	for _, minion in pairs(minionManager.objects) do
+		if GetTeam(minion) == MINION_ENEMY then
+			if GetCurrentHP(minion) - GetDamagePrediction(minion, GetWindUp(myHero)) < CalcDamage(myHero, minion, qdmg,0) and ValidTarget(minion, 400) and BPAIO.QWER.sQ:Value() and Ready(_Q) then
+				CastSpell(_Q)
+				AttackUnit(minion)
+			end
+		end
+	end
+end
+
+function Nasus:Draw()
+local qdmg = 10 + 20*GetCastLevel(myHero,_Q) + GetBonusDmg(myHero) + GetBaseDamage(myHero) + GetBuffData(myHero,"nasusqstacks").Stacks - 5 -- thanks zwei
+
+	if BPAIO.D.dW:Value() then
+		if Ready(_W) then
+			DrawCircle(GetOrigin(myHero), 600, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 600, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.dE:Value() then
+		if Ready(_E) then
+			DrawCircle(GetOrigin(myHero), 650, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 650, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.cDmg:Value() then
+		for _,enemy in pairs(GetEnemyHeroes()) do
+			if ValidTarget(enemy) then
+				DrawDmgOverHpBar(enemy, GetCurrentHP(enemy), qdmg, 0, GoS.White)
+			end
+		end
+	end
+	for _,mob in pairs(minionManager.objects) do
+		if BPAIO.D.mDmg:Value() then
+			if ValidTarget(mob) and GetTeam(mob) == MINION_ENEMY and GetCurrentHP(mob) < qdmg then
+				DrawCircle(GetOrigin(mob), 70, 2, 100, ARGB(255, 150, 0, 230))
+			end
+		end
+		if BPAIO.D.AA:Value() then
+			if ValidTarget(mob) and GetTeam(mob) == MINION_ENEMY then
+				if GetCurrentHP(mob) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
+					DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 255, 255, 255))
+				end
+			end
+		end
+	end
+end
+
+class "Tristana"
+
+function Tristana:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("Q"))
+BPAIO.QWER:Key("rW", "W Onto Enemy", string.byte("D"))
+BPAIO.QWER:Slider("pW", "W Pred", 0, 0, 100, 5)
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+BPAIO.QWER:Boolean("aR", "Auto Cast R", true)
+
+BPAIO:Menu("D", "Draw Stuff")
+BPAIO.D:Boolean("W", "Draw W", true)
+BPAIO.D:Boolean("E", "Draw E", true)
+BPAIO.D:Boolean("R", "Draw R", true)
+BPAIO.D:Boolean("AA", "Last Hit Minion", true)
+BPAIO.D:Boolean("dR", "R Damage", true)
+
+OnTick(function(myHero) self.Tick() end)
+OnDraw(function(myHero) self.Draw() end)
+end
+
+function Tristana:Tick()
+local target = GetCurrentTarget()
+local TrisW = { delay = 0.5, speed = 1500, width = 270, range = 900 }
+local WPred = GetCircularAOEPrediction(target, TrisW)
+
+	if Ready(_Q) and BPAIO.QWER.Q:Value() then
+		CastSpell(_Q)
+	end
+	if Ready(_W) and BPAIO.QWER.W:Value() then
+		CastSkillShot(_W, GetMousePos())
+	end
+	if Ready(_W) and BPAIO.QWER.rW:Value() and ValidTarget(target, 900) then
+		if WPred and WPred.hitChance >= (BPAIO.QWER.pW:Value()/100) then
+			CastSkillShot(_W, WPred.castPos)
+		end
+	end
+	if Ready(_E) and ValidTarget(target, GetCastRange(myHero, _E)) and BPAIO.QWER.E:Value() then
+		CastTargetSpell(target, _E)
+	end
+	if Ready(_R) and ValidTarget(target, GetCastRange(myHero, _R)) and BPAIO.QWER.R:Value() then
+		CastTargetSpell(target, _R)
+	end
+	for _,enemy in pairs(GetEnemyHeroes()) do
+		if Ready(_R) and ValidTarget(enemy, GetCastRange(myHero, _R)) and BPAIO.QWER.aR:Value() and GetCurrentHP(enemy) + GetDmgShield(enemy) + GetMagicShield(enemy) < getdmg("R", enemy, myHero, GetCastLevel(myHero, _R)) then
+			CastTargetSpell(enemy, _R)
+		end
+	end
+end
+
+function Tristana:Draw()
+
+	if BPAIO.D.W:Value() then
+		if Ready(_W) then
+			DrawCircle(GetOrigin(myHero), 900, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 900, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.E:Value() then
+		if Ready(_E) then
+			DrawCircle(GetOrigin(myHero), GetCastRange(myHero, _E), 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), GetCastRange(myHero, _E), 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.R:Value() then
+		if Ready(_R) then
+			DrawCircle(GetOrigin(myHero), GetCastRange(myHero, _R), 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), GetCastRange(myHero, _R), 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	for _,mob in pairs(minionManager.objects) do
+		if BPAIO.D.AA:Value() then
+			if ValidTarget(mob) and GetTeam(mob) == MINION_ENEMY then
+				if GetCurrentHP(mob) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
+					DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 255, 255, 255))
+				end
+			end
+		end
+	end
+	for _,enemy in pairs(GetEnemyHeroes()) do
+		if BPAIO.D.dR:Value() and Ready(_R) and ValidTarget(enemy) then
+			DrawDmgOverHpBar(enemy, GetCurrentHP(enemy), 0, getdmg("R", enemy, myHero, GetCastLevel(myHero, _R)), GoS.White)
+		end
+	end
+end
+
+class "XinZhao"
+
+function XinZhao:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+BPAIO.QWER:Slider("eR", "Auto R at # Enemies", 3, 1, 5, 1)
+
+BPAIO:Menu("D", "Draw Stuff")
+BPAIO.D:Boolean("E", "E Range", true)
+BPAIO.D:Boolean("R", "R Range", true)
+BPAIO.D:Boolean("Dmg", "Draw Dmg", true)
+BPAIO.D:Boolean("AA", "AA Dmg to Min", true)
+
+OnTick(function(myHero) self.Tick() end)
+OnDraw(function(myHero) self.Draw() end)
+end
+
+function XinZhao:Tick()
+local target = GetCurrentTarget()
+
+	if Ready(_Q) and ValidTarget(target, 300) and BPAIO.QWER.Q:Value() then
+		CastSpell(_Q)
+	end
+	if Ready(_W) and ValidTarget(target, 300) and BPAIO.QWER.W:Value() then
+		CastSpell(_W)
+	end
+	if Ready(_E) and ValidTarget(target, 600) and BPAIO.QWER.E:Value() then
+		CastTargetSpell(target, _E)
+		DelayAction(function()
+			CastSpell(_W)
+			DelayAction(function()
+				CastSpell(_Q)
+			end, 0.01)
+		end, 0.01)
+	end
+	if Ready(_R) and ValidTarget(target, 500) and BPAIO.QWER.R:Value() then
+		CastSpell(_R)
+	end
+	for _,enemy in pairs(GetEnemyHeroes()) do
+		if Ready(_R) and EnemiesAround(myHero, 500) >= BPAIO.QWER.eR:Value() then
+			CastSpell(_R)
+		end
+	end
+end
+
+function XinZhao:Draw()
+
+	if BPAIO.D.E:Value() then
+		if Ready(_E) then
+			DrawCircle(GetOrigin(myHero), 600, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 600, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.R:Value() then
+		if Ready(_R) then
+			DrawCircle(GetOrigin(myHero), 500, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 500, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	for _, enemy in pairs(GetEnemyHeroes()) do
+		if BPAIO.D.Dmg:Value() and ValidTarget(enemy) then
+			DrawDmgOverHpBar(enemy, GetCurrentHP(enemy), getdmg("R", enemy, myHero, GetCastLevel(myHero, _R)), getdmg("E", enemy, myHero, GetCastLevel(myHero, _E)), GoS.White)
+		end
+	end
+	for _,mob in pairs(minionManager.objects) do
+		if BPAIO.D.AA:Value() then
+			if ValidTarget(mob) and GetTeam(mob) == MINION_ENEMY then
+				if GetCurrentHP(mob) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
+					DrawCircle(GetOrigin(mob), 60, 2, 8, ARGB(200, 255, 255, 255))
+				end
+			end
+		end
+	end
+end
+
+class "Irelia"
+
+function Irelia:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q on Champ", string.byte("S"))
+BPAIO.QWER:Key("mQ", "Cast Q on Min", string.byte("Q"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("sE", "Stun w/ E", string.byte("Z"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+BPAIO.QWER:Slider("pR", "R Pred", 0, 0, 100, 5)
+
+BPAIO:Menu("D", "Draw Stuff")
+BPAIO.D:Boolean("Q", "Draw Q", true)
+BPAIO.D:Boolean("mQ", "Draw Q Min Dmg", true)
+BPAIO.D:Boolean("E", "Draw E", true)
+BPAIO.D:Boolean("R", "Draw R", true)
+BPAIO.D:Boolean("AA", "Draw AA on Min", true)
+
+OnTick(function() self.Tick() end)
+OnDraw(function() self.Draw() end)
+end
+
+function Irelia:Tick()
+local target = GetCurrentTarget()
+local IreliaR = { delay = 0, speed = 1600, width = 65, range = 1000 }
+local RPred = GetPrediction(target, IreliaR)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 650) then
+		CastTargetSpell(target, _Q)
+	end
+	for _, minion in pairs(minionManager.objects) do
+		if BPAIO.QWER.mQ:Value() and Ready(_Q) and ValidTarget(minion, 650) and GetTeam(minion) == MINION_ENEMY and GetCurrentHP(minion) < getdmg("Q", minion, myHero, GetCastLevel(myHero, _Q)) then
+			CastTargetSpell(minion, _Q)
+		end
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) then
+		CastSpell(_W)
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 425) then
+		CastTargetSpell(_E, target)
+	end
+	if BPAIO.QWER.sE:Value() and Ready(_E) and ValidTarget(target, 425) and GetCurrentHP(target) >= GetCurrentHP(myHero) then
+		CastTargetSpell(_E, target)
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, 1000) then
+		if RPred and RPred.hitChance >= (BPAIO.QWER.pR:Value()/100) then
+			CastSkillShot(_R, RPred.castPos)
+		end
+	end
+end
+
+function Irelia:Draw()
+	if BPAIO.D.Q:Value() then
+		if Ready(_Q) then
+			DrawCircle(GetOrigin(myHero), 650, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 650, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	for _, minion in pairs(minionManager.objects) do
+		if BPAIO.D.mQ:Value() and Ready(_Q) and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion) then
+			if GetCurrentHP(minion) < getdmg("Q", minion, myHero, GetCastLevel(myHero, _Q)) then
+				DrawCircle(GetOrigin(minion), 50, 2, 100, ARGB(255, 0, 0, 255))
+			end
+		end
+		if BPAIO.D.AA:Value() and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion) then
+			if GetCurrentHP(minion) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
+				DrawCircle(GetOrigin(minion), 60, 2, 100, ARGB(255, 255, 255, 255))
+			end
+		end
+	end
+	if BPAIO.D.E:Value() then
+		if Ready(_E) then
+			DrawCircle(GetOrigin(myHero), 425, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 425, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.R:Value() then
+		if Ready(_R) then
+			DrawCircle(GetOrigin(myHero), 1000, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 1000, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+end
+
+class "Cassiopeia"
+
+function Cassiopeia:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Slider("pQ", "Q Pred", 0, 0, 100, 5)
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Slider("pW", "W Pred", 0, 0, 100, 0)
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("mE", "Last Hit w/ E", string.byte("Q"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+BPAIO.QWER:Slider("pR", "R Pred", 0, 0, 100, 0)
+
+BPAIO:Menu("D", "Draw Stuff")
+BPAIO.D:Boolean("Q", "Draw Q", true)
+BPAIO.D:Boolean("W", "Draw W", true)
+BPAIO.D:Boolean("E", "Draw E", true)
+BPAIO.D:Boolean("R", "Draw R", true)
+BPAIO.D:Boolean("AA", "Draw AA", true)
+BPAIO.D:Boolean("mE", "Draw E on Min", true)
+
+OnTick(function() self.Tick() end)
+OnDraw(function() self.Draw() end)
+end
+
+function Cassiopeia:Tick()
+local target = GetCurrentTarget()
+local CassQ = { delay = 0.75, speed = math.huge, width = 150, range = 850 }
+local CassW = { delay = nil, speed = math.huge, width = 160, range = 900 }
+local CassR = { delay = 0.6, speed = math.huge, width = 150, range = 850 }
+local QPred = GetCircularAOEPrediction(target, CassQ)
+local WPred = GetCircularAOEPrediction(target, CassW)
+local RPred = GetCircularAOEPrediction(target, CassR)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 850) then
+		if QPred and QPred.hitChance >= (BPAIO.QWER.pQ:Value()/100) then
+			CastSkillShot(_Q, QPred.castPos)
+		end
+	end
+	for _, minion in pairs(minionManager.objects) do
+		if BPAIO.QWER.mE:Value() and Ready(_E) and ValidTarget(minion, 700) and GetTeam(minion) == MINION_ENEMY and GetCurrentHP(minion) < getdmg("E", minion, myHero, GetCastLevel(myHero, _E)) then
+			CastTargetSpell(minion, _E)
+		end
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, 900) then
+		if WPred and WPred.hitChance >= (BPAIO.QWER.pW:Value()/100) then
+			CastSkillShot(_W, WPred.castPos)
+		end
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 700) then
+		CastTargetSpell(target, _E)
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, 850) then
+		if RPred and RPred.hitChance >= (BPAIO.QWER.pR:Value()/100) then
+			CastSkillShot(_R, RPred.castPos)
+		end
+	end
+end
+
+function Cassiopeia:Draw()
+	if BPAIO.D.Q:Value() then
+		if Ready(_Q) then
+			DrawCircle(GetOrigin(myHero), 840, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 840, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.W:Value() then
+		if Ready(_W) then
+			DrawCircle(GetOrigin(myHero), 900, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 900, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.E:Value() then
+		if Ready(_E) then
+			DrawCircle(GetOrigin(myHero), 700, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 700, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.R:Value() then
+		if Ready(_R) then
+			DrawCircle(GetOrigin(myHero), 850, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 850, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	for _, minion in pairs(minionManager.objects) do
+		if BPAIO.D.AA:Value() and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion) then
+			if GetCurrentHP(minion) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
+				DrawCircle(GetOrigin(minion), 60, 2, 100, ARGB(255, 255, 255, 255))
+			end
+		end
+		if BPAIO.D.mE:Value() and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion) then
+			if GetCurrentHP(minion) < getdmg("E", minion, myHero, GetCastLevel(myHero, _E)) then
+				DrawCircle(GetOrigin(minion), 70, 2, 100, ARGB(255, 150, 80, 160))
 			end
 		end
 	end
