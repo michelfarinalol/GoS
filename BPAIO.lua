@@ -972,10 +972,10 @@ end
 function XinZhao:Tick()
 local target = GetCurrentTarget()
 
-	if Ready(_Q) and ValidTarget(target, 300) and BPAIO.QWER.Q:Value() then
+	if Ready(_Q) and BPAIO.QWER.Q:Value() then
 		CastSpell(_Q)
 	end
-	if Ready(_W) and ValidTarget(target, 300) and BPAIO.QWER.W:Value() then
+	if Ready(_W) and BPAIO.QWER.W:Value() then
 		CastSpell(_W)
 	end
 	if Ready(_E) and ValidTarget(target, 600) and BPAIO.QWER.E:Value() then
