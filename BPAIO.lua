@@ -1,6 +1,6 @@
 --Credits to SxcS and Zwei
 
-local v = 0.3
+local v = 0.4
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/BPAIO.version", function(num)
 	if v < tonumber(num) then
@@ -337,7 +337,7 @@ function Darius:Draw()
 		end
 		for _, mob in pairs(minionManager.objects) do
 			if BPAIO.D.AA:Value() then
-				if ValidTarget(mob) and GetTeam(mob) == MINION_ENEMY then
+				if ValidTarget(mob) and GetTeam(mob) == MINION_ENEMY and ValidTarget(mob) then
 					if GetCurrentHP(mob) + GetDmgShield(mob) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
 						DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(200, 255, 255, 255))
 					end
@@ -1232,7 +1232,7 @@ class "Jhin"
 function Jhin:__init()
 BPAIO:Menu("QWER", "Cast QWER")
 BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
-BPAIO.QWER:Key("mQ", "Cast Q on Min", string.byte("Q"))
+BPAIO.QWER:Key("mQ", "Cast Q on Min", string.byte("Z"))
 BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
 BPAIO.QWER:Slider("pW", "W Pred", 0, 0, 100, 5)
 BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
@@ -1261,11 +1261,11 @@ local WPred = GetPrediction(target, JhinW)
 local EPred = GetPrediction(target, JhinE)
 local RPred = GetPrediction(target, JhinR)
 
-	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 600) then
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 550) then
 		CastTargetSpell(target, _Q)
 	end
 	for _, minion in pairs(minionManager.objects) do
-		if BPAIO.QWER.mQ:Value() and Ready(_Q) and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion, 600) and GetCurrentHP(minion) < getdmg("Q", minion, myHero, GetCastLevel(myHero, _Q)) then
+		if BPAIO.QWER.mQ:Value() and Ready(_Q) and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion, 550) and GetCurrentHP(minion) < getdmg("Q", minion, myHero, GetCastLevel(myHero, _Q)) then
 			CastTargetSpell(minion, _Q)
 		end
 	end
