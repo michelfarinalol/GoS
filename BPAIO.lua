@@ -1,6 +1,6 @@
 --Credits to SxcS and Zwei
 
-local v = 0.4
+local v = 0.5
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/BPAIO.version", function(num)
 	if v < tonumber(num) then
@@ -222,7 +222,7 @@ function Ashe:Draw()
 			end
 		end
 		for _, mob in pairs(minionManager.objects) do
-			if BPAIO.D.AA:Value() then
+			if BPAIO.D.AA:Value() and GetTeam(mob) == MINION_ENEMY and ValidTarget(mob) then
 				if GetCurrentHP(mob) + GetDmgShield(mob) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
 					DrawCircle(GetOrigin(mob), 50, 2, 8, ARGB(200, 255, 255, 255))
 				end
@@ -299,7 +299,7 @@ CastSkillShot(_E , GetOrigin(target))
       end
     end
 	end
-	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(460) then
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, 460) then
 		CastTargetSpell(target, _R)
 	end
 end
@@ -1324,6 +1324,61 @@ function Jhin:Draw()
 		if BPAIO.D.mQ:Value() and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion) and Ready(_Q) then
 			if GetCurrentHP(minion) < getdmg("Q", minion, myHero, GetCastLevel(myHero, _Q)) then
 				DrawCircle(GetOrigin(minion), 70, 2, 100, ARGB(255, 230, 40, 170))
+			end
+		end
+	end
+end
+
+class "Vayne"
+
+function Vayne:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+BPAIO:Menu("D", "Draw Stuff")
+BPAIO.D:Boolean("Q", "Draw Q", true)
+BPAIO.D:Boolean("E", "Draw E", true)
+BPAIO.D:Boolean("AA", "Draw AA on Min", true)
+
+OnTick(function(myHero) self.Tick() end)
+OnDraw(function(myHero) self.Draw() end)
+end
+
+function Vayne:Tick()
+local target = GetCurrentTarget()
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) then
+		CastSkillShot(_Q, GetMousePos())
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 500) then
+		CastTargetSpell(target, _E)
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) then
+		CastSpell(_R)
+	end
+end
+
+function Vayne:Draw()
+	if BPAIO.D.Q:Value() then
+		if Ready(_Q) then
+			DrawCircle(GetOrigin(myHero), GetCastRange(_Q), 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), GetCastRange(_Q), 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.E:Value() then
+		if Ready(_E) then
+			DrawCircle(GetOrigin(myHero), GetCastRange(_E), 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), GetCastRange(_E), 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	for _, minion in pairs(minionManager.objects) do
+		if BPAIO.D.AA:Value() and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion) then
+			if GetCurrentHP(minion) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
+				DrawCircle(GetOrigin(minion), 60, 2, 100, ARGB(255, 255, 255, 255))
 			end
 		end
 	end
