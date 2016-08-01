@@ -1,6 +1,6 @@
 --Credits to SxcS and Zwei
 
-local v = 0.5
+local v = 0.6
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/BPAIO.version", function(num)
 	if v < tonumber(num) then
@@ -83,7 +83,7 @@ local AnnieR = {delay = 0.25, speed = math.huge, width = 200, range = 600}
 local target = GetCurrentTarget()
 local RPred = GetCircularAOEPrediction(target, AnnieR)
 
-if target ~= nil then
+	if not IsDead(target) then
 if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 625) then
 		CastTargetSpell(target, _Q)
 	end
@@ -174,7 +174,7 @@ function Ashe:Tick()
 	local WPred = GetPrediction(target, AsheW)
 	local RPred = GetPrediction(target, AsheR)
 	
-	if target ~= nil then
+	if not IsDead(target) then
 	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 1200) then
 		CastSpell(_Q)
 	end
@@ -281,7 +281,7 @@ CastSkillShot(_E , GetOrigin(target))
 		AttackUnit(target)
       end
 	
-	if target ~= nil then
+	if not IsDead(target) then
 	if BPAIO.QWER.Q:Value() and Ready(_Q) then
 		CastSpell(_Q)
 	end
@@ -388,7 +388,7 @@ function Gnar:Tick()
 	local MiniGnar = (GotBuff(myHero, "gnartransform") == 0 or GotBuff(myHero, "gnarfuryhigh") == 1)
 	local MegaGnar = (GotBuff(myHero, "gnartransformsoon") == 1 or GotBuff(myHero, "gnartransform") == 1)
 	
-	if targe ~= nil then 
+	if not IsDead(target) then 
 	if BPAIO.QWER.Q:Value() and Ready(_Q) and Ready(_Q) and ValidTarget(target, 1200) and GetCastName(myHero, _Q) == "GnarQ" and MiniGnar then
 		if mQPred and mQPred.hitChance >= (BPAIO.p.pQ:Value()/100) then
 			CastSkillShot(_Q, mQPred.castPos)
@@ -514,7 +514,7 @@ function Ryze:Tick()
 	local target = GetCurrentTarget()
 	local QPred = GetPrediction(target, RyzeQ)
 	
-	if target ~= nil then
+	if not IsDead(target) then
 	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 900) then
 		if QPred and QPred.hitChance >= (BPAIO.QWER.pQ:Value()/100) then
 			CastSkillShot(_Q, QPred.castPos)
@@ -620,7 +620,7 @@ function Poppy:Tick()
 	local QPred = GetPrediction(target, PoppyQ)
 	local RPred = GetLinearAOEPrediction(target, PoppyR)
 	
-	if target ~= nil then
+	if not IsDead(target) then
 	if BPAIO.QER.Q:Value() and Ready(_Q) and ValidTarget(target, 400) then
 		if QPred and QPred.hitChance >= (BPAIO.QER.pQ:Value()/100) then
 			CastSkillShot(_Q, QPred.castPos)
@@ -710,8 +710,8 @@ end
 function Katarina:Tick()
 	local target = GetCurrentTarget()
 	
-	if target ~= nil then
-		if BPAIO.QWER.Q:Value() and ValidTarget(target, GetCastRange(myHero, _Q)) and Ready(_Q) then
+	if not IsDead(target) then
+	if BPAIO.QWER.Q:Value() and ValidTarget(target, GetCastRange(myHero, _Q)) and Ready(_Q) then
 			CastTargetSpell(target, _Q)
 		end
 		if BPAIO.QWER.W:Value() and ValidTarget(target, GetCastRange(myHero, _W)) and Ready(_W) then
@@ -791,6 +791,7 @@ local NasusE = { delay = 0.1, speed = math.huge, width = 400, range = 650 }
 local EPred = GetCircularAOEPrediction(target, NasusE)
 local qdmg = 10 + 20*GetCastLevel(myHero,_Q) + GetBonusDmg(myHero) + GetBaseDamage(myHero) + GetBuffData(myHero,"nasusqstacks").Stacks - 5 -- thanks zwei
 
+	if not IsDead(target) then
 	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 325) then
 		CastSpell(_Q)
 		AttackUnit(target)
@@ -817,6 +818,7 @@ local qdmg = 10 + 20*GetCastLevel(myHero,_Q) + GetBonusDmg(myHero) + GetBaseDama
 			end
 		end
 	end
+end
 end
 
 function Nasus:Draw()
@@ -887,6 +889,7 @@ local target = GetCurrentTarget()
 local TrisW = { delay = 0.5, speed = 1500, width = 270, range = 900 }
 local WPred = GetCircularAOEPrediction(target, TrisW)
 
+	if not IsDead(target) then
 	if Ready(_Q) and BPAIO.QWER.Q:Value() then
 		CastSpell(_Q)
 	end
@@ -909,6 +912,7 @@ local WPred = GetCircularAOEPrediction(target, TrisW)
 			CastTargetSpell(enemy, _R)
 		end
 	end
+end
 end
 
 function Tristana:Draw()
@@ -973,6 +977,7 @@ end
 function XinZhao:Tick()
 local target = GetCurrentTarget()
 
+	if not IsDead(target) then
 	if Ready(_Q) and BPAIO.QWER.Q:Value() then
 		CastSpell(_Q)
 	end
@@ -996,6 +1001,7 @@ local target = GetCurrentTarget()
 			CastSpell(_R)
 		end
 	end
+end
 end
 
 function XinZhao:Draw()
@@ -1058,6 +1064,7 @@ local target = GetCurrentTarget()
 local IreliaR = { delay = 0, speed = 1600, width = 65, range = 1000 }
 local RPred = GetPrediction(target, IreliaR)
 
+	if not IsDead(target) then
 	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 650) then
 		CastTargetSpell(target, _Q)
 	end
@@ -1080,6 +1087,7 @@ local RPred = GetPrediction(target, IreliaR)
 			CastSkillShot(_R, RPred.castPos)
 		end
 	end
+end
 end
 
 function Irelia:Draw()
@@ -1152,7 +1160,8 @@ local CassR = { delay = 0.6, speed = math.huge, width = 150, range = 850 }
 local QPred = GetCircularAOEPrediction(target, CassQ)
 local WPred = GetCircularAOEPrediction(target, CassW)
 local RPred = GetCircularAOEPrediction(target, CassR)
-
+	
+	if not IsDead(target) then
 	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 850) then
 		if QPred and QPred.hitChance >= (BPAIO.QWER.pQ:Value()/100) then
 			CastSkillShot(_Q, QPred.castPos)
@@ -1182,6 +1191,7 @@ local RPred = GetCircularAOEPrediction(target, CassR)
 			CastSkillShot(_R, RPred.castPos)
 		end
 	end
+end
 end
 
 function Cassiopeia:Draw()
@@ -1261,6 +1271,7 @@ local WPred = GetPrediction(target, JhinW)
 local EPred = GetPrediction(target, JhinE)
 local RPred = GetPrediction(target, JhinR)
 
+	if not IsDead(target) then
 	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 550) then
 		CastTargetSpell(target, _Q)
 	end
@@ -1284,6 +1295,7 @@ local RPred = GetPrediction(target, JhinR)
 			CastSkillShot(_R, RPred.castPos)
 		end
 	end
+end
 end
 
 function Jhin:Draw()
@@ -1336,6 +1348,7 @@ BPAIO:Menu("QWER", "Cast QWER")
 BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
 BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
 BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+--BPAIO.QWER:Key("AA", "Last Hit Min", string.byte("Q"))
 
 BPAIO:Menu("D", "Draw Stuff")
 BPAIO.D:Boolean("Q", "Draw Q", true)
@@ -1349,30 +1362,39 @@ end
 function Vayne:Tick()
 local target = GetCurrentTarget()
 
+	if not IsDead(target) then
 	if BPAIO.QWER.Q:Value() and Ready(_Q) then
 		CastSkillShot(_Q, GetMousePos())
 	end
-	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 500) then
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 550) then
 		CastTargetSpell(target, _E)
 	end
 	if BPAIO.QWER.R:Value() and Ready(_R) then
 		CastSpell(_R)
 	end
+	--for _, minion in pairs(minionManager.objects) do
+		--if BPAIO.QWER.AA:Value() and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion, 550) then
+			---if GetCurrentHP(minion) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
+				--AttackUnit(minion)
+			--end
+		--end
+	--end
+end
 end
 
 function Vayne:Draw()
 	if BPAIO.D.Q:Value() then
 		if Ready(_Q) then
-			DrawCircle(GetOrigin(myHero), GetCastRange(_Q), 1, 100, ARGB(100, 0, 255, 0))
+			DrawCircle(GetOrigin(myHero), GetCastRange(myHero, _Q), 1, 100, ARGB(100, 0, 255, 0))
 		else
-			DrawCircle(GetOrigin(myHero), GetCastRange(_Q), 1, 100, ARGB(100, 255, 0, 0))
+			DrawCircle(GetOrigin(myHero), GetCastRange(myHero, _Q), 1, 100, ARGB(100, 255, 0, 0))
 		end
 	end
 	if BPAIO.D.E:Value() then
 		if Ready(_E) then
-			DrawCircle(GetOrigin(myHero), GetCastRange(_E), 1, 100, ARGB(100, 0, 255, 0))
+			DrawCircle(GetOrigin(myHero), GetCastRange(myHero, _E), 1, 100, ARGB(100, 0, 255, 0))
 		else
-			DrawCircle(GetOrigin(myHero), GetCastRange(_E), 1, 100, ARGB(100, 255, 0, 0))
+			DrawCircle(GetOrigin(myHero), GetCastRange(myHero, _E), 1, 100, ARGB(100, 255, 0, 0))
 		end
 	end
 	for _, minion in pairs(minionManager.objects) do
