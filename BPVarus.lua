@@ -11,7 +11,7 @@ VarusMenu.QER:Slider("pE", "E Pred", 0, 0, 100, 5)
 VarusMenu.QER:Key("R", "Cast R", string.byte("G"))
 VarusMenu.QER:Slider("pR", "R Pred", 0, 0, 100, 5)
 
-local VarusQ = { delay = 0.1, speed = 1850, width = 70, range = qRange}
+local VarusQ = { delay = 0.1, speed = 1850, width = 70, range = 1625}
 local VarusE = { delay = 0.1, speed = 1700, width = 55, range = 925, radius = 275}
 local VarusR = { delay = 0.1, speed = 1850, width = 120, range = 1075}
 
