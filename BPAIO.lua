@@ -1531,7 +1531,7 @@ BPAIO.QWER:Slider("pW", "Cast W", 0, 0, 100, 5)
 BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
 BPAIO.QWER:Slider("pE", "E Pred", 0, 0, 100, 5)
 BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
-BPAIO.QWER:Boolean("aR", "Auto R", true)
+--BPAIO.QWER:Boolean("aR", "Auto R", true)
 
 BPAIO:Menu("D", "Draw Stuff")
 BPAIO.D:Boolean("Q", "Draw Q", true)
@@ -1572,11 +1572,11 @@ local EPred = GetPrediction(target, CaitE)
 	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, GetCastRange(myHero, _R)) then
 		CastTargetSpell(target, _R)
 	end
-	for _, enemy in pairs(GetEnemyHeroes()) do
-		if BPAIO.QWER.aR:Value() and ValidTarget(target, GetCastRange(myHero, _R)) and GetCurrentHP(target) < getdmg("R", enemy, myHero, GetCastLevel(myHero, _R)) then
-			CastTargetSpell(enemy, _R)
-		end
-	end
+	--for _, enemy in pairs(GetEnemyHeroes()) do
+		--if BPAIO.QWER.aR:Value() and ValidTarget(target, GetCastRange(myHero, _R)) and GetCurrentHP(target) < getdmg("R", enemy, myHero, GetCastLevel(myHero, _R)) then
+			--CastTargetSpell(enemy, _R)
+		--end
+	--end
 end
 end
 
