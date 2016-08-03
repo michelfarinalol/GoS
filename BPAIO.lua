@@ -1449,7 +1449,7 @@ function Ezreal:Tick()
 local target = GetCurrentTarget()
 local EzQ = { delay = 0.25, speed = 1975, width = 50, range = GetCastRange(myHero, _Q) }
 local EzW = { delay = 0.25, speed = 1500, width = 80, range = GetCastRange(myHero, _W) }
-local EzR = { delay = 1, speed = 2000, width 150, range = GetCastRange(myHero, _R) }
+local EzR = { delay = 1, speed = 2000, width = 150, range = GetCastRange(myHero, _R) }
 local QPred = GetPrediction(target, EzQ)
 local WPred = GetPrediction(target, EzW)
 local RPred = GetPrediction(target, EzR)
@@ -1475,7 +1475,7 @@ local RPred = GetPrediction(target, EzR)
 	end
 	for _, minion in pairs(minionManager.objects) do
 		if BPAIO.QWER.mQ:Value() and Ready(_Q) and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion, GetCastRange(myHero, _Q)) and GetCurrentHP(minion) < getdmg("Q", minion, myHero, GetCastLevel(myHero, _Q)) then
-			local QPred2 = (minion, EzQ)
+			local QPred2 = GetPrediction(minion, EzQ)
 			if QPred2 and QPred2.hitChance >= (BPAIO.QWER.pQ:Value()/100) then
 				CastSkillShot(_Q, QPred2.castPos)
 			end
@@ -1553,6 +1553,7 @@ local QPred = GetPrediction(target, CaitQ)
 local WPred = GetCircularAOEPrediction(target, CaitW)
 local EPred = GetPrediction(target, CaitE)
 
+	if not IsDead(target) then
 	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, GetCastRange(myHero, _Q)) then
 		if QPred and QPred.hitChance >= (BPAIO.QWER.pQ:Value()/100) then
 			CastSkillShot(_Q, QPred.castPos)
@@ -1572,7 +1573,7 @@ local EPred = GetPrediction(target, CaitE)
 		CastTargetSpell(target, _R)
 	end
 	for _, enemy in pairs(GetEnemyHeroes()) do
-		if BPAIO.QWER.aR:Value() and ValidTarget(target, GetCastRange(myHero, _R) and GetCurrentHP(target) < getdmg("R", enemy, myHero, GetCastLevel(myHero, _R)) then
+		if BPAIO.QWER.aR:Value() and ValidTarget(target, GetCastRange(myHero, _R)) and GetCurrentHP(target) < getdmg("R", enemy, myHero, GetCastLevel(myHero, _R)) then
 			CastTargetSpell(enemy, _R)
 		end
 	end
