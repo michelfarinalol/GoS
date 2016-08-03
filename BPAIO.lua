@@ -1514,7 +1514,7 @@ function Ezreal:Draw()
 		end
 		if BPAIO.D.mQ:Value() and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion) and Ready(_Q) then
 			if GetCurrentHP(minion) < getdmg("Q", minion, myHero, GetCastLevel(myHero, _Q)) then
-				DrawCircle(GetOrigin(myHero), 70, 2, 100, ARGB(255, 255, 255, 255))
+				DrawCircle(GetOrigin(minion), 70, 2, 100, ARGB(255, 255, 255, 255))
 			end
 		end
 	end
