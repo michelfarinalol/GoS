@@ -24,6 +24,7 @@ local BPChamps =
 	["Illaoi"] = 		true,
 	["Irelia"] =		true,
 	["Khazix"] = 		true,
+	["Jayce"] =			true,
 	["Jinx"] =			true,
 	["Jhin"] =			true,
 	["Katarina"] =		true,
@@ -1514,7 +1515,7 @@ function Ezreal:Draw()
 		end
 		if BPAIO.D.mQ:Value() and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion) and Ready(_Q) then
 			if GetCurrentHP(minion) < getdmg("Q", minion, myHero, GetCastLevel(myHero, _Q)) then
-				DrawCircle(GetOrigin(minion), 70, 2, 100, ARGB(255, 255, 255, 255))
+				DrawCircle(GetOrigin(minion), 70, 2, 100, ARGB(255, 0, 0, 255))
 			end
 		end
 	end
@@ -1607,6 +1608,119 @@ function Caitlyn:Draw()
 			DrawCircle(GetOrigin(myHero), GetCastRange(myHero, _R), 1, 100, ARGB(100, 0, 255, 0))
 		else
 			DrawCircle(GetOrigin(myHero), GetCastRange(myHero, _R), 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	for _, minion in pairs(minionManager.objects) do
+		if BPAIO.D.AA:Value() and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion) then
+			if GetCurrentHP(minion) < GetBaseDamage(myHero) + GetBonusDmg(myHero) then
+				DrawCircle(GetOrigin(minion), 60, 2, 100, ARGB(255, 255, 255, 255))
+			end
+		end
+	end
+end
+
+class "Jayce"
+
+function Jayce:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q1", "Cast Q1", string.byte("S"))
+BPAIO.QWER:Key("Q2", "Cast Q2", string.byte("S"))
+BPAIO.QWER:Slider("pQ2", "Q1 Pred", 0, 0, 100, 5)
+BPAIO.QWER:Key("W1", "Cast W1", string.byte("D"))
+BPAIO.QWER:Key("W2", "Cast W2", string.byte("D"))
+BPAIO.QWER:Key("E1", "Cast E1", string.byte("F"))
+BPAIO.QWER:Key("E2", "Cast E2", string.byte("F"))
+BPAIO.QWER:Key("EQ", "Cast E + Q", string.byte("Q"))
+--BPAIO.QWER:Slider("pE2", "E2 Pred", 0, 0, 100, 5)
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+BPAIO:Menu("D", "Draw Stuff")
+BPAIO.D:Boolean("Q1", "Draw Q1", true)
+BPAIO.D:Boolean("Q2", "Draw Q2", true)
+BPAIO.D:Boolean("W1", "Draw W1", true)
+BPAIO.D:Boolean("E1", "Draw E1", true)
+BPAIO.D:Boolean("E2", "Draw E2", true)
+BPAIO.D:Boolean("AA", "Draw AA on Min", true)
+
+OnTick(function() self.Tick() end)
+OnDraw(function() self.Draw() end)
+end
+
+function Jayce:Tick()
+local target = GetCurrentTarget()
+local JayceQ = { delay = 0.25, speed = 1450, width = 70, range = 1300 }
+--local JayceE = { delay = 0.25, speed = math.huge, width = 100, range = 650 }
+local QPred = GetPrediction(target, JayceQ)
+--local EPred = GetPrediction(target, JayceE)
+
+
+	if BPAIO.QWER.Q1:Value() and Ready(_Q) and ValidTarget(target, 600) and GotBuff(myHero, "JaycePassiveMeleeAttack") == 1 then
+		CastTargetSpell(target, _Q)
+	end
+	if BPAIO.QWER.Q2:Value() and Ready(_Q) and ValidTarget(target, 1300) and GotBuff(myHero, "JaycePassiveRangeAttack") == 1 then
+		if QPred and QPred.hitChance >= (BPAIO.QWER.pQ2:Value()/100) then
+			CastSkillShot(_Q, QPred.castPos)
+		end
+	end
+	if BPAIO.QWER.W1:Value() and Ready(_W) and ValidTarget(target, 285) and GotBuff(myHero, "JaycePassiveMeleeAttack") == 1 then
+		CastSpell(_W)
+	end
+	if BPAIO.QWER.W2:Value() and Ready(_W) and GotBuff(myHero, "JaycePassiveRangeAttack") then
+		CastSpell(_W)
+	end
+	if BPAIO.QWER.E1:Value() and Ready(_E) and ValidTarget(target, 240) and GotBuff(myHero, "JaycePassiveMeleeAttack") == 1then
+		CastTargetSpell(target, _E)
+	end
+	if BPAIO.QWER.E2:Value() and Ready(_E) and GotBuff(myHero, "JaycePassiveRangeAttack") then
+		CastSkillShot(_E, GetMousePos())
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) then
+		CastSpell(_R)
+	end
+	if BPAIO.QWER.EQ:Value() and Ready(_E) and Ready(_Q) and ValidTarget(target, 1300) and GotBuff(myHero, "JaycePassiveRangeAttack") == 1 then
+		if QPred and QPred.hitChance >= (BPAIO.QWER.pQ2:Value()/100) then
+			CastSkillShot(_E, GetMousePos())
+			DelayAction(function()
+				CastSkillShot(_Q, QPred.castPos)
+			end, 0.01)
+		end
+	end
+end
+
+function Jayce:Draw()
+	if BPAIO.D.Q1:Value() and GotBuff(myHero, "JaycePassiveMeleeAttack") == 1 then
+		if Ready(_Q) then
+			DrawCircle(GetOrigin(myHero), 600, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 600, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.Q2:Value() and GotBuff(myHero, "JaycePassiveRangeAttack") == 1then
+		if Ready(_Q) then
+			DrawCircle(GetOrigin(myHero), 1300, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 1300, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.W1:Value() and GotBuff(myHero, "JaycePassiveMeleeAttack") == 1 then
+		if Ready(_W) then
+			DrawCircle(GetOrigin(myHero), 285, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 285, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.E1:Value() and GotBuff(myHero, "JaycePassiveMeleeAttack") == 1 then
+		if Ready(_E) then
+			DrawCircle(GetOrigin(myHero), 240, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 240, 1, 100, ARGB(100, 255, 0, 0))
+		end
+	end
+	if BPAIO.D.E2:Value() and GotBuff(myHero, "JaycePassiveRangeAttack") == 1 then
+		if Ready(_E) then
+			DrawCircle(GetOrigin(myHero), 650, 1, 100, ARGB(100, 0, 255, 0))
+		else
+			DrawCircle(GetOrigin(myHero), 650, 1, 100, ARGB(100, 255, 0, 0))
 		end
 	end
 	for _, minion in pairs(minionManager.objects) do
