@@ -2251,12 +2251,12 @@ local FioraW = { delay = 0.5, speed = 3200, width = 70, range = 800 }
 local QPred = GetPrediction(target, FioraQ)
 local WPred = GetPrediction(target, FioraW)
 
-	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, GetCastRange(_Q)) then
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, GetCastRange(myHero, _Q)) then
 		if QPred and QPred.hitChance >= 0 then
 			CastSkillShot(_Q, QPred.castPos)
 		end
 	end
-	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, GetCastRange(_W)) then
+	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, GetCastRange(myHero, _W)) then
 		if WPred and WPred.hitChance >= 0 then
 			CastSkillShot(_W, WPred.castPos)
 		end
