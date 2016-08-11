@@ -2246,13 +2246,13 @@ end
 
 function Fiora:Tick()
 local target = GetCurrentTarget()
-local FioraQ = { delay = 0, speed = 1200, width = 70, range = GetCastRange(myHero, _Q) }
+local FioraQ = { delay = 0, speed = 1200, width = 70, range = 800 }
 local FioraW = { delay = 0.5, speed = 3200, width = 70, range = 800 }
 local QPred = GetPrediction(target, FioraQ)
 local WPred = GetPrediction(target, FioraW)
 
 	if BPAIO.QWER.Q:Value() and Ready(_Q) then
-		if ValidTarget(target, GetCastRange(myHero, _Q)) then
+		if ValidTarget(target, 800) then
 			if QPred and QPred.hitChance >= 0 then
 				CastSkillShot(_Q, QPred.castPos)
 			end
@@ -2260,12 +2260,12 @@ local WPred = GetPrediction(target, FioraW)
 			CastSkillShot(_Q, GetMousePos())
 		end
 	end
-	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, GetCastRange(myHero, _W)) then
+	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, 800) then
 		if WPred and WPred.hitChance >= 0 then
 			CastSkillShot(_W, WPred.castPos)
 		end
 	end
-	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 225) then
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 300) then
 		CastSpell(_E)
 		DelayAction(function()
 			AttackUnit(target)
@@ -2302,11 +2302,11 @@ local RPred = GetPrediction(target, FizzR)
 		CastSpell(_W)
 	end
 	if BPAIO.QWER.E:Value() and Ready(_E) then
-		if ValidTarget(target, 800) then
+		if ValidTarget(target, 1200) then
 			if EPred and EPred.hitChance >= 0 then
 				CastSkillShot(_E, EPred.castPos)
 			end
-		elseif EnemiesAround(myHero, 800) < 1 then
+		elseif not ValidTarget(target, 1200) then
 			CastSkillShot(_E, GetMousePos())
 		end
 	end
@@ -2365,9 +2365,9 @@ end
 function Talon:Tick()
 local target = GetCurrentTarget()
 local TalonW = { delay = 0.25, speed = 2300, width = 80, range = 800 }
-local Wpred = GetPrediction(target, TalonW)
+local WPred = GetPrediction(target, TalonW)
 
-	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 250) then
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 300) then
 		CastSpell(_Q)
 		DelayAction(function()
 			AttackUnit(target)
@@ -2391,17 +2391,17 @@ class "Tryndamere"
 function Tryndamere:__init()
 BPAIO:Menu("QWER", "Cast QWER")
 BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
-BPAIO.QWER:Slider("hQ", "Health for Q", 10, 1, 100, 1)
 BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
 BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
 BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+BPAIO.QWER:Slider("hQ", "Health for R", 10, 1, 100, 1)
 
 OnTick(function(myHero) self.Tick() end)
 end
 
 function Tryndamere:Tick()
 local target = GetCurrentTarget()
-local TrynE = { delay = 0, speed = 1300, width = 93, range = 660 }
+local TryndE = { delay = 0, speed = 1300, width = 93, range = 660 }
 local EPred = GetPrediction(target, TryndE)
 
 	if BPAIO.QWER.Q:Value() and Ready(_Q) then
@@ -2415,7 +2415,7 @@ local EPred = GetPrediction(target, TryndE)
 			CastSkillShot(_E, EPred.castPos)
 		end
 	end
-	if BPAIO.QWER.R:Value() and Ready(_R) and GetCurrentHP(myHero) <= BPAIO.QWER.hQ:Value() then
+	if BPAIO.QWER.R:Value() and Ready(_R) and GetPercentHP(myHero) <= BPAIO.QWER.hQ:Value() then
 		CastSpell(_R)
 	end
 end
