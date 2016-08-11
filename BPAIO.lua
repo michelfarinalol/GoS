@@ -2251,9 +2251,13 @@ local FioraW = { delay = 0.5, speed = 3200, width = 70, range = 800 }
 local QPred = GetPrediction(target, FioraQ)
 local WPred = GetPrediction(target, FioraW)
 
-	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, GetCastRange(myHero, _Q)) then
-		if QPred and QPred.hitChance >= 0 then
-			CastSkillShot(_Q, QPred.castPos)
+	if BPAIO.QWER.Q:Value() and Ready(_Q) then
+		if ValidTarget(target, GetCastRange(myHero, _Q)) then
+			if QPred and QPred.hitChance >= 0 then
+				CastSkillShot(_Q, QPred.castPos)
+			end
+		else
+			CastSkillShot(_Q, GetMousePos())
 		end
 	end
 	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, GetCastRange(myHero, _W)) then
@@ -2267,7 +2271,7 @@ local WPred = GetPrediction(target, FioraW)
 			AttackUnit(target)
 		end, 0.01)
 	end
-	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, GetCastRange(_R)) then
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, GetCastRange(myHero, _R)) then
 		CastTargetSpell(target, _R)
 	end
 end
