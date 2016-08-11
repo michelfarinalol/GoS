@@ -14,7 +14,12 @@ require("DamageLib")
 
 local BPChamps = 
 	{
+	["Aatrox"] =		true,
+	["Ahri"] =			true,
 	["Akali"] =			true,
+	["Alistar"] =		true,
+	["Amumu"] = 		true,
+	["Anivia"] = 		true,
 	["Annie"] = 		true, 
 	["Ashe"] = 			true,
 	["Blitzcrank"] =	true,
@@ -2118,7 +2123,7 @@ local QPred = GetPrediction(target, SivirQ)
 	if BPAIO.QWER.W:Value() and Ready(_W) then
 		CastSpell(_W)
 	end
-	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 2000) then
+	if BPAIO.QWER.E:Value() and Ready(_E) then
 		CastSpell(_E)
 	end
 	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, 2000) then
