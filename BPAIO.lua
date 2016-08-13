@@ -1,6 +1,6 @@
 --Credits to SxcS and Zwei
 
-local v = 1.0
+local v = 0.0001
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/BPAIO.version", function(num)
 	if v < tonumber(num) then
@@ -2507,7 +2507,7 @@ BPAIO.QWER:Slider("aaW", "Ally % Health W", 40, 1, 100, 1)
 BPAIO.QWER:Boolean("aR", "Auto R", true)
 BPAIO.QWER:Slider("aaR", "Ally % Health R", 40, 1, 100, 1)
 
-OnTick(function() self.Tick() end)
+OnTick(function(myHero) self.Tick() end)
 end
 
 function Soraka:Tick()
@@ -2523,16 +2523,21 @@ local EPred = GetPrediction(target, SorakaE)
 		end
 	end
 	for _,ally in pairs(GetAllyHeroes()) do
-		if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(ally, 550) then
+		if BPAIO.QWER.W:Value() and Ready(_W) and GetDistance(myHero,ally)<GetCastRange(myHero,_W) then
 			CastTargetSpell(ally, _W)
 		end
-		if BPAIO.QWER.aW:Value() and Ready(_W) and ValidTarget(ally, 550) and GetPercentHP(ally) <= BPAIO.QWER.aaW:Value() then
+		if BPAIO.QWER.aW:Value() and Ready(_W) and GetDistance(myHero,ally)<GetCastRange(myHero,_W) and GetPercentHP(ally) <= BPAIO.QWER.aaW:Value() then
 			CastTargetSpell(ally, _W)
 		end
-		if BPAIO.QWER.aR:Value() and Ready(_R) and GetPercentHP(ally) <= BPAIO.QWER.aaR:Value() then
+		if BPAIO.QWER.aR:Value() and Ready(_R) and not IsDead(ally) and GetPercentHP(ally) <= BPAIO.QWER.aaR:Value() then
 			CastSpell(_R)
 		end
 	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 925) then
+		if EPred and EPred.hitChance >= 0 then
+			CastSkillShot(_E, EPred.castPos)
+		end
+	end	
 	if BPAIO.QWER.R:Value() and Ready(_R) then
 		CastSpell(_R)
 	end
