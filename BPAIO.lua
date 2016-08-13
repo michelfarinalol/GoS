@@ -1,6 +1,6 @@
 --Credits to SxcS and Zwei
 
-local v = 0.10
+local v = 1.0
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/BPAIO.version", function(num)
 	if v < tonumber(num) then
