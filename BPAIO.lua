@@ -57,6 +57,7 @@ local BPChamps =
 	["Sejuani"] =		true,
 	["Shen"] = 			true,
 	["Sivir"] =			true,
+	["Soraka"] =		true,
 	["Taric"] =			true,
 	["Talon"] =			true,
 	["Tristana"] =		true,
@@ -723,6 +724,7 @@ BPAIO.QWER:Key("aQ", "Q Minions", string.byte("Q"))
 BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
 BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
 BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+BPAIO.QWER:Boolean("AIgn", "Auto Ignite", true)
 
 BPAIO:Menu("D", "Draw")
 BPAIO.D:Boolean("dQ", "Draw Q", true)
@@ -739,7 +741,7 @@ function Katarina:Tick()
 	local target = GetCurrentTarget()
 	
 	if not IsDead(target) then
-	if BPAIO.QWER.Q:Value() and ValidTarget(target, GetCastRange(myHero, _Q)) and Ready(_Q) then
+		if BPAIO.QWER.Q:Value() and ValidTarget(target, GetCastRange(myHero, _Q)) and Ready(_Q) then
 			CastTargetSpell(target, _Q)
 		end
 		if BPAIO.QWER.W:Value() and ValidTarget(target, GetCastRange(myHero, _W)) and Ready(_W) then
@@ -756,7 +758,26 @@ function Katarina:Tick()
 				CastTargetSpell(minion, _Q)
 			end
 		end
+		for _,enemy in pairs(GetEnemyHeroes()) do
+		if BPAIO.QWER.AIgn:Value() then
+			if GetCastName(myHero, SUMMONER_1) == 'SummonerDot' then
+				Ignite = SUMMONER_1
+				if ValidTarget(enemy, 600) then
+					if 20 * GetLevel(myHero) + 50 > GetCurrentHP(enemy) + GetHPRegen(enemy) * 3 then
+						CastTargetSpell(enemy, Ignite)
+					end
+				end
+			elseif GetCastName(myHero, SUMMONER_2) == 'SummonerDot' then
+				Ignite = SUMMONER_2
+				if ValidTarget(enemy, 600) then
+					if 20 * GetLevel(myHero) + 50 > GetCurrentHP(enemy) + GetHPRegen(enemy) * 3 then
+						CastTargetSpell(enemy, Ignite)
+					end
+				end
+			end
+		end
 	end
+end
 end
 
 function Katarina:Draw()
@@ -2469,6 +2490,50 @@ aaResetItems={3074,3077,3748}
 		CastSpell(_R)
 	end
 	if BPAIO.QWER.aR:Value() and Ready(_R) and BPAIO.QWER.aR1:Value() >= EnemiesAround(myHero, 1500) and GetPercentHP(myHero) <= BPAIO.QWER.aR2:Value() then
+		CastSpell(_R)
+	end
+end
+
+class "Soraka"
+
+function Soraka:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+BPAIO.QWER:Boolean("aW", "Auto W", true)
+BPAIO.QWER:Slider("aaW", "Ally % Health W", 40, 1, 100, 1)
+BPAIO.QWER:Boolean("aR", "Auto R", true)
+BPAIO.QWER:Slider("aaR", "Ally % Health R", 40, 1, 100, 1)
+
+OnTick(function() self.Tick() end)
+end
+
+function Soraka:Tick()
+local target = GetCurrentTarget()
+local SorakaQ = { delay = 0.5, speed = 1750, width = 235, range = 950 }
+local SorakaE = { delay = 0.25, speed = math.huge, width = 300, range = 925 }
+local QPred = GetPrediction(target, SorakaQ)
+local EPred = GetPrediction(target, SorakaE)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 950) then
+		if QPred and QPred.hitChance >= 0 then
+			CastSkillShot(_Q, QPred.castPos)
+		end
+	end
+	for _,ally in pairs(GetAllyHeroes()) do
+		if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(ally, 550) then
+			CastTargetSpell(ally, _W)
+		end
+		if BPAIO.QWER.aW:Value() and Ready(_W) and ValidTarget(ally, 550) and GetPercentHP(ally) <= BPAIO.QWER.aaW:Value() then
+			CastTargetSpell(ally, _W)
+		end
+		if BPAIO.QWER.aR:Value() and Ready(_R) and GetPercentHP(ally) <= BPAIO.QWER.aaR:Value() then
+			CastSpell(_R)
+		end
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) then
 		CastSpell(_R)
 	end
 end
