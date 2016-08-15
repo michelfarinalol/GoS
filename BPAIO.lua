@@ -2475,7 +2475,7 @@ aaResetItems={3074,3077,3748}
 	if BPAIO.QWER.aQ:Value() and Ready(_Q) then
 		CastSpell(_Q)
 	end
-	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, 175) then
+	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, 250) then
 		for _, id in pairs(aaResetItems) do
 			if (BPAIO.QWER.It:Value() and GetItemSlot(myHero, id) > 0) then
 				CastSpell(_W)
