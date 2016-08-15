@@ -1,6 +1,6 @@
 --Credits to SxcS and Zwei
 
-local v = 0.0001
+local v = 0.0002
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/BPAIO.version", function(num)
 	if v < tonumber(num) then
@@ -1395,7 +1395,7 @@ class "Vayne"
 function Vayne:__init()
 BPAIO:Menu("QWER", "Cast QWER")
 BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
-BPAIO.QWER:DropDown("QL", "Q-Logic", 1, {"Advanced", "Simple"})
+BPAIO.QWER:DropDown("QL", "Q-Logic", 2, {"Advanced", "Simple"})
 BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
 BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
 --BPAIO.QWER:Key("AA", "Last Hit Min", string.byte("Q"))
@@ -2452,6 +2452,7 @@ BPAIO:Menu("QWER", "Cast QWER")
 BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
 BPAIO.QWER:Key("aQ", "Auto Cast Q", string.byte("Q"))
 BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Boolean("It", "Use Items", true)
 BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
 BPAIO.QWER:Key("aE", "Auto Cast E", string.byte("Z"))
 BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
@@ -2475,8 +2476,18 @@ aaResetItems={3074,3077,3748}
 		CastSpell(_Q)
 	end
 	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, 300) then
-		CastSpell(_W)
-		AttackUnit(target)
+		for _, id in pairs(aaResetItems) do
+			if (BPAIO.QWER.It:Value() and GetItemSlot(myHero, id) > 0) then
+				CastSpell(_W)
+				AttackUnit(target)
+					DelayAction(function()
+					CastSpell(GetItemSlot(myHero,id))
+				end, 0.01)
+			else
+				CastSpell(_W)
+				AttackUnit(target)
+			end
+		end
 	end
 	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 900) then
 		if EPred and EPred.hitChance >= 0 then
