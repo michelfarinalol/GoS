@@ -1,6 +1,6 @@
 --Credits to SxcS and Zwei
 
-local v = 0.0002
+local v = 0.0003
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/BPAIO.version", function(num)
 	if v < tonumber(num) then
@@ -2857,5 +2857,72 @@ local WPred = GetPrediction(target, MorgW)
 		if BPAIO.QWER.aR:Value() and Ready(_R) and EnemiesAround(myHero, GetCastRange(_R)) >= BPAIO.QWER.aaR:Value() then
 			CastSpell(_R)
 		end
+	end
+end
+
+class "Trundle"
+
+function Trundle:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Trundle:Tick()
+local target = GetCurrentTarget()
+local TrundleW = { delay = 0.25, speed = math.huge, width = 1000, range = 900 }
+local TrundleE = { delay = 0.2, speed = math.huge, width = 270, range = 1000 }
+local WPred = GetPrediction(target, TrundleW)
+local EPred = GetPrediction(target, TrundleE)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 250) then
+		CastSpell(_Q)
+		AttackUnit(target)
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, GetCastRange(myHero, _W)) then
+		if WPred and WPRed.hitChance >= 0 then
+			CastSkillShot(_W, WPred.castPos)
+		end
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, GetCastRange(myHero, _E)) then
+		if EPred and EPred.hitChance >= 0 then
+			CastSkillShot(_E, EPred.castPos)
+		end
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, GetCastRange(myHero, _R)) then
+		CastTargetSpell(target, _R)
+	end
+end
+
+class "Udyr"
+
+function Udyr:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Udyr:Tick()
+local target = GetCurrentTarget()
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) then
+		CastSpell(_Q)
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) then
+		CastSpell(_W)
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) then
+		CastSpell(_E)
+	end
+	if BPAIO.QWER:R:Value() and Ready(_R) then
+		CastSpell(_R)
 	end
 end
