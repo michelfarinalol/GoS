@@ -1,6 +1,6 @@
 --Credits to SxcS and Zwei
 
-local v = 0.0003
+local v = 0.0004
 
 GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/BPAIO.version", function(num)
 	if v < tonumber(num) then
@@ -2633,7 +2633,7 @@ BPAIO.QWER:Boolean("mE", "Auto E Minion", true)
 BPAIO.QWER:Boolean("jE", "Auto E Jungle", true)
 BPAIO.QWER:Slider("oE", "E Overkill", 50, 0, 250, 10)
 BPAIO.QWER:Slider("dE", "Delay on E", 10, 0, 50, 1)
-BPAIO.QWER:Slider("R", "Cast R", string.byte("G"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
 
 OnTick(function(myHero) self.Tick() end)
 end
@@ -2642,10 +2642,6 @@ function Kalista:Tick()
 local target = GetCurrentTarget()
 local KaliQ = { delay = 0.25, speed = 1700, width = 40, range = 1200 }
 local QPred = GetPrediction(target, KaliQ)
-
-self:AutoEM()
-self:AutoEJM()
-self:AutoEC()
 
 	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, GetCastRange(myHero, _Q)) then
 		if QPred and QPred.hitChance >= 0 then
@@ -2660,88 +2656,6 @@ self:AutoEC()
 	end
 	if BPAIO.QWER.R:Value() and Ready(_R) then
 		CastSpell(_R)
-	end
-end
-
-function Kalista:AutoEC()
-  for _, unit in pairs(GetEnemyHeroes()) do                               --*(GotBuff(unit,"kalistaexpungemarker")-1) copied from noddy ( kalista code )
-		if GetCastLevel(myHero,_E) == 1 and not IsDead(unit) and GetHP(unit) + BPAIO.QWER.oE:Value() < CalcDamage(myHero, unit, (24*GetCastLevel(myHero,_E)+24+((GetBaseDamage(myHero)+GetBonusDmg(myHero))*0.6)) + ((((0.175+GetCastLevel(myHero,_E))*0.025)*(GetBaseDamage(myHero)+GetBonusDmg(myHero))))*(GotBuff(unit,"kalistaexpungemarker")-1),0) and IsReady(_E) and GotBuff(unit, "kalistaexpungemarker") >= 1 and GetPercentMP(myHero) >= BPAIO.QWER.maE:Value() and ValidTarget(unit, GetCastRange(myHero,_E)) and BPAIO.QWER.cE:Value() then
-		DelayAction(function()
-			CastSpell(_E)
-		end,BPAIO.QWER.dE:Value()/100)
-		elseif GetCastLevel(myHero,_E) == 2 and not IsDead(unit) and GetHP(unit) + BPAIO.QWER.oE:Value() < CalcDamage(myHero, unit, (29*GetCastLevel(myHero,_E)+29+((GetBaseDamage(myHero)+GetBonusDmg(myHero))*0.6)) + ((((0.175+GetCastLevel(myHero,_E))*0.025)*(GetBaseDamage(myHero)+GetBonusDmg(myHero))))*(GotBuff(unit,"kalistaexpungemarker")-1),0) and IsReady(_E) and GotBuff(unit, "kalistaexpungemarker") >= 1 and GetPercentMP(myHero) >= BPAIO.QWER.maE:Value() and ValidTarget(unit, GetCastRange(myHero,_E)) and BPAIO.QWER.cE:Value() then
-		DelayAction(function()
-			CastSpell(_E)
-		end,BPAIO.QWER.dE:Value()/100)
-		elseif GetCastLevel(myHero,_E) == 3 and not IsDead(unit) and GetHP(unit) + BPAIO.QWER.oE:Value() < CalcDamage(myHero, unit, (34*GetCastLevel(myHero,_E)+34+((GetBaseDamage(myHero)+GetBonusDmg(myHero))*0.6)) + ((((0.175+GetCastLevel(myHero,_E))*0.025)*(GetBaseDamage(myHero)+GetBonusDmg(myHero))))*(GotBuff(unit,"kalistaexpungemarker")-1),0) and IsReady(_E) and GotBuff(unit, "kalistaexpungemarker") >= 1 and GetPercentMP(myHero) >= BPAIO.QWER.maE:Value() and ValidTarget(unit, GetCastRange(myHero,_E)) and BPAIO.QWER.cE:Value() then
-		DelayAction(function()
-			CastSpell(_E)
-		end,BPAIO.QWER.dE:Value()/100)
-		elseif GetCastLevel(myHero,_E) == 4 and not IsDead(unit) and GetHP(unit) + BPAIO.QWER.oE:Value() < CalcDamage(myHero, unit, (39*GetCastLevel(myHero,_E)+39+((GetBaseDamage(myHero)+GetBonusDmg(myHero))*0.6)) + ((((0.175+GetCastLevel(myHero,_E))*0.025)*(GetBaseDamage(myHero)+GetBonusDmg(myHero))))*(GotBuff(unit,"kalistaexpungemarker")-1),0) and IsReady(_E) and GotBuff(unit, "kalistaexpungemarker") >= 1 and GetPercentMP(myHero) >= BPAIO.QWER.maE:Value() and ValidTarget(unit, GetCastRange(myHero,_E)) and BPAIO.QWER.cE:Value() then
-		DelayAction(function()
-			CastSpell(_E)
-		end,BPAIO.QWER.dE:Value()/100)
-		elseif GetCastLevel(myHero,_E) == 5 and not IsDead(unit) and GetHP(unit) + BPAIO.QWER.oE:Value() < CalcDamage(myHero, unit, (46*GetCastLevel(myHero,_E)+46+((GetBaseDamage(myHero)+GetBonusDmg(myHero))*0.6)) + ((((0.175+GetCastLevel(myHero,_E))*0.025)*(GetBaseDamage(myHero)+GetBonusDmg(myHero))))*(GotBuff(unit,"kalistaexpungemarker")-1),0) and IsReady(_E) and GotBuff(unit, "kalistaexpungemarker") >= 1 and GetPercentMP(myHero) >= BPAIO.QWER.maE:Value() and ValidTarget(unit, GetCastRange(myHero,_E)) and BPAIO.QWER.cE:Value() then
-		DelayAction(function()
-			CastSpell(_E)
-		end,BPAIO.QWER.dE:Value()/100)
-	    end
-	end
-end
-
-function Kalista:AutoEM()
-	for _, minion in pairs(minionManager.objects) do
-	  if GetTeam(minion) == MINION_ENEMY then
-		if GetCastLevel(myHero,_E) == 1 and not IsDead(minion) and GetHP(minion) + BPAIO.QWER.oE:Value() < CalcDamage(myHero, minion, (24*GetCastLevel(myHero,_E)+24+((GetBaseDamage(myHero)+GetBonusDmg(myHero))*0.6)) + ((((0.175+GetCastLevel(myHero,_E))*0.025)*(GetBaseDamage(myHero)+GetBonusDmg(myHero))))*(GotBuff(minion,"kalistaexpungemarker")-1),0) and IsReady(_E) and GotBuff(minion, "kalistaexpungemarker") >= 1 and GetPercentMP(myHero) >= BPAIO.QWER.maE:Value() and ValidTarget(minion, GetCastRange(myHero,_E)) and BPAIO.QWER.mE:Value() then
-		DelayAction(function()
-			CastSpell(_E)
-		end,BPAIO.QWER.dE:Value()/100)
-		elseif GetCastLevel(myHero,_E) == 2 and not IsDead(minion) and GetHP(minion) + BPAIO.QWER.oE:Value() < CalcDamage(myHero, minion, (29*GetCastLevel(myHero,_E)+29+((GetBaseDamage(myHero)+GetBonusDmg(myHero))*0.6)) + ((((0.175+GetCastLevel(myHero,_E))*0.025)*(GetBaseDamage(myHero)+GetBonusDmg(myHero))))*(GotBuff(minion,"kalistaexpungemarker")-1),0) and IsReady(_E) and GotBuff(minion, "kalistaexpungemarker") >= 1 and GetPercentMP(myHero) >= BPAIO.QWER.maE:Value() and ValidTarget(minion, GetCastRange(myHero,_E)) and BPAIO.QWER.mE:Value() then
-		DelayAction(function()
-			CastSpell(_E)
-		end,BPAIO.QWER.dE:Value()/100)
-		elseif GetCastLevel(myHero,_E) == 3 and not IsDead(minion) and GetHP(minion) + BPAIO.QWER.oE:Value() < CalcDamage(myHero, minion, (34*GetCastLevel(myHero,_E)+34+((GetBaseDamage(myHero)+GetBonusDmg(myHero))*0.6)) + ((((0.175+GetCastLevel(myHero,_E))*0.025)*(GetBaseDamage(myHero)+GetBonusDmg(myHero))))*(GotBuff(minion,"kalistaexpungemarker")-1),0) and IsReady(_E) and GotBuff(minion, "kalistaexpungemarker") >= 1 and GetPercentMP(myHero) >= BPAIO.QWER.maE:Value() and ValidTarget(minion, GetCastRange(myHero,_E)) and BPAIO.QWER.mE:Value() then
-		DelayAction(function()
-			CastSpell(_E)
-		end,BPAIO.QWER.dE:Value()/100)
-		elseif GetCastLevel(myHero,_E) == 4 and not IsDead(minion) and GetHP(minion) + BPAIO.QWER.oE:Value() < CalcDamage(myHero, minion, (39*GetCastLevel(myHero,_E)+39+((GetBaseDamage(myHero)+GetBonusDmg(myHero))*0.6)) + ((((0.175+GetCastLevel(myHero,_E))*0.025)*(GetBaseDamage(myHero)+GetBonusDmg(myHero))))*(GotBuff(minion,"kalistaexpungemarker")-1),0) and IsReady(_E) and GotBuff(minion, "kalistaexpungemarker") >= 1 and GetPercentMP(myHero) >= BPAIO.QWER.maE:Value() and ValidTarget(minion, GetCastRange(myHero,_E)) and BPAIO.QWER.mE:Value() then
-		DelayAction(function()
-			CastSpell(_E)
-		end,BPAIO.QWER.dE:Value()/100)
-		elseif GetCastLevel(myHero,_E) == 5 and not IsDead(minion) and GetHP(minion) + BPAIO.QWER.oE:Value() < CalcDamage(myHero, minion, (46*GetCastLevel(myHero,_E)+46+((GetBaseDamage(myHero)+GetBonusDmg(myHero))*0.6)) + ((((0.175+GetCastLevel(myHero,_E))*0.025)*(GetBaseDamage(myHero)+GetBonusDmg(myHero))))*(GotBuff(minion,"kalistaexpungemarker")-1),0) and IsReady(_E) and GotBuff(minion, "kalistaexpungemarker") >= 1 and GetPercentMP(myHero) >= BPAIO.QWER.maE:Value() and ValidTarget(minion, GetCastRange(myHero,_E)) and BPAIO.QWER.mE:Value() then
-		DelayAction(function()
-			CastSpell(_E)
-		end,BPAIO.QWER.dE:Value()/100)
-	    end
-	  end
-	end
-end
-
-function Kalista:AutoEJM()
-	for _, mob in pairs(minionManager.objects) do
-	  if GetTeam(mob) == MINION_JUNGLE then
-		if GetCastLevel(myHero,_E) == 1 and not IsDead(mob) and GetHP(mob) + BPAIO.QWER.oE:Value() < CalcDamage(myHero, mob, (24*GetCastLevel(myHero,_E)+24+((GetBaseDamage(myHero)+GetBonusDmg(myHero))*0.6)) + ((((0.175+GetCastLevel(myHero,_E))*0.025)*(GetBaseDamage(myHero)+GetBonusDmg(myHero))))*(GotBuff(mob,"kalistaexpungemarker")-1),0) and IsReady(_E) and GotBuff(mob, "kalistaexpungemarker") >= 1 and GetPercentMP(myHero) >= BPAIO.QWER.maE:Value() and ValidTarget(mob, GetCastRange(myHero,_E)) and BPAIO.QWER.jE:Value() then
-		DelayAction(function()
-			CastSpell(_E)
-		end,BPAIO.QWER.dE:Value()/100)
-		elseif GetCastLevel(myHero,_E) == 2 and not IsDead(mob) and GetHP(mob) + BPAIO.QWER.oE:Value() < CalcDamage(myHero, mob, (29*GetCastLevel(myHero,_E)+29+((GetBaseDamage(myHero)+GetBonusDmg(myHero))*0.6)) + ((((0.175+GetCastLevel(myHero,_E))*0.025)*(GetBaseDamage(myHero)+GetBonusDmg(myHero))))*(GotBuff(mob,"kalistaexpungemarker")-1),0) and IsReady(_E) and GotBuff(mob, "kalistaexpungemarker") >= 1 and GetPercentMP(myHero) >= BPAIO.QWER.maE:Value() and ValidTarget(mob, GetCastRange(myHero,_E)) and BPAIO.QWER.jE:Value() then
-		DelayAction(function()
-			CastSpell(_E)
-		end,BPAIO.QWER.dE:Value()/100)
-		elseif GetCastLevel(myHero,_E) == 3 and not IsDead(mob) and GetHP(mob) + BPAIO.QWER.oE:Value() < CalcDamage(myHero, mob, (34*GetCastLevel(myHero,_E)+34+((GetBaseDamage(myHero)+GetBonusDmg(myHero))*0.6)) + ((((0.175+GetCastLevel(myHero,_E))*0.025)*(GetBaseDamage(myHero)+GetBonusDmg(myHero))))*(GotBuff(mob,"kalistaexpungemarker")-1),0) and IsReady(_E) and GotBuff(mob, "kalistaexpungemarker") >= 1 and GetPercentMP(myHero) >= BPAIO.QWER.maE:Value() and ValidTarget(mob, GetCastRange(myHero,_E)) and BPAIO.QWER.jE:Value() then
-		DelayAction(function()
-			CastSpell(_E)
-		end,BPAIO.QWER.dE:Value()/100)
-		elseif GetCastLevel(myHero,_E) == 4 and not IsDead(mob) and GetHP(mob) + BPAIO.QWER.oE:Value() < CalcDamage(myHero, mob, (39*GetCastLevel(myHero,_E)+39+((GetBaseDamage(myHero)+GetBonusDmg(myHero))*0.6)) + ((((0.175+GetCastLevel(myHero,_E))*0.025)*(GetBaseDamage(myHero)+GetBonusDmg(myHero))))*(GotBuff(mob,"kalistaexpungemarker")-1),0) and IsReady(_E) and GotBuff(mob, "kalistaexpungemarker") >= 1 and GetPercentMP(myHero) >= BPAIO.QWER.maE:Value() and ValidTarget(mob, GetCastRange(myHero,_E)) and BPAIO.QWER.jE:Value() then
-		DelayAction(function()
-			CastSpell(_E)
-		end,BPAIO.QWER.dE:Value()/100)
-		elseif GetCastLevel(myHero,_E) == 5 and not IsDead(mob) and GetHP(mob) + BPAIO.QWER.oE:Value() < CalcDamage(myHero, mob, (46*GetCastLevel(myHero,_E)+46+((GetBaseDamage(myHero)+GetBonusDmg(myHero))*0.6)) + ((((0.175+GetCastLevel(myHero,_E))*0.025)*(GetBaseDamage(myHero)+GetBonusDmg(myHero))))*(GotBuff(mob,"kalistaexpungemarker")-1),0) and IsReady(_E) and GotBuff(mob, "kalistaexpungemarker") >= 1 and GetPercentMP(myHero) >= BPAIO.QWER.maE:Value() and ValidTarget(mob, GetCastRange(myHero,_E)) and BPAIO.QWER.jE:Value() then
-		DelayAction(function()
-			CastSpell(_E)
-		end,BPAIO.QWER.dE:Value()/100)
-	    end
-	  end
 	end
 end
 
@@ -2865,6 +2779,8 @@ class "Trundle"
 function Trundle:__init()
 BPAIO:Menu("QWER", "Cast QWER")
 BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Boolean("It", "Use Items", true)
+BPAIO.QWER:Key("aQ", "Auto Q", string.byte("Q"))
 BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
 BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
 BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
@@ -2878,13 +2794,27 @@ local TrundleW = { delay = 0.25, speed = math.huge, width = 1000, range = 900 }
 local TrundleE = { delay = 0.2, speed = math.huge, width = 270, range = 1000 }
 local WPred = GetPrediction(target, TrundleW)
 local EPred = GetPrediction(target, TrundleE)
+aaResetItems={3074,3077,3748}
 
 	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 250) then
+		for _, id in pairs(aaResetItems) do
+			if (BPAIO.QWER.It:Value() and GetItemSlot(myHero, id) > 0) then
+				CastSpell(_Q)
+				AttackUnit(target)
+					DelayAction(function()
+					CastSpell(GetItemSlot(myHero,id))
+				end, 0.01)
+			else
+				CastSpell(_Q)
+				AttackUnit(target)
+			end
+		end
+	end
+	if BPAIO.QWER.aQ:Value() and Ready(_Q) then
 		CastSpell(_Q)
-		AttackUnit(target)
 	end
 	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, GetCastRange(myHero, _W)) then
-		if WPred and WPRed.hitChance >= 0 then
+		if WPred and WPred.hitChance >= 0 then
 			CastSkillShot(_W, WPred.castPos)
 		end
 	end
@@ -2922,7 +2852,73 @@ local target = GetCurrentTarget()
 	if BPAIO.QWER.E:Value() and Ready(_E) then
 		CastSpell(_E)
 	end
-	if BPAIO.QWER:R:Value() and Ready(_R) then
+	if BPAIO.QWER.R:Value() and Ready(_R) then
+		CastSpell(_R)
+	end
+end
+
+class "Nidalee"
+
+function Nidalee:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("W2", "Auto Pounce", string.byte("Q"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Nidalee:Tick()
+local target = GetCurrentTarget()
+local NidQ = { delay = 0.25, speed = 1300, width = 40, range = 1500 }
+local NidW = { delay = 0, speed = 1300, width = 100, range = 350 }
+local NidW2 = { delay = 0, speed = 1300, width = 100, range = 850 }
+local NidW3 = { delay = 1, speed = math.huge, width = 40, range = 900 }
+local NidE = { delay = 0.25, speed = math.huge, width = 100, range = 300 }
+local QPred = GetPrediction(target, NidQ)
+local WPred = GetPrediction(target, NidW)
+local WPred2 = GetPrediction(target, NidW2)
+local WPred3 = GetPrediction(target, NidW3)
+local EPred = GetPrediction(target, NidE)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) then
+		if GetCastName(myHero, _Q) == "JavelinToss" and ValidTarget(target, 1500) then
+			if QPred and QPred.hitChance >= 0 then
+				CastSkillShot(_Q, QPred.castPos)
+			end
+		elseif GetCastName(myHero, _Q) == "Takedown" and ValidTarget(target, 250) then
+			CastSpell(_Q)
+			AttackUnit(target)
+		end
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) then
+		if GetCastName(myHero, _W) == "Bushwhack" and ValidTarget(target, 900) then
+			if WPred3 and WPred3.hitChance >= 0 then
+				CastSkillShot(_W, WPred3.castPos)
+			end
+		elseif GetCastName(myHero, _W) == "Pounce" and ValidTarget(target, 850) then
+			if WPred2 and WPred2.hitChance >= 0 then
+				CastSkillShot(_W, WPred2.castPos)
+			end
+		end
+	end
+	if BPAIO.QWER.W2:Value() and Ready(_W) then
+		if GetCastName(myHero, _W) == "Pounce" then
+			CastSkillShot(_W, GetMousePos())
+		end
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) then
+		if GetCastName(myHero, _E) == "PrimalSurge" then
+			CastTargetSpell(GetMyHero(), _E)
+		elseif GetCastName(myHero, _E) == "Swipe" and ValidTarget(target, 300) then
+			if EPred and EPred.hitChance >= 0 then
+				CastSkillShot(_E, EPred.castPos)
+			end
+		end
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) then
 		CastSpell(_R)
 	end
 end
