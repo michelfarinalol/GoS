@@ -287,6 +287,7 @@ BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
 BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
 BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
 BPAIO.QWER:Boolean("ksR", "Auto R When Low", true)
+BPAIO.QWER:Boolean("AIgn", "Auto Ignite", true)
 
 BPAIO:Menu("D", "Draw")
 BPAIO.D:Boolean("Q", "Draw Q", true)
@@ -348,6 +349,25 @@ CastSkillShot(_E , GetOrigin(target))
 	end
 	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, 460) then
 		CastTargetSpell(target, _R)
+	end
+	for _,enemy in pairs(GetEnemyHeroes()) do
+		if BPAIO.QWER.AIgn:Value() then
+			if GetCastName(myHero, SUMMONER_1) == 'SummonerDot' then
+				Ignite = SUMMONER_1
+				if ValidTarget(enemy, 600) then
+					if 20 * GetLevel(myHero) + 50 > GetCurrentHP(enemy) + GetHPRegen(enemy) * 3 then
+						CastTargetSpell(enemy, Ignite)
+					end
+				end
+			elseif GetCastName(myHero, SUMMONER_2) == 'SummonerDot' then
+				Ignite = SUMMONER_2
+				if ValidTarget(enemy, 600) then
+					if 20 * GetLevel(myHero) + 50 > GetCurrentHP(enemy) + GetHPRegen(enemy) * 3 then
+						CastTargetSpell(enemy, Ignite)
+					end
+				end
+			end
+		end
 	end
 end
 end
@@ -1404,6 +1424,9 @@ local QPos3 = Vector(target) + Vector(target):normalized()
 	end
 	if BPAIO.QWER.R:Value() and Ready(_R) then
 		CastSpell(_R)
+		DelayAction(function()
+			CastSkillShot(_Q, GetMousePos())
+		end, 0.01)
 	end
 	--for _, minion in pairs(minionManager.objects) do
 		--if BPAIO.QWER.AA:Value() and GetTeam(minion) == MINION_ENEMY and ValidTarget(minion, 550) then
@@ -3275,7 +3298,7 @@ local flylength = 0
 		end
 	end
 	for _,ally in pairs(GetAllyHeroes()) do
-		if BPAIO.QWER.W:Value() and Ready(_W) and GetDistance(myHero,ally)<GetCastRange(myHero,_W) then
+		if BPAIO.QWER.W:Value() and Ready(_W) and GetDistance(myHero,ally)<GetCastRange(myHero,_W) and not IsDead(ally) then
 			local WPred = GetPrediction(ally, ThreshW)
 			if WPred and WPred.hitChance >= 0 then
 				CastSkillShot(_W, WPred.castPos)
