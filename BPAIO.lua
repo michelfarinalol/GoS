@@ -1,14 +1,5 @@
 --Credits to SxcS and Zwei
 
-local v = 0.0006
-
-GetWebResultAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/BPAIO.version", function(num)
-	if v < tonumber(num) then
-		PrintChat("[BPAIO] Update Available. x2 f6 to Update.")
-		DownloadFileAsync("https://raw.githubusercontent.com/wildrelic/GoS/master/BPAIO.lua", SCRIPT_PATH .. "BPAIO.lua", function() PrintChat("Enjoy your game!") return end)
-	end
-end)
-
 require("OpenPredict")
 require("DamageLib")
 
@@ -24,6 +15,7 @@ local BPChamps =
 	["Ashe"] = 			true,
 	["Blitzcrank"] =	true,
 	["Braum"] =			true,
+	["Brand"] =			true,
 	["Caitlyn"] =		true,
 	["Cassiopeia"] =	true,
 	["Chogath"] =		true,
@@ -33,6 +25,7 @@ local BPChamps =
 	["Draven"] =		true,
 	["Ezreal"] =		true,
 	["Evelynn"] =		true,
+	["FiddleSticks"] =	true,
 	["Fiora"] =			true,
 	["Fizz"] =			true,
 	["Gangplank"] =		true,
@@ -40,6 +33,7 @@ local BPChamps =
 	["Hecarim"] =		true,
 	["Illaoi"] = 		true,
 	["Irelia"] =		true,
+	["Karthus"] =		true,
 	["Khazix"] = 		true,
 	["KogMaw"] =		true,
 	["JarvanIV"] =		true,
@@ -52,6 +46,7 @@ local BPChamps =
 	["Katarina"] =		true,
 	["Kalista"] =		true,
 	["Kayle"] =			true,
+	["Kennen"] =		true,
 	["Leblanc"] =		true,
 	["LeeSin"] =		true,
 	["Leona"] = 		true,
@@ -60,14 +55,19 @@ local BPChamps =
 	["Lux"] = 			true,
 	["Malzahar"] =		true,
 	["Morgana"] =		true,
+	["MissFortune"] =	true,
 	["Nami"] =			true,
 	["Nasus"]=			true,
 	["Nidalee"] =		true,
+	["Nocturne"] =		true,
+	["Nautilus"] =		true,
 	["Olaf"] = 			true,
 	["Orianna"] =		true,
 	["Pantheon"] =		true,
 	["Poppy"] =			true,
+	["Quinn"] =			true,
 	["Renekton"] =		true,
+	["Rumble"] =		true,
 	["Rengar"] =		true,
 	["Ryze"] = 			true,
 	["Sejuani"] =		true,
@@ -76,6 +76,7 @@ local BPChamps =
 	["Sion"] = 			true,
 	["Skarner"] =		true,
 	["Soraka"] =		true,
+	["Swain"] =			true,
 	["Taric"] =			true,
 	["Talon"] =			true,
 	["Thresh"] =		true,
@@ -84,13 +85,16 @@ local BPChamps =
 	["Trundle"] =		true,
 	["Tryndamere"] =	true,
 	["TwistedFate"] =	true,
+	["Twitch"] =		true,
 	["Udyr"] =			true,
 	["Varus"] =			true,
 	["Vayne"] =			true,
+	["Warwick"] = 		true,
 	["XinZhao"]=		true,
 	["Yasuo"] = 		true,
 	["Zed"] =			true,
 	["Zyra"] =			true,
+	["Ziggs"] =			true,
 	}
 
 Callback.Add("Load", function()
@@ -115,6 +119,7 @@ class "Annie"
 function Annie:__init()
 BPAIO:Menu("QWER", "Cast QWER")
 BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("Q2", "Cast Q on Min", string.byte("Q"))
 BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
 BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
 BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
@@ -150,6 +155,13 @@ if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 625) then
 	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, 600) then
 		if RPred and RPred.hitChance >= (BPAIO.QWER.pR:Value()/100) then
 			CastSkillShot(_R, RPred.castPos)
+		end
+	end
+	for _, mob in pairs(minionManager.objects) do
+		if BPAIO.QWER.Q2:Value() and Ready(_Q) and GetTeam(mob) == MINION_ENEMY and ValidTarget(mob, 625) then
+			if GetCurrentHP(mob) + GetDmgShield(mob) <= getdmg("Q", mob, myHero, GetCastLevel(myHero, _Q)) then
+				CastTargetSpell(mob, _Q)
+			end
 		end
 	end
 end
@@ -2693,6 +2705,7 @@ BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
 BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
 BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
 BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+BPAIO.QWER:Key("Q2", "Cast Q on Min", string.byte("Q"))
 
 OnTick(function() self.Tick() end)
 end
@@ -2712,7 +2725,7 @@ local RPred = GetPrediction(target, KassR)
 			CastSkillShot(_W, WPred.castPos)
 		end
 	end
-	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, 250) then
+	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, 300) then
 		CastSpell(_W)
 		AttackUnit(target)
 	end
@@ -2726,6 +2739,13 @@ local RPred = GetPrediction(target, KassR)
 			CastSkillShot(_R, RPred.castPos)
 		end
 	end
+	for _, mob in pairs(minionManager.objects) do
+		if BPAIO.QWER.Q2:Value() and Ready(_Q) and GetTeam(mob) == MINION_ENEMY and ValidTarget(mob, GetCastRange(myHero, _Q)) then
+			if GetCurrentHP(mob) + GetDmgShield(mob) <= getdmg("Q", mob, myHero, GetCastLevel(myHero, _Q)) then
+				CastTargetSpell(mob, _Q)
+			end
+		end
+	end	
 end
 
 class "Morgana"
@@ -3733,5 +3753,543 @@ local target = GetCurrentTarget()
 	end
 	if BPAIO.QWER.R:Value() and Ready(_R) then
 		CastTargetSpell(GetMyHero(), _R)
+	end
+end
+
+class "Sion"
+
+function Sion:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q1", "Cast Q1", string.byte("S"))
+BPAIO.QWER:Key("Q2", "Cast Q2", string.byte("Q"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Sion:Tick()
+local target = GetCurrentTarget()
+local SionQ = {delay = 0.5, speed = math.huge, width = 200, range = 300}
+local SionE = {delay = 0.25, speed = 1400, width = 100, range = 1500}
+local QPred = GetPrediction(target, SionQ)
+local EPred = GetPrediction(target, SionE)
+
+	if BPAIO.QWER.Q1:Value() and Ready(_Q) and ValidTarget(target, 600) then
+		if QPred and QPred.hitChance <= 0 then
+			CastSkillShot(_Q, QPred.castPos)
+		end
+	end
+	if BPAIO.QWER.Q2:Value() and Ready(_Q) then
+		CastSkillShot2(_Q, GetMousePos())
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) then
+		CastSpell(_W)
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 1500) then
+		if EPred and EPred.hitChance >= 0 then
+			CastSkillShot(_E, EPred.castPos)
+		end
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, GetCastRange(myHero, _R)) then
+		CastSkillShot(_R, GetOrigin(target))
+	end
+end
+
+class "Warwick"
+
+function Warwick:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Warwick:Tick()
+local target = GetCurrentTarget()
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, GetCastRange(myHero, _Q)) then
+		CastTargetSpell(target, _Q)
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) then
+		CastSpell(_W)
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) then
+		CastSpell(_E)
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, GetCastRange(myHero, _R)) then
+		CastTargetSpell(target, _R)
+	end
+end
+
+class "Karthus"
+
+function Karthus:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Karthus:Tick()
+local target = GetCurrentTarget()
+local KartQ = {delay = 0.775, speed = math.huge, width = 100, range = GetCastRange(myHero, _Q)}
+local KartW = {delay = 0.25, speed = math.huge, width = 100, range = GetCastRange(myHero, _W)}
+local QPred = GetPrediction(target, KartQ)
+local WPred = GetPrediction(target, KartW)
+	
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, GetCastRange(myHero, _Q)) then
+		if QPred and QPred.hitChance >= 0 then
+			CastSkillShot(_Q, QPred.castPos)
+		end
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, GetCastRange(myHero, _W)) then	
+		if WPred and WPred.hitChance >= 0 then
+			CastSkillShot(_W, WPred.castPos)
+		end
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) then
+		CastSpell(_E)
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) then
+		CastSpell(_R)
+	end
+end
+
+class "Nocturne"
+
+function Nocturne:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("R"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Nocturne:Tick()
+local target = GetCurrentTarget()
+local NocturneQ = {delay = 0.25, speed = 1400, width = 100, range = GetCastRange(myHero, _Q)}
+local QPred = GetPrediction(target, NocturneQ)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, GetCastRange(myHero, _Q)) then
+		if QPred and QPred.hitChance >= 0 then
+			CastSkillShot(_Q, QPred.castPos)
+		end
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) then
+		CastSpell(_W)
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, GetCastRange(myHero, _E)) then
+		CastTargetSpell(target, _E)
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, GetCastRange(myHero, _R)) then
+		CastTargetSpell(target, _R)
+	end
+end
+
+class "Nautilus"
+
+function Nautilus:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Nautilus:Tick()
+local target = GetCurrentTarget()
+local NautilusQ = {delay = 0.25, speed = 2000, width = 100, range = GetCastRange(myHero, _Q)}
+local QPred = GetPrediction(target, NautilusQ)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, GetCastRange(myHero, _Q)) then
+		if QPred and QPred.hitChance >= 0 then
+			CastSkillShot(_Q, QPred.castPos)
+		end
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) then
+		CastSpell(_W)
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) then
+		CastSpell(_E)
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, GetCastRange(myHero, _R)) then
+		CastTargetSpell(target, _R)
+	end
+end
+
+class "Brand"
+
+function Brand:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Brand:Tick()
+local target = GetCurrentTarget()
+local BrandQ = {delay = 0.25, speed = 1200, width = 80, range = 1050}
+local BrandW = {delay = 0.625, speed = math.huge, width = 275, range = 1050}
+local QPred = GetPrediction(target, BrandQ)
+local WPred = GetPrediction(target, BrandW)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 1050) then
+		if QPred and QPred.hitChance >= 0 then
+			CastSkillShot(_Q, QPred.castPos)
+		end
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, 1050) then
+		if WPred and WPred.hitChance >= 0 then
+			CastSkillShot(_W, WPred.castPos)
+		end
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, GetCastRange(myHero, _E)) then
+		CastTargetSpell(target, _E)
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, GetCastRange(myHero, _R)) then
+		CastTargetSpell(target, _R)
+	end
+end
+
+class "FiddleSticks"
+
+function FiddleSticks:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function FiddleSticks:Tick()
+local target = GetCurrentTarget()
+local FidR = {delay = 1, speed = math.huge, width = 10, range = GetCastRange(myHero, _R)}
+local RPred = GetPrediction(target, FidR)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, GetCastRange(myHero, _Q)) then
+		CastTargetSpell(target, _Q)
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, GetCastRange(myHero, _W)) then
+		CastTargetSpell(target, _W)
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, GetCastRange(myHero, _E)) then
+		CastTargetSpell(target, _E)
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, GetCastRange(myHero, _R)) then
+		if RPred and RPred.hitChance >= 0 then
+			CastSkillShot(_R, RPred.castPos)
+		end
+	end
+end
+
+class "Kennen"
+
+function Kennen:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Kennen:Tick()
+local target = GetCurrentTarget()
+local KennenQ = {delay = 0.180, speed = 1700, width = 70, range = 1050}
+local QPred = GetPrediction(target, KennenQ)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, GetCastRange(myHero, _Q)) then
+		if QPred and QPred.hitChance >= 0 then
+			CastSkillShot(_Q, QPred.castPos)
+		end
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) then
+		CastSpell(_W)
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) then
+		CastSpell(_E)
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and EnemiesAround(myHero, GetCastRange(myHero, _R)) then
+		CastSpell(_R)
+	end
+end
+
+class "Ziggs"
+
+function Ziggs:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Ziggs:Tick()
+local target = GetCurrentTarget()
+local ZigQ = {delay = 0.25, speed = 1750, width = 80, range = 1400}
+local ZigW = {delay = 0.25, speed = 1800, width = 275, range = GetCastRange(myHero, _W)}
+local ZigE = {delay = 0.15, speed = 1750, width = 350, range = GetCastRange(myHero, _E)}
+local ZigR = {delay = 0.15, speed = 1750, width = 530, range = GetCastRange(myHero, _R)}
+local QPred = GetPrediction(target, ZigQ)
+local WPred = GetPrediction(target, ZigW)
+local EPred = GetPrediction(target, ZigE)
+local RPred = GetPrediction(target, ZigR)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 1400) then
+		if QPred and QPred.hitChance >= 0 then
+			CastSkillShot(_Q, QPred.castPos)
+		end
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, GetCastRange(myHero, _W)) then
+		if WPred and WPred.hitChance >= 0 then
+			CastSkillShot(_W, WPred.castPos)
+		end
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, GetCastRange(myHero, _E)) then
+		if EPred and EPred.hitChance >= 0 then
+			CastSkillShot(_E, EPred.castPos)
+		end
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, GetCastRange(myHero, _R)) then
+		if RPred and RPred.hitChance >= 0 then
+			CastSkillShot(_R, RPred.castPos)
+		end
+	end
+end
+
+class "Sejuani"
+
+function Sejuani:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Sejuani:Tick()
+local target = GetCurrentTarget()
+local SejQ = {delay = 0, speed = 1200, width = 70, range = GetCastRange(myHero, _Q)}
+local SejR = {delay = 0.25, speed = 1600, width = 110, range = GetCastRange(myHero, _R)}
+local QPred = GetPrediction(target, SejQ)
+local RPred = GetPrediction(target, SejR)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, GetCastRange(myHero, _Q)) then
+		if QPred and QPred.hitChance >= 0 then
+			CastSkillShot(_Q, QPred.castPos)
+		end
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) then
+		CastSpell(_W)
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) then
+		CastSpell(_E)
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, GetCastRange(myHero, _R)) then
+		if RPred and RPred.hitChance >= 0 then
+			CastSkillShot(_R, RPred.castPos)
+		end
+	end
+end
+
+class "Twitch"
+
+function Twitch:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Twitch:Tick()
+local target = GetCurrentTarget()
+local TwitchW = {delay = 0.25, speed = 1750, width = 275, range = GetCastRange(myHero, _W)}
+local WPred = GetPrediction(target, TwitchW)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) then
+		CastSpell(_Q)
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) and ValidTarget(target, GetCastRange(myHero, _W)) then
+		if WPred and WPred.hitChance >= 0 then
+			CastSkillShot(_W, WPred.castPos)
+		end
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, 1200) then
+		CastSpell(_E)
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) then
+		CastSpell(_R)
+	end
+end
+
+class "Quinn"
+
+function Quinn:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Quinn:Tick()
+local target = GetCurrentTarget()
+local QuinnQ = {delay = 0.25, speed = 1550, width = 80, range = 1050}
+local QPred = GetPrediction(target, QuinnQ)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, 1050) then
+		if QPred and QPred.hitChance >= 0 then
+			CastSkillShot(_Q, QPred)
+		end
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) then
+		CastSpell(_W)
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, GetCastRange(myHero, _E)) then
+		CastTargetSpell(target, _E)
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) then
+		CastSpell(_R)
+	end
+end
+
+class "Illaoi"
+
+function Illaoi:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Illaoi:Tick()
+local target = GetCurrentTarget()
+local IllQ = {delay = 0.75, speed = math.huge, width = 160, range = 750}
+local IllE = {delay = 0.25, speed = 1900, width = 50, range = 900}
+local IllR = {delay = 0.5, speed = math.huge, width = 450, range = 0}
+local QPred = GetLinearAOEPrediction(target, IllQ)
+local EPred = GetPrediction(target, IllE)
+local RPred = GetCircularAOEPrediction(target, IllR)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, GetCastRange(myHero, _Q)) then
+		if QPred and QPred.hitChance >= 0 then
+			CastSkillShot(_Q, QPred.castPos)
+		end
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) then
+		CastSpell(_W)
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, GetCastRange(myHero, _E)) then
+		if EPred and EPred.hitChance >= 0 then
+			CastSkillShot(_E, EPred.castPos)
+		end
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, GetCastRange(myHero, _R)) then
+		CastSpell(_R)
+	end
+end
+
+class "MissFortune"
+
+function MissFortune:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function MissFortune:Tick()
+local target = GetCurrentTarget()
+local MissE = {delay = 0.25, speed = math.huge, width = 100, range = GetCastRange(myHero, _E)}
+local MissR = {delay = 0.25, speed = math.huge, width = 700, range = 1400}
+local EPred = GetPrediction(target, MissE)
+local RPred = GetPrediction(target, MissR)
+	
+	if BPAIO.QWER.Q:Value() and Ready(_Q) and ValidTarget(target, GetCastRange(myHero, _Q)) then
+		CastTargetSpell(target, _Q)
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) then
+		CastSpell(_W)
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, GetCastRange(myHero, _E)) then
+		if EPred and EPred.hitChance >= 0 then
+			CastSkillShot(_E, EPred.castPos)
+		end
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, 1400) then
+		if RPred and RPred.hitChance >= 0 then
+			CastSkillShot(_R, RPred.castPos)
+		end
+	end
+end
+
+
+class "Rumble"
+
+function Rumble:__init()
+BPAIO:Menu("QWER", "Cast QWER")
+BPAIO.QWER:Key("Q", "Cast Q", string.byte("S"))
+BPAIO.QWER:Key("W", "Cast W", string.byte("D"))
+BPAIO.QWER:Key("E", "Cast E", string.byte("F"))
+BPAIO.QWER:Key("R", "Cast R", string.byte("G"))
+
+OnTick(function(myHero) self.Tick() end)
+end
+
+function Rumble:Tick()
+local target = GetCurrentTarget()
+local RumbE = {delay = 0.25, speed = 1200, width = 90, range = GetCastRange(myHero, _E)}
+local RumbR = {delay = 0.25, speed = 1700, width = 90, range = 1700}
+local EPred = GetPrediction(target, RumbE)
+local RPred = GetPrediction(target, RumbR)
+
+	if BPAIO.QWER.Q:Value() and Ready(_Q) then
+		CastSkillShot(_Q, GetOrigin(GetMyHero()))
+	end
+	if BPAIO.QWER.W:Value() and Ready(_W) then
+		CastSpell(_W)
+	end
+	if BPAIO.QWER.E:Value() and Ready(_E) and ValidTarget(target, GetCastRange(myHero, _E)) then
+		if EPred and EPred.hitChance >= 0 then
+			CastSkillShot(_E, EPred.castPos)
+		end
+	end
+	if BPAIO.QWER.R:Value() and Ready(_R) and ValidTarget(target, 1700) then
+		if RPred and RPred.hitChance >= 0 then
+			CastSkillShot3(_R, GetOrigin(target), RPred.castPos)
+		end
 	end
 end
